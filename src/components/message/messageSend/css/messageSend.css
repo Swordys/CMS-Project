@@ -1,0 +1,32 @@
+.messageSendWrap {
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+}
+
+.sendThatText {
+  resize: none;
+  max-height: 140px;
+  width: 100%;
+  background: #F7F7F7;
+  padding: 15px;
+  border: 0;
+  border-top: 1px solid #B3B3B3;
+  outline: none;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #282828;
+}
+
+.sendThatText::-webkit-scrollbar-track {
+  background-color: #f5f5f5;
+}
+
+.sendThatText::-webkit-scrollbar {
+  width: 4px;
+  background-color: #f5f5f5;
+}
+
+.sendThatText::-webkit-scrollbar-thumb {
+  background-color: #3C3C3C;
+  border-radius: 3px;
+}

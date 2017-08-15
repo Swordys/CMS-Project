@@ -1,0 +1,6 @@
+.sideBarWrap {
+  height: 100vh;
+  width: 300px;
+  background: darkgray;
+  flex-shrink: 0;
+}
