@@ -23,12 +23,13 @@ class MessageSendBox extends Component {
         const { send } = this.props;
 
         e.target.value = "";
+        e.target.style.height = "15px";
+
         let msgObj = {
           key: uuid(),
           msg: textValue
         };
         send(msgObj);
-        // console.log(textValue);
       }
     }
   }

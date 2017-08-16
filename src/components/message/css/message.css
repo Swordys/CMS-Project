@@ -1,7 +1,6 @@
 .messageWrap {
   max-height: 100vh;
   width: 100%;
-  background: lightgray;
   display: flex;
   flex-direction: column;
   align-items: flex-end;

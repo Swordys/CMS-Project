@@ -5,7 +5,7 @@ class Message extends Component {
     const { msg } = this.props;
 
     return (
-      <div>
+      <div className='messageBoxWrap'>
         <span>
           {msg}
         </span>
