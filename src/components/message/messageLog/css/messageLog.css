@@ -31,6 +31,11 @@
   align-items: center;
 }
 
+.bottom {
+  float: left;
+  clear: both;
+}
+
 .messageLogWrap::-webkit-scrollbar-track {
   background-color: #f5f5f5;
 }

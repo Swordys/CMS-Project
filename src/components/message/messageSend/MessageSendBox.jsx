@@ -16,7 +16,7 @@ class MessageSendBox extends Component {
     this.sendMessage = this.sendMessage.bind(this);
   }
 
-  sendMessage(e) {
+  sendMessage = e => {
     const isShift = e.nativeEvent.shiftKey;
     const isEnter = e.nativeEvent.keyCode === 13;
     const textValue = e.target.value;
@@ -38,7 +38,7 @@ class MessageSendBox extends Component {
         send(msgObj);
       }
     }
-  }
+  };
 
   render() {
     return (

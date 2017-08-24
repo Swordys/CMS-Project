@@ -6,9 +6,17 @@ import "./css/messageLog.css";
 import Message from "./Message";
 
 class MessageLog extends Component {
-  renderMessages() {
+  renderMessages = () => {
     const { messageLog } = this.props;
     return messageLog.map(msg => <Message {...msg} />);
+  };
+
+  componentDidUpdate() {
+    this.bottomMsg.scrollIntoView();
+  }
+
+  componentDidMount() {
+    this.bottomMsg.scrollIntoView();
   }
 
   render() {
@@ -16,6 +24,7 @@ class MessageLog extends Component {
       <div className="messageLogMain">
         <div className="messageLogWrap">
           {this.renderMessages()}
+          <div ref={e => (this.bottomMsg = e)} className="bottom" />
         </div>
       </div>
     );
