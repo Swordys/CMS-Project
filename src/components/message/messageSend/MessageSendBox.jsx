@@ -23,7 +23,8 @@ class MessageSendBox extends Component {
 
     if (isEnter && !isShift) {
       e.preventDefault();
-      if (textValue) {
+      let checkText = textValue.trim();
+      if (checkText) {
         this.setState({
           inputValue: ""
         });
@@ -32,7 +33,7 @@ class MessageSendBox extends Component {
 
         let msgObj = {
           key: uuid(),
-          msg: textValue
+          msg: checkText
         };
 
         send(msgObj);
