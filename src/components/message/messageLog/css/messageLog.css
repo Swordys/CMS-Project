@@ -11,7 +11,7 @@
   width: 100%;
   background: #ffffff;
   overflow: auto;
-  padding: 0 10px 15px 0;
+  padding: 0 10px 10px 10px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;

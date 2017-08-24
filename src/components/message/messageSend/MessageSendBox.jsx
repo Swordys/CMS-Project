@@ -9,6 +9,10 @@ import { sendMessage } from "../../../actions/Actions.js";
 class MessageSendBox extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      inputValue: ""
+    };
+
     this.sendMessage = this.sendMessage.bind(this);
   }
 
@@ -20,15 +24,17 @@ class MessageSendBox extends Component {
     if (isEnter && !isShift) {
       e.preventDefault();
       if (textValue) {
-        const { send } = this.props;
+        this.setState({
+          inputValue: ""
+        });
 
-        e.target.value = "";
-        e.target.style.height = "15px";
+        const { send } = this.props;
 
         let msgObj = {
           key: uuid(),
           msg: textValue
         };
+
         send(msgObj);
       }
     }
@@ -38,6 +44,8 @@ class MessageSendBox extends Component {
     return (
       <Textarea
         onKeyPress={this.sendMessage}
+        onChange={e => this.setState({ inputValue: e.target.value })}
+        value={this.state.inputValue}
         className="sendThatText"
         placeholder="Type a message"
       />
