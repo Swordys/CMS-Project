@@ -13,8 +13,10 @@ class MessageLog extends Component {
 
   render() {
     return (
-      <div className="messageLogWrap">
-        {this.renderMessages()}
+      <div className="messageLogMain">
+        <div className="messageLogWrap">
+          {this.renderMessages()}
+        </div>
       </div>
     );
   }
