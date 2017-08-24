@@ -1,14 +1,21 @@
 import React, { Component } from "react";
 
 class Message extends Component {
-  render() {
-    const { msg } = this.props;
-
+  renderText = () => {
+    let { msg } = this.props;
+    msg = msg.trim();
     return (
-      <div className='messageBoxWrap'>
-        <span>
-          {msg}
-        </span>
+      <div style={{ whiteSpace: "pre-line" }}>
+        {msg}
+      </div>
+    );
+  };
+  render() {
+    return (
+      <div className="messageBoxWrap">
+        <div>
+          {this.renderText()}
+        </div>
       </div>
     );
   }
