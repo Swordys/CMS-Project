@@ -54,13 +54,3 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps, null)(MessageLog);
-
-// {this.renderMessages().map((item, i) => (
-//   <CSSTransition
-//     key={i}
-//     classNames="fade"
-//     timeout={{ enter: 500, exit: 300 }}
-//   >
-//     {item}
-//   </CSSTransition>
-// ))}

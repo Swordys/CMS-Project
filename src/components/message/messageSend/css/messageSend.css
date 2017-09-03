@@ -4,6 +4,9 @@
   align-items: flex-end;
   height: auto;
   flex-shrink: 0;
+  padding: 15px;
+  box-sizing: border-box;
+  border-top: 1px solid #B3B3B3;
 }
 
 .sendThatText {
@@ -11,12 +14,12 @@
   max-height: 140px;
   width: 100%;
   background: #F7F7F7;
-  padding: 15px;
-  border: 0;
-  border-top: 1px solid #B3B3B3;
+  padding: 10px;
+  border: 1px solid #B3B3B3;
   outline: none;
   font-family: Arial, Helvetica, sans-serif;
   color: #282828;
+  border-radius: 3px;
 }
 
 .sendThatText::-webkit-scrollbar-track {
