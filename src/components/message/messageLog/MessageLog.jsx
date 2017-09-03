@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import TransitionGroup from "react-transition-group/TransitionGroup";
+import CSSTransition from "react-transition-group/CSSTransition";
 import "./css/messageLog.css";
+import "./css/reactTrans.css";
 
 // Components
 import Message from "./Message";
@@ -8,7 +11,23 @@ import Message from "./Message";
 class MessageLog extends Component {
   renderMessages = () => {
     const { messageLog } = this.props;
-    return messageLog.map(msg => <Message {...msg} />);
+    const bottomMsg = (
+      <CSSTransition key={"bot"} timeout={{ enter: 100, exit: 100 }}>
+        <div ref={e => (this.bottomMsg = e)} className="bottom" />
+      </CSSTransition>
+    );
+    const retunLog = messageLog.map(item => (
+      <CSSTransition
+        key={item.key}
+        classNames="fade"
+        timeout={{ enter: 500, exit: 300 }}
+      >
+        <Message text={item.msg} />
+      </CSSTransition>
+    ));
+
+    retunLog.push(bottomMsg);
+    return retunLog;
   };
 
   componentDidUpdate() {
@@ -22,10 +41,9 @@ class MessageLog extends Component {
   render() {
     return (
       <div className="messageLogMain">
-        <div className="messageLogWrap">
+        <TransitionGroup className="messageLogWrap">
           {this.renderMessages()}
-          <div ref={e => (this.bottomMsg = e)} className="bottom" />
-        </div>
+        </TransitionGroup>
       </div>
     );
   }
@@ -36,3 +54,13 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps, null)(MessageLog);
+
+// {this.renderMessages().map((item, i) => (
+//   <CSSTransition
+//     key={i}
+//     classNames="fade"
+//     timeout={{ enter: 500, exit: 300 }}
+//   >
+//     {item}
+//   </CSSTransition>
+// ))}
