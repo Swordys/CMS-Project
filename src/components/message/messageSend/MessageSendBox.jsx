@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Textarea from "react-textarea-autosize";
 import uuid from "uuid";
+import moment from "moment";
 import { connect } from "react-redux";
 
 // Components
@@ -8,7 +9,7 @@ import MessageSendFile from "./MessageSendFile";
 import MessageSendSmile from "./MessageSendSmile";
 
 // Actions
-import { sendMessage } from "../../../actions/Actions.js";
+import { sendMessage, sendMessageNow } from "../../../actions/Actions.js";
 
 class MessageSendBox extends Component {
   constructor(props) {
@@ -28,19 +29,24 @@ class MessageSendBox extends Component {
     if (isEnter && !isShift) {
       e.preventDefault();
       let checkText = textValue.trim();
+      let timeFull = moment().format("MMM Do YYYY, h:mm a");
+      let timeMin = moment().format("dddd, h:mm a");
       if (checkText) {
         this.setState({
           inputValue: ""
         });
 
-        const { send } = this.props;
-
+        const { sendNow, messageLog } = this.props;
         let msgObj = {
           key: uuid(),
-          msg: checkText
+          text: checkText,
+          date: timeMin,
+          dateFull: timeFull,
+          id: uuid(),
+          timeStamp: false
         };
 
-        send(msgObj);
+        sendNow(msgObj, messageLog);
       }
     }
   };
@@ -63,9 +69,13 @@ class MessageSendBox extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  send: message => {
-    dispatch(sendMessage(message));
+  sendNow: (message, log) => {
+    dispatch(sendMessageNow(message, log));
   }
 });
 
-export default connect(null, mapDispatchToProps)(MessageSendBox);
+const mapStateToProps = state => ({
+  messageLog: state.getMessages
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(MessageSendBox);

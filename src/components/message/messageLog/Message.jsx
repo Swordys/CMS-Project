@@ -11,7 +11,7 @@ class Message extends Component {
   render() {
     return (
       <div className="messageBoxWrap">
-        <div>{this.renderText()}</div>
+        <div className="messageBoxText">{this.renderText()}</div>
       </div>
     );
   }
