@@ -32,8 +32,8 @@ class MessageLog extends Component {
       if (item.timeStamp) {
         retunLog.push(
           <CSSTransition
-            key={"timeSt"}
-            classNames="fade"
+            key={item.id}
+            classNames="zade"
             timeout={{ enter: 100, exit: 100 }}
           >
             <div className="messageBoxDate">{item.date}</div>
