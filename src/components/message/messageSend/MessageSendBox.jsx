@@ -3,6 +3,10 @@ import Textarea from "react-textarea-autosize";
 import uuid from "uuid";
 import { connect } from "react-redux";
 
+// Components
+import MessageSendFile from "./MessageSendFile";
+import MessageSendSmile from "./MessageSendSmile";
+
 // Actions
 import { sendMessage } from "../../../actions/Actions.js";
 
@@ -44,7 +48,7 @@ class MessageSendBox extends Component {
   render() {
     return (
       <div className="sendThatTextWrap">
-        <div className="sendThatFile" />
+        <MessageSendFile />
         <Textarea
           onKeyPress={this.sendMessage}
           onChange={e => this.setState({ inputValue: e.target.value })}
@@ -52,7 +56,7 @@ class MessageSendBox extends Component {
           className="sendThatText"
           placeholder="Type a message"
         />
-        <div className="sendThatSmile" />
+        <MessageSendSmile />
       </div>
     );
   }

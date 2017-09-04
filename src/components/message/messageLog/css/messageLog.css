@@ -3,16 +3,16 @@
   clear: both;
 }
 
-.messageLogWrap::-webkit-scrollbar-track {
+.messageLog::-webkit-scrollbar-track {
   background-color: #f5f5f5;
 }
 
-.messageLogWrap::-webkit-scrollbar {
+.messageLog::-webkit-scrollbar {
   width: 4px;
   background-color: #f5f5f5;
 }
 
-.messageLogWrap::-webkit-scrollbar-thumb {
+.messageLog::-webkit-scrollbar-thumb {
   background-color: rgba(68, 68, 68, 0.9);
   border-radius: 3px;
 }
