@@ -9,7 +9,7 @@ import MessageSendFile from "./MessageSendFile";
 import MessageSendSmile from "./MessageSendSmile";
 
 // Actions
-import { sendMessage, sendMessageNow } from "../../../actions/Actions.js";
+import { sendMessageNow } from "../../../actions/Actions.js";
 
 class MessageSendBox extends Component {
   constructor(props) {
