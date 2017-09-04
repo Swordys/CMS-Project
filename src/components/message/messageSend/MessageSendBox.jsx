@@ -43,13 +43,17 @@ class MessageSendBox extends Component {
 
   render() {
     return (
-      <Textarea
-        onKeyPress={this.sendMessage}
-        onChange={e => this.setState({ inputValue: e.target.value })}
-        value={this.state.inputValue}
-        className="sendThatText"
-        placeholder="Type a message"
-      />
+      <div className="sendThatTextWrap">
+        <div className="sendThatFile" />
+        <Textarea
+          onKeyPress={this.sendMessage}
+          onChange={e => this.setState({ inputValue: e.target.value })}
+          value={this.state.inputValue}
+          className="sendThatText"
+          placeholder="Type a message"
+        />
+        <div className="sendThatSmile" />
+      </div>
     );
   }
 }

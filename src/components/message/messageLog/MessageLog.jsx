@@ -40,8 +40,8 @@ class MessageLog extends Component {
 
   render() {
     return (
-      <div className="messageLogMain">
-        <TransitionGroup className="messageLogWrap">
+      <div className="messageLogWrap">
+        <TransitionGroup className="messageLog">
           {this.renderMessages()}
         </TransitionGroup>
       </div>
