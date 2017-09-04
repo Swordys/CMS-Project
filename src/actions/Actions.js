@@ -6,15 +6,12 @@ export const sendMessage = msg => ({
 export const sendMessageNow = (msg, log) => dispatch => {
   const logLen = log.length;
   if (logLen < 1) {
-    // console.log(msg);
     msg.timeStamp = true;
   } else {
-    let lastH = log[logLen - 1].timeHour;
-    let currentH = msg.timeHour;
+    let lastH = Number(log[logLen - 1].timeHour.replace(":", "."));
+    let currentH = Number(msg.timeHour.replace(":", "."));
 
-    if (currentH > lastH) {
-      // console.log(lastH);
-      // console.log(currentH);
+    if (currentH - lastH >= 1) {
       msg.timeStamp = true;
     }
   }

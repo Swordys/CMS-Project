@@ -31,9 +31,8 @@ class MessageSendBox extends Component {
       let checkText = textValue.trim();
       let timeFull = moment().format("MMM Do YYYY, h:mm a");
       let timeMin = moment().format("dddd, h:mm a");
-      let timeHour = moment().hour();
-
-      console.log(timeHour);
+      let timeHour = moment().format('H:m');
+      
       if (checkText) {
         this.setState({
           inputValue: ""
