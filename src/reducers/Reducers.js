@@ -6,3 +6,12 @@ export const getMessageLogReducer = (state = [], action) => {
       return state;
   }
 };
+
+export const toggleEmojiReducer = (state = false, action) => {
+  switch (action.type) {
+    case "TOGGLE_EMOJI":
+      return !state;
+    default:
+      return state;
+  }
+};

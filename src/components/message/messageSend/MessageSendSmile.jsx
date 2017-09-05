@@ -1,13 +1,18 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { toggleEmoji } from "../../../actions/Actions.js";
 
 class MessageSendSmile extends Component {
   render() {
-    return (
-      <div className="sendThatSmile">
-     
-      </div>
-    );
+    const { toggleThat } = this.props;
+    return <div onClick={() => toggleThat()} className="sendThatSmile" />;
   }
 }
 
-export default MessageSendSmile;
+const mapDispatchToProps = dispatch => ({
+  toggleThat: () => {
+    dispatch(toggleEmoji());
+  }
+});
+
+export default connect(null, mapDispatchToProps)(MessageSendSmile);

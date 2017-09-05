@@ -2,13 +2,14 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import TransitionGroup from "react-transition-group/TransitionGroup";
 import CSSTransition from "react-transition-group/CSSTransition";
-import { Picker } from "emoji-mart";
+
 // CSS
 import "./css/messageLog.css";
 import "./css/reactTrans.css";
-import "./css/emoji-mart.css";
+
 // Components
 import Message from "./Message";
+import EmojiBox from "./EmojiBox";
 
 class MessageLog extends Component {
   renderMessages = () => {
@@ -60,15 +61,7 @@ class MessageLog extends Component {
   render() {
     return (
       <div className="messageLogWrap">
-        <div className="emojiWrap">
-          <Picker
-            set="emojione"
-            exclude={["recent"]}
-            emojiSize={23}
-            perLine={8}
-            title={""}
-          />
-        </div>
+        <EmojiBox />
         <TransitionGroup className="messageLog">
           {this.renderMessages()}
         </TransitionGroup>
