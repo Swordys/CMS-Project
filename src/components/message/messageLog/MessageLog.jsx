@@ -2,10 +2,12 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import TransitionGroup from "react-transition-group/TransitionGroup";
 import CSSTransition from "react-transition-group/CSSTransition";
+import EmojiPicker from "emojione-picker";
 
 // CSS
 import "./css/messageLog.css";
 import "./css/reactTrans.css";
+import "./css/picker.css";
 
 // Components
 import Message from "./Message";
@@ -60,6 +62,14 @@ class MessageLog extends Component {
   render() {
     return (
       <div className="messageLogWrap">
+        <div className="emojiWrap">
+          <EmojiPicker
+            search={true}
+            onChange={function(data) {
+              console.log("Emoji chosen", data);
+            }}
+          />
+        </div>
         <TransitionGroup className="messageLog">
           {this.renderMessages()}
         </TransitionGroup>
