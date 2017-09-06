@@ -11,7 +11,7 @@ const EmojiBox = props => {
   const duration = 200;
 
   const defaultStyle = {
-    transition: `all ${duration}ms ease-out`,
+    transition: `z-index ${duration}ms step-end, opacity ${duration}ms ease-out, transform ${duration}ms ease-out`,
     opacity: 0,
     transform: "scale(0.8)",
     zIndex: -500
@@ -19,21 +19,23 @@ const EmojiBox = props => {
 
   const transitionStyles = {
     entering: {
+      transition: `z-index ${duration}ms step-start, opacity ${duration}ms ease-out, transform ${duration}ms ease-out`,
       opacity: 1,
       transform: "scale(1)",
-      zIndex: "auto"
+      zIndex: "2000"
     },
     entered: {
+      transition: `z-index ${duration}ms step-start, opacity ${duration}ms ease-out, transform ${duration}ms ease-out`,
       opacity: 1,
       transform: "scale(1)",
-      zIndex: "auto"
+      zIndex: "2000"
     }
   };
 
   const emojiValue = (
     <Picker
       set="emojione"
-      exclude={["recent"]}
+      exclude={["recent", "activity", "objects", "flags", "places", "custom"]}
       emojiSize={23}
       perLine={8}
       title={""}
