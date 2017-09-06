@@ -2,12 +2,16 @@ import React from "react";
 import { Picker } from "emoji-mart";
 import { connect } from "react-redux";
 import Transition from "react-transition-group/Transition";
+import uuid from 'uuid';
+
+// Actions
+import { sendEmoji } from "../../../actions/Actions.js";
 
 // CSS
 import "./css/emoji-mart.css";
 
 const EmojiBox = props => {
-  const { showEmoji } = props;
+  const { showEmoji, sendEmojicon } = props;
 
   const duration = 200;
 
@@ -43,7 +47,9 @@ const EmojiBox = props => {
       sheetSize={32}
       color={"rgba(0, 91, 234, 0.9)"}
       onClick={(emoji, e) => {
-        console.log(emoji);
+        let newMoji = emoji;
+        newMoji.id = uuid();
+        sendEmojicon(newMoji);
       }}
     />
   );
@@ -67,8 +73,14 @@ const EmojiBox = props => {
   );
 };
 
+const mapDispatchToProps = dispatch => ({
+  sendEmojicon: emoji => {
+    dispatch(sendEmoji(emoji));
+  }
+});
+
 const mapStateToProps = state => ({
   showEmoji: state.getEmojiState
 });
 
-export default connect(mapStateToProps)(EmojiBox);
+export default connect(mapStateToProps, mapDispatchToProps)(EmojiBox);

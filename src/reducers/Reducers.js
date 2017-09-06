@@ -15,3 +15,12 @@ export const toggleEmojiReducer = (state = false, action) => {
       return state;
   }
 };
+
+export const sendEmojiReducer = (state = {}, action) => {
+  switch (action.type) {
+    case "SEND_EMOJI":
+      return action.emoji;
+    default:
+      return state;
+  }
+};

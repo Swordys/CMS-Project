@@ -79,7 +79,7 @@
   display: flex;
   flex-shrink: 0;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   border: 1px solid rgba(128, 128, 128, 0.51);
   border-top: 2px solid rgba(0, 91, 234, 0.9);
 }

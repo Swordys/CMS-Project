@@ -7,6 +7,12 @@ export const toggleEmoji = () => ({
   type: "TOGGLE_EMOJI"
 });
 
+export const sendEmoji = emoji => ({
+  type: "SEND_EMOJI",
+  emoji
+});
+
+
 export const sendMessageNow = (msg, log) => dispatch => {
   const logLen = log.length;
   if (logLen < 1) {

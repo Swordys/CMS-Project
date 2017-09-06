@@ -1,10 +1,18 @@
 import React, { Component } from "react";
+import ReactEmoji from "react-emoji";
 
 class Message extends Component {
   renderText = () => {
     const { text } = this.props;
     return (
-      <div style={{ whiteSpace: "pre-wrap", fontSize: "14px" }}>{text}</div>
+      <div
+        style={{
+          whiteSpace: "pre-wrap",
+          fontSize: "14px"
+        }}
+      >
+        <span>{ReactEmoji.emojify(text)}</span>
+      </div>
     );
   };
 
@@ -18,3 +26,10 @@ class Message extends Component {
 }
 
 export default Message;
+
+// style={{
+//   display: "flex",
+//   justifyContent: "center",
+//   alignItems: "center",
+//   flexShrink: 0
+// }}

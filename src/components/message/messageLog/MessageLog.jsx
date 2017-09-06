@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import TransitionGroup from "react-transition-group/TransitionGroup";
 import CSSTransition from "react-transition-group/CSSTransition";
-
 // CSS
 import "./css/messageLog.css";
 import "./css/reactTrans.css";
@@ -10,6 +9,7 @@ import "./css/reactTrans.css";
 // Components
 import Message from "./Message";
 import EmojiBox from "./EmojiBox";
+// import CodeMirrorBox from "./CodeMirrorBox";
 
 class MessageLog extends Component {
   renderMessages = () => {

@@ -1,11 +1,16 @@
 import { combineReducers } from "redux";
 
 // reducers
-import { getMessageLogReducer, toggleEmojiReducer } from "./Reducers";
+import {
+  getMessageLogReducer,
+  toggleEmojiReducer,
+  sendEmojiReducer
+} from "./Reducers";
 
 const rootReducer = combineReducers({
   getMessages: getMessageLogReducer,
-  getEmojiState: toggleEmojiReducer
+  getEmojiState: toggleEmojiReducer,
+  getSentEmoji: sendEmojiReducer
 });
 
 export default rootReducer;
