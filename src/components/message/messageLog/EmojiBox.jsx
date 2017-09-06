@@ -2,6 +2,7 @@ import React from "react";
 import { Picker } from "emoji-mart";
 import { connect } from "react-redux";
 import Transition from "react-transition-group/Transition";
+
 // CSS
 import "./css/emoji-mart.css";
 
@@ -39,6 +40,7 @@ const EmojiBox = props => {
       emojiSize={23}
       perLine={8}
       title={""}
+      sheetSize={32}
       color={"rgba(0, 91, 234, 0.9)"}
       onClick={(emoji, e) => {
         console.log(emoji);
