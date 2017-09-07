@@ -8,10 +8,11 @@ class Message extends Component {
       <div
         style={{
           whiteSpace: "pre-wrap",
-          fontSize: "14px"
+          fontSize: "14px",
+          wordBreak: "break-word"
         }}
       >
-        <span>{ReactEmoji.emojify(text)}</span>
+        <span>{ReactEmoji.emojify(text, { emojiType: "emojione" })}</span>
       </div>
     );
   };
