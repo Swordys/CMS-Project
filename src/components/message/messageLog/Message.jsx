@@ -12,7 +12,9 @@ class Message extends Component {
           wordBreak: "break-word"
         }}
       >
-        <span>{ReactEmoji.emojify(text, { emojiType: "emojione" })}</span>
+        <div className="textContain">
+          {ReactEmoji.emojify(text, { emojiType: "emojione" })}
+        </div>
       </div>
     );
   };
