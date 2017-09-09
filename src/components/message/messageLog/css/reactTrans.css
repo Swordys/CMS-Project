@@ -1,10 +1,12 @@
 .fade-enter {
   opacity: 0.01;
+  transform: translate3d(0, 10px, 0);
 }
 
 .fade-enter.fade-enter-active {
   opacity: 1;
-  transition: opacity 500ms ease-in;
+  transform: translate3d(0, 0, 0);
+  transition: opacity 300ms ease-out, transform 300ms ease-out;
 }
 
 .fade-exit {
@@ -13,5 +15,5 @@
 
 .fade-exit.fade-exit-active {
   opacity: 0.01;
-  transition: opacity 300ms ease-in;
+  transition: opacity 300ms ease-out;
 }

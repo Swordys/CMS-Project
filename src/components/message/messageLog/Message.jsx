@@ -1,9 +1,11 @@
 import React, { Component } from "react";
-import ReactEmoji from "react-emoji";
+import { emojify } from "react-emoji";
+// import { toArray } from "react-emoji-render";
 
 class Message extends Component {
   renderText = () => {
     const { text } = this.props;
+
     return (
       <div
         style={{
@@ -13,7 +15,9 @@ class Message extends Component {
         }}
       >
         <div className="textContain">
-          {ReactEmoji.emojify(text, { emojiType: "emojione" })}
+          {emojify(text, {
+            emojiType: "emojione"
+          })}
         </div>
       </div>
     );
@@ -29,10 +33,3 @@ class Message extends Component {
 }
 
 export default Message;
-
-// style={{
-//   display: "flex",
-//   justifyContent: "center",
-//   alignItems: "center",
-//   flexShrink: 0
-// }}

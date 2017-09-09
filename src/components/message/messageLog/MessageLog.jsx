@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import TransitionGroup from "react-transition-group/TransitionGroup";
 import CSSTransition from "react-transition-group/CSSTransition";
+import { Emoji } from "emoji-mart";
+
 // CSS
 import "./css/messageLog.css";
 import "./css/reactTrans.css";
@@ -9,7 +11,9 @@ import "./css/reactTrans.css";
 // Components
 import Message from "./Message";
 import EmojiBox from "./EmojiBox";
-// import CodeMirrorBox from "./CodeMirrorBox";
+
+// Actions
+import { closeEmoji } from "../../../actions/Actions.js";
 
 class MessageLog extends Component {
   renderMessages = () => {
@@ -27,7 +31,7 @@ class MessageLog extends Component {
         <CSSTransition
           key={item.key}
           classNames="fade"
-          timeout={{ enter: 500, exit: 300 }}
+          timeout={{ enter: 300, exit: 300 }}
         >
           <Message {...item} />
         </CSSTransition>
@@ -60,7 +64,7 @@ class MessageLog extends Component {
 
   render() {
     return (
-      <div className="messageLogWrap">
+      <div onClick={() => this.props.closeEmoji()} className="messageLogWrap">
         <EmojiBox />
         <TransitionGroup className="messageLog">
           {this.renderMessages()}
@@ -74,4 +78,10 @@ const mapStateToProps = state => ({
   messageLog: state.getMessages
 });
 
-export default connect(mapStateToProps, null)(MessageLog);
+const dispatchToProps = dispatch => ({
+  closeEmoji: () => {
+    dispatch(closeEmoji());
+  }
+});
+
+export default connect(mapStateToProps, dispatchToProps)(MessageLog);

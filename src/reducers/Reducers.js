@@ -11,6 +11,8 @@ export const toggleEmojiReducer = (state = false, action) => {
   switch (action.type) {
     case "TOGGLE_EMOJI":
       return !state;
+    case "CLOSE_EMOJI":
+      return false;
     default:
       return state;
   }

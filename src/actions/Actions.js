@@ -7,6 +7,10 @@ export const toggleEmoji = () => ({
   type: "TOGGLE_EMOJI"
 });
 
+export const closeEmoji = () => ({
+  type: "CLOSE_EMOJI"
+});
+
 export const sendEmoji = emoji => ({
   type: "SEND_EMOJI",
   emoji
