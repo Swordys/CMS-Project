@@ -2,7 +2,7 @@ import React from "react";
 import { Picker } from "emoji-mart";
 import { connect } from "react-redux";
 import Transition from "react-transition-group/Transition";
-import uuid from 'uuid';
+import uuid from "uuid";
 
 // Actions
 import { sendEmoji } from "../../../actions/Actions.js";
@@ -47,6 +47,8 @@ const EmojiBox = props => {
       sheetSize={32}
       color={"rgba(0, 91, 234, 0.9)"}
       onClick={(emoji, e) => {
+        e.stopPropagation();
+        console.log(emoji);
         let newMoji = emoji;
         newMoji.id = uuid();
         sendEmojicon(newMoji);
