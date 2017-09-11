@@ -108,6 +108,10 @@
   display: inline-block;
 }
 
+.textContainEmoji {
+  text-align: right;
+}
+
 .textContainEmoji > .inline-emoji {
   object-fit: contain;
   width: 1.5rem;

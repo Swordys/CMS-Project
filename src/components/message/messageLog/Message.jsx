@@ -25,8 +25,10 @@ class Message extends Component {
         if (emojiObj) {
           const styleObj = emojiObj.props.children.props.style;
           const retEmoji = (
-            <div
+            <img
+              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
               className="inline-emoji"
+              alt={item}
               key={i}
               style={{
                 backgroundImage: `${styleObj.backgroundImage}`,
