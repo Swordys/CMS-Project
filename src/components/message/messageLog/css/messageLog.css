@@ -97,7 +97,7 @@
   align-items: flex-start;
 }
 
-.textContain > img {
+.textContain > .inline-emoji {
   object-fit: contain;
   width: 1rem;
   height: 1rem;
@@ -105,15 +105,17 @@
   min-height: 1.4em;
   margin: 0 0.05em 0 0.1em !important;
   vertical-align: -.35em;
+  display: inline-block;
 }
 
-
-.textContainEmoji > img {
+.textContainEmoji > .inline-emoji {
   object-fit: contain;
-  width: 1rem;
-  height: 1rem;
+  width: 1.5rem;
+  height: 1.5rem;
   min-width: 1.6em;
   min-height: 1.6em;
   margin: 0 0.04em 0 0.1em !important;
   vertical-align: -.35em;
+  display: inline-block;
+  user-select: initial;
 }

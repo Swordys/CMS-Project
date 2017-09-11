@@ -47,8 +47,6 @@ const EmojiBox = props => {
       sheetSize={32}
       color={"rgba(0, 91, 234, 0.9)"}
       onClick={(emoji, e) => {
-        e.stopPropagation();
-        console.log(emoji);
         let newMoji = emoji;
         newMoji.id = uuid();
         sendEmojicon(newMoji);
@@ -61,6 +59,7 @@ const EmojiBox = props => {
       {state => {
         return (
           <div
+            onClick={e => e.stopPropagation()}
             className="emojiWrap"
             style={{
               ...defaultStyle,

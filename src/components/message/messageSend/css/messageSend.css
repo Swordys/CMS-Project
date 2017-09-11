@@ -60,3 +60,11 @@
   flex-shrink: 0;
   cursor: pointer;
 }
+
+.sendThatSmile > span {
+  transition: transform 150ms ease-out;
+}
+
+.sendThatSmile:hover > span {
+  transform: scale(1.2);
+}

@@ -1,14 +1,47 @@
 import React, { Component } from "react";
-import { emojify } from "react-emoji";
+import { Emoji } from "emoji-mart";
 
 class Message extends Component {
   renderText = () => {
     const { text } = this.props;
-    const emojiText = emojify(text, {
-      emojiType: "emojione"
-    });
 
-    const IsOnlyEmojy = emojiText.every(e => e.key);
+    let reggoAll = /(:[a-zA-Z0-9-_+]+:(:skin-tone-[2-6]:)?)|(\s+)|\w+/g;
+    let reggoEmoji = /(:[a-zA-Z0-9-_+]+:(:skin-tone-[2-6]:)?)/g;
+    let textReturnArr = [];
+
+    // FIX THE REGULAR SMILES :D :) :( AND ON
+
+    const textToArr = text.match(reggoAll);
+    for (let i = 0; i < textToArr.length; i++) {
+      let item = textToArr[i];
+
+      if (item.match(reggoEmoji)) {
+        const emojiObj = Emoji({
+          key: i,
+          emoji: item,
+          size: 22,
+          set: "emojione"
+        }).props.children.props.style;
+
+        const retEmoji = (
+          <div
+            className="inline-emoji"
+            key={i}
+            style={{
+              backgroundImage: `${emojiObj.backgroundImage}`,
+              backgroundPosition: `${emojiObj.backgroundPosition}`,
+              backgroundSize: `${emojiObj.backgroundSize}`
+            }}
+          />
+        );
+
+        textReturnArr.push(retEmoji);
+      } else {
+        textReturnArr.push(item);
+      }
+    }
+
+    const IsOnlyEmojy = textReturnArr.every(e => e.key);
 
     let msgClass = "messageBoxText";
     let textClass = "textContain";
@@ -26,7 +59,7 @@ class Message extends Component {
             wordBreak: "break-word"
           }}
         >
-          <div className={textClass}>{emojiText}</div>
+          <div className={textClass}>{textReturnArr}</div>
         </div>
       </div>
     );
