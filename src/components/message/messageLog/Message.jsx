@@ -21,21 +21,24 @@ class Message extends Component {
           emoji: item,
           size: 22,
           set: "emojione"
-        }).props.children.props.style;
-
-        const retEmoji = (
-          <div
-            className="inline-emoji"
-            key={i}
-            style={{
-              backgroundImage: `${emojiObj.backgroundImage}`,
-              backgroundPosition: `${emojiObj.backgroundPosition}`,
-              backgroundSize: `${emojiObj.backgroundSize}`
-            }}
-          />
-        );
-
-        textReturnArr.push(retEmoji);
+        });
+        if (emojiObj) {
+          const styleObj = emojiObj.props.children.props.style;
+          const retEmoji = (
+            <div
+              className="inline-emoji"
+              key={i}
+              style={{
+                backgroundImage: `${styleObj.backgroundImage}`,
+                backgroundPosition: `${styleObj.backgroundPosition}`,
+                backgroundSize: `${styleObj.backgroundSize}`
+              }}
+            />
+          );
+          textReturnArr.push(retEmoji);
+        } else {
+          textReturnArr.push(item);
+        }
       } else {
         textReturnArr.push(item);
       }
