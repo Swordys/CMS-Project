@@ -60,13 +60,14 @@ class MessageSendBox extends Component {
     const isChecking = emoji.id !== emojiCurrent.id;
 
     if (isChecking) {
+      console.log(emoji);
       const { inputValue, cursorPosition } = this.state;
       const newVal =
         inputValue.slice(0, cursorPosition) +
-        emoji.colons +
+        emoji.native +
         inputValue.slice(cursorPosition);
 
-      let newLen = emoji.colons.length + cursorPosition;
+      let newLen = emoji.native.length + cursorPosition;
       this.setState({
         inputValue: newVal,
         cursorPosition: newLen

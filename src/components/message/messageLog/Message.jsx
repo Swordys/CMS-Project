@@ -1,20 +1,18 @@
 import React, { Component } from "react";
 import { Emoji } from "emoji-mart";
+// import NodeEmoji from 'node-emoji';
 
 class Message extends Component {
   renderText = () => {
     const { text } = this.props;
 
-    let reggoAll = /(:[a-zA-Z0-9-_+]+:(:skin-tone-[2-6]:)?)|(\s+)|\w+/g;
     let reggoEmoji = /(:[a-zA-Z0-9-_+]+:(:skin-tone-[2-6]:)?)/g;
     let textReturnArr = [];
 
-    // FIX THE REGULAR SMILES :D :) :( AND ON
+    const textToArr = text.split(reggoEmoji).filter(e => e);
 
-    const textToArr = text.match(reggoAll);
     for (let i = 0; i < textToArr.length; i++) {
       let item = textToArr[i];
-
       if (item.match(reggoEmoji)) {
         const emojiObj = Emoji({
           key: i,
@@ -42,6 +40,13 @@ class Message extends Component {
           textReturnArr.push(item);
         }
       } else {
+        const emojiObj = Emoji({
+          key: 0,
+          emoji: item,
+          size: 22,
+          set: "emojione"
+        });
+        console.log(emojiObj);
         textReturnArr.push(item);
       }
     }
