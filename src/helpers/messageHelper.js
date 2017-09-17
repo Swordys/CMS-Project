@@ -1,7 +1,31 @@
-import React from 'react';
+import React from "react";
 import { Emoji } from "emoji-mart";
+import emoticons from "emoticons";
 
 const emojifyText = text => {
+  const defenition = {
+    smile: {
+      title: ":slightly_smiling_face:",
+      codes: [":)"]
+    },
+    laugh: {
+      title: ":smile:",
+      codes: [":D"]
+    },
+    sad: {
+      title: ":white_frowning_face:",
+      codes: [":("]
+    },
+    kiss: {
+      title: ":kissing_smiling_eyes:",
+      codes: [":*"]
+    }
+  };
+
+  emoticons.define(defenition);
+
+  text = emoticons.replace(text, (n, c, t) => t);
+
   const reggoEmoji = /(:[a-zA-Z0-9-_+]+:(:skin-tone-[2-6]:)?)/g;
   const filterSkin = /^(:skin-tone-[2-6]:)/;
   const textReturnArr = [];
