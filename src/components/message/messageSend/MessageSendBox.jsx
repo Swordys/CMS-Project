@@ -25,7 +25,7 @@ class MessageSendBox extends Component {
   sendMessage = e => {
     const isShift = e.nativeEvent.shiftKey;
     const isEnter = e.nativeEvent.keyCode === 13;
-    const textValue = e.target.value;
+    const textValue = this.state.inputValue;
 
     if (isEnter && !isShift) {
       e.preventDefault();
@@ -60,14 +60,14 @@ class MessageSendBox extends Component {
     const isChecking = emoji.id !== emojiCurrent.id;
 
     if (isChecking) {
-      console.log(emoji);
       const { inputValue, cursorPosition } = this.state;
+      const newMoji = ` ${emoji.colons} `;
       const newVal =
         inputValue.slice(0, cursorPosition) +
-        emoji.native +
+        newMoji +
         inputValue.slice(cursorPosition);
 
-      let newLen = emoji.native.length + cursorPosition;
+      let newLen = newMoji.length + cursorPosition;
       this.setState({
         inputValue: newVal,
         cursorPosition: newLen

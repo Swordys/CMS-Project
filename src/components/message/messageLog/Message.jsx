@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Emoji } from "emoji-mart";
-// import NodeEmoji from 'node-emoji';
 
 class Message extends Component {
   renderText = () => {
@@ -39,14 +38,8 @@ class Message extends Component {
         } else {
           textReturnArr.push(item);
         }
-      } else {
-        const emojiObj = Emoji({
-          key: 0,
-          emoji: item,
-          size: 22,
-          set: "emojione"
-        });
-        console.log(emojiObj);
+      } else if (/\S/.test(item)) {
+        console.log(item);
         textReturnArr.push(item);
       }
     }
