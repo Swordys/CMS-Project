@@ -61,7 +61,7 @@ class MessageSendBox extends Component {
 
     if (isChecking) {
       const { inputValue, cursorPosition } = this.state;
-      const newMoji = ` ${emoji.colons} `;
+      const newMoji = `${emoji.colons} `;
       const newVal =
         inputValue.slice(0, cursorPosition) +
         newMoji +
