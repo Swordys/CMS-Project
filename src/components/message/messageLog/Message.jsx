@@ -3,7 +3,8 @@ import emojifyText from "../../../helpers/messageHelper.js";
 
 class Message extends Component {
   renderText = () => {
-    const { text } = this.props;
+    const { text, date } = this.props;
+    console.log(this.props);
     const { textReturnArr, IsOnlyEmojy } = emojifyText(text);
 
     const msgStyle = {
@@ -24,6 +25,7 @@ class Message extends Component {
         <div style={msgStyle}>
           <div className={textClass}>{textReturnArr}</div>
         </div>
+        <div className="timeInfo">{date}</div>
       </div>
     );
   };

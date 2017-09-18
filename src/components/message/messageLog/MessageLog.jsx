@@ -15,9 +15,9 @@ import EmojiBox from "./EmojiBox";
 import { closeEmoji } from "../../../actions/Actions.js";
 
 class MessageLog extends Component {
+
   renderMessages = () => {
     const { messageLog } = this.props;
-
     const bottomMsg = (
       <CSSTransition key={"bot"} timeout={{ enter: 100, exit: 100 }}>
         <div ref={e => (this.bottomMsg = e)} className="bottom" />
@@ -48,7 +48,7 @@ class MessageLog extends Component {
       }
       retunLog.push(retItem);
     }, this);
-
+    
     retunLog.push(bottomMsg);
     return retunLog;
   };
