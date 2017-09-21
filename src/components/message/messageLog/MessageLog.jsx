@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import ProptTypes from "prop-types";
 import { connect } from "react-redux";
 import TransitionGroup from "react-transition-group/TransitionGroup";
 import CSSTransition from "react-transition-group/CSSTransition";
@@ -12,21 +13,33 @@ import Message from "./Message";
 import EmojiBox from "./EmojiBox";
 
 // Actions
-import { closeEmoji } from "../../../actions/Actions.js";
+import { closeEmoji } from "../../../actions/Actions";
 
 class MessageLog extends Component {
+  componentDidMount() {
+    this.bottomMsg.scrollIntoView();
+  }
+
+  componentDidUpdate() {
+    this.bottomMsg.scrollIntoView();
+  }
 
   renderMessages = () => {
     const { messageLog } = this.props;
     const bottomMsg = (
       <CSSTransition key={"bot"} timeout={{ enter: 100, exit: 100 }}>
-        <div ref={e => (this.bottomMsg = e)} className="bottom" />
+        <div
+          ref={e => {
+            this.bottomMsg = e;
+          }}
+          className="bottom"
+        />
       </CSSTransition>
     );
 
     const retunLog = [];
     messageLog.forEach(item => {
-      let retItem = (
+      const retItem = (
         <CSSTransition
           key={item.key}
           classNames="fade"
@@ -48,22 +61,18 @@ class MessageLog extends Component {
       }
       retunLog.push(retItem);
     }, this);
-    
+
     retunLog.push(bottomMsg);
     return retunLog;
   };
 
-  componentDidUpdate() {
-    this.bottomMsg.scrollIntoView();
-  }
-
-  componentDidMount() {
-    this.bottomMsg.scrollIntoView();
-  }
-
   render() {
     return (
-      <div onClick={() => this.props.closeEmoji()} className="messageLogWrap">
+      <div
+        role="presentation"
+        onClick={() => this.props.closeEmoji()}
+        className="messageLogWrap"
+      >
         <EmojiBox />
         <TransitionGroup className="messageLog">
           {this.renderMessages()}
@@ -72,6 +81,11 @@ class MessageLog extends Component {
     );
   }
 }
+
+MessageLog.propTypes = {
+  messageLog: ProptTypes.arrayOf(ProptTypes.object).isRequired,
+  closeEmoji: ProptTypes.func.isRequired
+};
 
 const mapStateToProps = state => ({
   messageLog: state.getMessages

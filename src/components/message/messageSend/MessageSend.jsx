@@ -1,17 +1,13 @@
-import React, { Component } from "react";
+import React from "react";
 import "./css/messageSend.css";
 
-// components
+// Components
 import MessageSendBox from "./MessageSendBox";
 
-class MessageSend extends Component {
-  render() {
-    return (
-      <div className="messageSendWrap">
-        <MessageSendBox />
-      </div>
-    );
-  }
-}
+const MessageSend = () => (
+  <div className="messageSendWrap">
+    <MessageSendBox />
+  </div>
+);
 
 export default MessageSend;

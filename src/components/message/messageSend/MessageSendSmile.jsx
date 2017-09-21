@@ -1,29 +1,35 @@
-import React, { Component } from "react";
+import React from "react";
+import ProptTypes from "prop-types";
 import { connect } from "react-redux";
-import { toggleEmoji } from "../../../actions/Actions.js";
 import { Emoji } from "emoji-mart";
 
-class MessageSendSmile extends Component {
-  render() {
-    const { toggleThat } = this.props;
-    return (
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center"
-        }}
-        onClick={() => toggleThat()}
-        className="sendThatSmile"
-      >
-        <Emoji emoji="smile" size={22} set="emojione" />
-      </div>
-    );
-  }
-}
+// Actions
+import { toggleEmoji } from "../../../actions/Actions";
+
+const MessageSendSmile = props => {
+  const { toggleEmojiWrap } = props;
+  return (
+    <div
+      role="presentation"
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center"
+      }}
+      onClick={() => toggleEmojiWrap()}
+      className="sendThatSmile"
+    >
+      <Emoji emoji="smile" size={22} set="emojione" />
+    </div>
+  );
+};
+
+MessageSendSmile.propTypes = {
+  toggleEmojiWrap: ProptTypes.func.isRequired
+};
 
 const mapDispatchToProps = dispatch => ({
-  toggleThat: () => {
+  toggleEmojiWrap: () => {
     dispatch(toggleEmoji());
   }
 });

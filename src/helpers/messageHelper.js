@@ -21,18 +21,19 @@ const emojifyText = text => {
       codes: [":*"]
     }
   };
+  let processText = text;
 
   emoticons.define(defenition);
 
-  text = emoticons.replace(text, (n, c, t) => t);
+  processText = emoticons.replace(processText, (n, c, t) => t);
 
   const reggoEmoji = /(:[a-zA-Z0-9-_+]+:(:skin-tone-[2-6]:)?)/g;
   const filterSkin = /^(:skin-tone-[2-6]:)/;
   const textReturnArr = [];
-  const textToArr = text.split(reggoEmoji).filter(e => e);
+  const textToArr = processText.split(reggoEmoji).filter(e => e);
 
-  for (let i = 0; i < textToArr.length; i++) {
-    let item = textToArr[i];
+  for (let i = 0; i < textToArr.length; i += 1) {
+    const item = textToArr[i];
     if (item.match(reggoEmoji)) {
       const emojiObj = Emoji({
         key: i,
@@ -56,8 +57,8 @@ const emojifyText = text => {
           />
         );
         textReturnArr.push(retEmoji);
-      } else {
-        !filterSkin.test(item) && textReturnArr.push(item);
+      } else if (!filterSkin.test(item)) {
+        textReturnArr.push(item);
       }
     } else if (/\S/.test(item)) {
       textReturnArr.push(item);

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import Textarea from "react-textarea-autosize";
 import uuid from "uuid";
 import moment from "moment";
@@ -9,49 +10,12 @@ import MessageSendFile from "./MessageSendFile";
 import MessageSendSmile from "./MessageSendSmile";
 
 // Actions
-import { sendMessageNow } from "../../../actions/Actions.js";
+import { sendMessageNow } from "../../../actions/Actions";
 
 class MessageSendBox extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      inputValue: "",
-      cursorPosition: 0
-    };
-
-    this.sendMessage = this.sendMessage.bind(this);
-  }
-
-  sendMessage = e => {
-    const isShift = e.nativeEvent.shiftKey;
-    const isEnter = e.nativeEvent.keyCode === 13;
-    const textValue = this.state.inputValue;
-
-    if (isEnter && !isShift) {
-      e.preventDefault();
-      let checkText = textValue.trim();
-      let timeFull = moment().format("MMM Do YYYY, h:mm a");
-      let timeMin = moment().format("ddd, h:mm a");
-      let timeHour = moment().format("H:m");
-
-      if (checkText) {
-        this.setState({
-          inputValue: ""
-        });
-
-        const { sendNow, messageLog } = this.props;
-        let msgObj = {
-          key: uuid(),
-          text: checkText,
-          date: timeMin,
-          dateFull: timeFull,
-          id: uuid(),
-          timeStamp: false,
-          timeHour
-        };
-        sendNow(msgObj, messageLog);
-      }
-    }
+  state = {
+    inputValue: "",
+    cursorPosition: 0
   };
 
   componentWillReceiveProps(nextProps) {
@@ -67,13 +31,45 @@ class MessageSendBox extends Component {
         newMoji +
         inputValue.slice(cursorPosition);
 
-      let newLen = newMoji.length + cursorPosition;
+      const newLen = newMoji.length + cursorPosition;
       this.setState({
         inputValue: newVal,
         cursorPosition: newLen
       });
     }
   }
+
+  sendMessage = e => {
+    const isShift = e.nativeEvent.shiftKey;
+    const isEnter = e.nativeEvent.keyCode === 13;
+    const textValue = this.state.inputValue;
+
+    if (isEnter && !isShift) {
+      e.preventDefault();
+      const checkText = textValue.trim();
+      const timeFull = moment().format("MMM Do YYYY, h:mm a");
+      const timeMin = moment().format("ddd, h:mm a");
+      const timeHour = moment().format("H:m");
+
+      if (checkText) {
+        this.setState({
+          inputValue: ""
+        });
+
+        const { sendNow, messageLog } = this.props;
+        const msgObj = {
+          key: uuid(),
+          text: checkText,
+          date: timeMin,
+          dateFull: timeFull,
+          id: uuid(),
+          timeStamp: false,
+          timeHour
+        };
+        sendNow(msgObj, messageLog);
+      }
+    }
+  };
 
   render() {
     return (
@@ -114,6 +110,12 @@ class MessageSendBox extends Component {
     );
   }
 }
+
+MessageSendBox.propTypes = {
+  emoji: PropTypes.objectOf(PropTypes.any).isRequired,
+  sendNow: PropTypes.func.isRequired,
+  messageLog: PropTypes.arrayOf(PropTypes.object).isRequired
+};
 
 const mapDispatchToProps = dispatch => ({
   sendNow: (message, log) => {

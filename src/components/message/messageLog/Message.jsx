@@ -1,10 +1,12 @@
 import React, { Component } from "react";
-import emojifyText from "../../../helpers/messageHelper.js";
+import PropTypes from "prop-types";
+
+// Helpers
+import emojifyText from "../../../helpers/messageHelper";
 
 class Message extends Component {
   renderText = () => {
     const { text, date } = this.props;
-    console.log(this.props);
     const { textReturnArr, IsOnlyEmojy } = emojifyText(text);
 
     const msgStyle = {
@@ -34,5 +36,10 @@ class Message extends Component {
     return <div className="messageBoxWrap">{this.renderText()}</div>;
   }
 }
+
+Message.propTypes = {
+  text: PropTypes.string.isRequired,
+  date: PropTypes.string.isRequired
+};
 
 export default Message;

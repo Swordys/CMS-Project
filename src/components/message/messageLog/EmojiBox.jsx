@@ -1,14 +1,15 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { Picker } from "emoji-mart";
 import { connect } from "react-redux";
 import Transition from "react-transition-group/Transition";
 import uuid from "uuid";
 
-// Actions
-import { sendEmoji } from "../../../actions/Actions.js";
-
 // CSS
 import "./css/emoji-mart.css";
+
+// Actions
+import { sendEmoji } from "../../../actions/Actions";
 
 const EmojiBox = props => {
   const { showEmoji, sendEmojicon } = props;
@@ -46,8 +47,8 @@ const EmojiBox = props => {
       title={""}
       sheetSize={32}
       color={"rgba(0, 91, 234, 0.9)"}
-      onClick={(emoji, e) => {
-        let newMoji = emoji;
+      onClick={emoji => {
+        const newMoji = emoji;
         newMoji.id = uuid();
         sendEmojicon(newMoji);
       }}
@@ -56,22 +57,26 @@ const EmojiBox = props => {
 
   return (
     <Transition in={showEmoji} timeout={duration}>
-      {state => {
-        return (
-          <div
-            onClick={e => e.stopPropagation()}
-            className="emojiWrap"
-            style={{
-              ...defaultStyle,
-              ...transitionStyles[state]
-            }}
-          >
-            {emojiValue}
-          </div>
-        );
-      }}
+      {state => (
+        <div
+          role="presentation"
+          onClick={e => e.stopPropagation()}
+          className="emojiWrap"
+          style={{
+            ...defaultStyle,
+            ...transitionStyles[state]
+          }}
+        >
+          {emojiValue}
+        </div>
+      )}
     </Transition>
   );
+};
+
+EmojiBox.propTypes = {
+  showEmoji: PropTypes.bool.isRequired,
+  sendEmojicon: PropTypes.func.isRequired
 };
 
 const mapDispatchToProps = dispatch => ({

@@ -8,10 +8,11 @@ import registerServiceWorker from "./registerServiceWorker";
 import "./css/index.css";
 
 // Components
-import App from "./components/App.jsx";
+import App from "./components/App";
 
 // Redux
 import configStore from "./store/Store";
+
 const store = configStore();
 
 ReactDOM.render(

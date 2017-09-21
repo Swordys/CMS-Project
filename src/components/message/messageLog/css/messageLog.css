@@ -54,6 +54,7 @@
 .messageBoxWrap:hover .timeInfo {
   opacity: 0.8;
   transform: translateY(0);
+  z-index: 1;
 }
 
 .timeInfo {
@@ -70,6 +71,7 @@
   width: 80px;
   transform: translateY(-5px);
   border-radius: 2px;
+  z-index: -500;
 }
 
 .timeInfo::after {
@@ -106,7 +108,7 @@
 
 .messageBoxText {
   padding: 9px 13px;
-  max-width: 500px;
+  max-width: 600px;
   margin-top: 8px;
   position: relative;
   line-height: 1.1em;

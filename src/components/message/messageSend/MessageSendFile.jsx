@@ -1,9 +1,5 @@
-import React, { Component } from "react";
+import React from "react";
 
-class MessageSendFile extends Component {
-  render() {
-    return <div className="sendThatFile" />;
-  }
-}
+const MessageSendFile = () => <div className="sendThatFile" />;
 
 export default MessageSendFile;
