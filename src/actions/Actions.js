@@ -1,3 +1,5 @@
+import Moment from "moment";
+
 export const sendMessage = msg => ({
   type: "SEND_MESSAGE",
   msg
@@ -22,10 +24,11 @@ export const sendMessageNow = (msg, log) => dispatch => {
   if (logLen < 1) {
     msgReturn.timeStamp = true;
   } else {
-    const lastH = Number(log[logLen - 1].timeHour.replace(":", "."));
-    const currentH = Number(msg.timeHour.replace(":", "."));
+    const lastTime = Moment(log[logLen - 1].timeCheck);
+    const thisTime = Moment(msg.timeCheck);
+    const timeDiff = thisTime.diff(lastTime, "minutes");
 
-    if (currentH - lastH >= 1) {
+    if (timeDiff >= 29) {
       msgReturn.timeStamp = true;
     }
   }
