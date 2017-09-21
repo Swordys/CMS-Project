@@ -1,5 +1,7 @@
 import React from "react";
-import "../../css/sidebar/sidebar.css";
+
+// CSS
+import "./css/sidebar.css";
 
 const Sidebar = () => <div className="sideBarWrap" />;
 

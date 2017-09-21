@@ -4,7 +4,7 @@ import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import registerServiceWorker from "./registerServiceWorker";
 
-// Style
+// CSS
 import "./css/index.css";
 
 // Components

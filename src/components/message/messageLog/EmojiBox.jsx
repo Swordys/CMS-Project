@@ -11,9 +11,7 @@ import "./css/emoji-mart.css";
 // Actions
 import { sendEmoji } from "../../../actions/Actions";
 
-const EmojiBox = props => {
-  const { showEmoji, sendEmojicon } = props;
-
+const EmojiBox = ({ showEmoji, sendEmojicon }) => {
   const duration = 200;
 
   const defaultStyle = {
