@@ -4,6 +4,9 @@ import PropTypes from "prop-types";
 // Helpers
 import emojifyText from "../../../helpers/messageHelper";
 
+// Components
+import MessagePic from "./MessagePic";
+
 class Message extends Component {
   renderText = () => {
     const { text, date } = this.props;
@@ -33,7 +36,12 @@ class Message extends Component {
   };
 
   render() {
-    return <div className="messageBoxWrap">{this.renderText()}</div>;
+    return (
+      <div className="messageBoxWrap">
+        {this.renderText()}
+        <MessagePic />
+      </div>
+    );
   }
 }
 

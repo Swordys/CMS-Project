@@ -47,9 +47,9 @@ class MessageSendBox extends Component {
     if (isEnter && !isShift) {
       e.preventDefault();
       const checkText = textValue.trim();
-      const timeFull = moment().format("MMM Do YYYY, h:mm a");
+      const timeFull = moment().format("YYYY-MM-DD HH:mm:ss");
       const timeMin = moment().format("ddd, h:mm a");
-      const timeCheck = moment().format("YYYY-MM-DDTHH:mm:ss");
+      const timeCheck = moment(timeFull);
 
       if (checkText) {
         this.setState({
@@ -64,6 +64,7 @@ class MessageSendBox extends Component {
           dateFull: timeFull,
           id: uuid(),
           timeStamp: false,
+          showPic: false,
           timeCheck
         };
         sendNow(msgObj, messageLog);

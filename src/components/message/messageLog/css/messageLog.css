@@ -41,7 +41,7 @@
   max-height: 100%;
   width: 100%;
   overflow: auto;
-  padding: 5px 40px 20px 40px;
+  padding: 5px 55px 20px 55px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -50,6 +50,12 @@
 }
 
 /* Message box */
+
+
+.messageBoxWrap{
+  position: relative;
+}
+
 
 .messageBoxWrap:hover .timeInfo {
   opacity: 0.8;
