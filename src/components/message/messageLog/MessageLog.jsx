@@ -43,7 +43,7 @@ class MessageLog extends Component {
         <CSSTransition
           key={item.key}
           classNames="fade"
-          timeout={{ enter: 300, exit: 300 }}
+          timeout={{ enter: 400, exit: 400 }}
         >
           <Message {...item} />
         </CSSTransition>

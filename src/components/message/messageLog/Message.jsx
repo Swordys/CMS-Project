@@ -35,11 +35,19 @@ class Message extends Component {
     );
   };
 
+  renderPic = () => {
+    const { showPic } = this.props;
+    if (showPic) {
+      return <MessagePic />;
+    }
+    return null;
+  };
+
   render() {
     return (
       <div className="messageBoxWrap">
         {this.renderText()}
-        <MessagePic />
+        {this.renderPic()}
       </div>
     );
   }
@@ -47,7 +55,8 @@ class Message extends Component {
 
 Message.propTypes = {
   text: PropTypes.string.isRequired,
-  date: PropTypes.string.isRequired
+  date: PropTypes.string.isRequired,
+  showPic: PropTypes.bool.isRequired
 };
 
 export default Message;

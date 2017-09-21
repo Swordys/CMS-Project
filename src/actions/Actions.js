@@ -16,21 +16,32 @@ export const sendEmoji = emoji => ({
   emoji
 });
 
+export const heightChange = height => ({
+  type: "height",
+  height
+});
+
 export const sendMessageNow = (msg, log) => dispatch => {
   const logLen = log.length;
-  const msgReturn = msg;
+  const currentMsg = msg;
   if (logLen < 1) {
-    msgReturn.timeStamp = true;
-    msgReturn.showPic = true;
+    currentMsg.timeStamp = true;
+    currentMsg.showPic = true;
   } else {
     console.log(msg);
-    const lastTime = log[logLen - 1].timeCheck;
+    const previousMsg = log[logLen - 1];
+
+    // If the last message is mine
+    // currentMsg.showPic = true;
+    // previousMsg.showPic = false;
+
+    const lastTime = previousMsg.timeCheck;
     const thisTime = msg.timeCheck;
     const timeDiff = thisTime.diff(lastTime, "minutes");
 
     if (timeDiff >= 29) {
-      msgReturn.timeStamp = true;
+      currentMsg.timeStamp = true;
     }
   }
-  dispatch(sendMessage(msgReturn));
+  dispatch(sendMessage(currentMsg));
 };
