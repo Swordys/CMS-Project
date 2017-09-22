@@ -7,11 +7,16 @@ class MessagePic extends Component {
   };
 
   componentWillMount() {
-    setTimeout(() => {
+    if (this.props.noDelay) {
       this.setState({
         opacity: "1"
       });
-    }, 450);
+    } else
+      setTimeout(() => {
+        this.setState({
+          opacity: "1"
+        });
+      }, 450);
   }
 
   renderPic = () => {

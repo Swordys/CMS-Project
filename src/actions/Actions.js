@@ -26,16 +26,18 @@ export const sendMessageNow = (msg, log) => dispatch => {
   const currentMsg = msg;
   if (logLen < 1) {
     currentMsg.timeStamp = true;
+    currentMsg.noDelay = true;
     const picPropNew = {
       showPic: true,
       position: 0
     };
     currentMsg.picProp = picPropNew;
   } else {
-    console.log(msg);
-    console.log(log);
-    const previousMsg = log[logLen - 1];
+    // console.log(msg);
+    // console.log(log);
 
+
+    const previousMsg = log[logLen - 1];
     const prevPicProp = {
       showPic: true,
       position: 43
@@ -45,11 +47,17 @@ export const sendMessageNow = (msg, log) => dispatch => {
 
     // If the last message is mine
     currentMsg.picProp.showPic = true;
-    setTimeout(() => {
-      previousMsg.picProp.showPic = false;
-    }, 10);
+  
 
-    // TIME STUFF
+
+
+
+
+
+
+
+
+    // -------- TIME STUFF -------
 
     const lastTime = previousMsg.timeCheck;
     const thisTime = msg.timeCheck;

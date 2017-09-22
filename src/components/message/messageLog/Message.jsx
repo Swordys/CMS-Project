@@ -36,9 +36,9 @@ class Message extends Component {
   };
 
   renderPic = () => {
-    const { picProp } = this.props;
+    const { picProp, noDelay } = this.props;
     if (picProp.showPic) {
-      return <MessagePic {...picProp} />;
+      return <MessagePic noDelay={noDelay} {...picProp} />;
     }
     return null;
   };

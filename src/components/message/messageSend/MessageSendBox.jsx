@@ -62,6 +62,7 @@ class MessageSendBox extends Component {
           text: checkText,
           date: timeMin,
           dateFull: timeFull,
+          noDelay: false,
           id: uuid(),
           timeStamp: false,
           picProp: {
