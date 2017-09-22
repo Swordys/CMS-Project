@@ -64,7 +64,10 @@ class MessageSendBox extends Component {
           dateFull: timeFull,
           id: uuid(),
           timeStamp: false,
-          showPic: false,
+          picProp: {
+            showPic: false,
+            position: 0
+          },
           timeCheck
         };
         sendNow(msgObj, messageLog);

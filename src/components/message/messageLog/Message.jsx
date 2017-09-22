@@ -36,9 +36,9 @@ class Message extends Component {
   };
 
   renderPic = () => {
-    const { showPic } = this.props;
-    if (showPic) {
-      return <MessagePic />;
+    const { picProp } = this.props;
+    if (picProp.showPic) {
+      return <MessagePic {...picProp} />;
     }
     return null;
   };
@@ -56,7 +56,7 @@ class Message extends Component {
 Message.propTypes = {
   text: PropTypes.string.isRequired,
   date: PropTypes.string.isRequired,
-  showPic: PropTypes.bool.isRequired
+  picProp: PropTypes.objectOf(PropTypes.any).isRequired
 };
 
 export default Message;
