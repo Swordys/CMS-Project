@@ -36,7 +36,6 @@ export const sendMessageNow = (msg, log) => dispatch => {
     // console.log(msg);
     // console.log(log);
 
-
     const previousMsg = log[logLen - 1];
     const prevPicProp = {
       showPic: true,
@@ -47,15 +46,9 @@ export const sendMessageNow = (msg, log) => dispatch => {
 
     // If the last message is mine
     currentMsg.picProp.showPic = true;
-  
-
-
-
-
-
-
-
-
+    // setTimeout(() => {
+    //   previousMsg.picProp.showPic = false;
+    // }, 10);
 
     // -------- TIME STUFF -------
 
