@@ -16,7 +16,7 @@
   border-radius: 3px;
 }
 
-/* main styles */
+/* MESSAGE LOG GENERAL */
 
 .messageLogWrap {
   height: 100%;
@@ -49,19 +49,7 @@
   align-items: flex-end;
 }
 
-/* Message box */
-
-
-.messageBoxWrap{
-  position: relative;
-}
-
-
-.messageBoxWrap:hover .timeInfo {
-  opacity: 0.8;
-  transform: translateY(0);
-  z-index: 1;
-}
+/* MESSAGE BOX TIME */
 
 .timeInfo {
   position: absolute;
@@ -99,25 +87,55 @@
   align-self: center;
 }
 
-/* .messageBoxText {
-  padding: 11px 13px;
-  max-width: 500px;
+/* --- INBOX MESSAGE --- */
+
+.messageBoxWrapInbox {
+  align-self: flex-start;
+  position: relative;
+}
+
+.messageBoxWrapInbox:hover .timeInfo {
+  opacity: 0.8;
+  transform: translateY(0);
+  z-index: 1;
+}
+
+.messageBoxTextInbox {
+  padding: 9px 13px;
+  max-width: 600px;
   margin-top: 10px;
-  border-radius: 3px;
+  position: relative;
+  line-height: 1.1em;
+  border-radius: 15px;
   display: flex;
   flex-shrink: 0;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
+  box-shadow: 0px 1.5px 2px -1px rgba(0, 0, 0, 0.5);
+  cursor: default;
   background: rgba(0, 91, 234, 0.85);
   color: white;
-} */
+}
+
+/* --- MY MESSAGE --- */
+
+.messageBoxWrap {
+  position: relative;
+}
+
+.messageBoxWrap:hover .timeInfo {
+  opacity: 0.8;
+  transform: translateY(0);
+  z-index: 1;
+}
 
 .messageBoxText {
   padding: 9px 13px;
   max-width: 600px;
+  font-size: 14px;
   margin-top: 8px;
   position: relative;
-  line-height: 1.1em;
+  line-height: 1.2em;
   border-radius: 15px;
   display: flex;
   flex-shrink: 0;
@@ -128,9 +146,11 @@
   cursor: default;
 }
 
+/* --- EMOJI GENERAL --- */
+
 .messageBoxEmoji {
   position: relative;
-  padding: 5px 13px;
+  padding: 5px 0;
   max-width: 500px;
   margin-top: 7.5px;
   line-height: 1.1em;
@@ -139,20 +159,17 @@
   flex-shrink: 0;
   justify-content: center;
   align-items: flex-start;
+  /* border: 1px solid red; */
 }
 
-.textContain {
-  color: #202020;
-}
-
-.textContain > .inline-emoji {
+.inline-emoji {
   object-fit: contain;
   width: 1rem;
   height: 1rem;
   min-width: 1.4em;
   min-height: 1.4em;
   margin: 0 0.05em 0 0.1em !important;
-  vertical-align: -.35em;
+  vertical-align: -0.35em;
   display: inline-block;
 }
 
@@ -167,7 +184,7 @@
   min-width: 1.6em;
   min-height: 1.6em;
   margin: 0 0.04em 0 0.1em !important;
-  vertical-align: -.35em;
+  vertical-align: -0.35em;
   display: inline-block;
   user-select: initial;
 }

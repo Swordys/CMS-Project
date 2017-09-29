@@ -7,28 +7,31 @@ import emojifyText from "../../../helpers/messageHelper";
 // Components
 import MessagePic from "./MessagePic";
 
+// Styles
+const msgStyle = {
+  whiteSpace: "pre-wrap",
+  fontSize: "14px",
+  wordBreak: "break-word"
+};
+
 class Message extends Component {
   renderText = () => {
-    const { text, date } = this.props;
+    const { text, date, sender } = this.props;
     const { textReturnArr, IsOnlyEmojy } = emojifyText(text);
 
-    const msgStyle = {
-      whiteSpace: "pre-wrap",
-      fontSize: "14px",
-      wordBreak: "break-word"
+    const classObj = {
+      msgClass: sender ? "messageBoxText" : "messageBoxTextInbox"
     };
 
-    let msgClass = "messageBoxText";
-    let textClass = "textContain";
     if (IsOnlyEmojy) {
-      msgClass = "messageBoxEmoji";
-      textClass = "textContainEmoji";
+      classObj.msgClass = "messageBoxEmoji";
+      classObj.textClass = "textContainEmoji";
     }
 
     return (
-      <div className={msgClass}>
+      <div className={classObj.msgClass}>
         <div style={msgStyle}>
-          <div className={textClass}>{textReturnArr}</div>
+          <div className={classObj.textClass}>{textReturnArr}</div>
         </div>
         <div className="timeInfo">{date}</div>
       </div>
@@ -36,16 +39,18 @@ class Message extends Component {
   };
 
   renderPic = () => {
-    const { picProp, noDelay } = this.props;
+    const { picProp, noDelay, sender } = this.props;
     if (picProp.showPic) {
-      return <MessagePic noDelay={noDelay} {...picProp} />;
+      return <MessagePic sender={sender} noDelay={noDelay} {...picProp} />;
     }
     return null;
   };
 
   render() {
+    const { sender } = this.props;
+
     return (
-      <div className="messageBoxWrap">
+      <div className={sender ? "messageBoxWrap" : "messageBoxWrapInbox"}>
         {this.renderText()}
         {this.renderPic()}
       </div>
@@ -56,6 +61,8 @@ class Message extends Component {
 Message.propTypes = {
   text: PropTypes.string.isRequired,
   date: PropTypes.string.isRequired,
+  sender: PropTypes.bool.isRequired,
+  noDelay: PropTypes.bool.isRequired,
   picProp: PropTypes.objectOf(PropTypes.any).isRequired
 };
 

@@ -15,7 +15,8 @@ import { sendMessageNow } from "../../../actions/Actions";
 class MessageSendBox extends Component {
   state = {
     inputValue: "",
-    cursorPosition: 0
+    cursorPosition: 0,
+    sender: false
   };
 
   componentWillReceiveProps(nextProps) {
@@ -53,7 +54,8 @@ class MessageSendBox extends Component {
 
       if (checkText) {
         this.setState({
-          inputValue: ""
+          inputValue: "",
+          sender: !this.state.sender
         });
 
         const { sendNow, messageLog } = this.props;
@@ -69,7 +71,8 @@ class MessageSendBox extends Component {
             showPic: false,
             position: 0
           },
-          timeCheck
+          timeCheck,
+          sender: !this.state.sender
         };
         sendNow(msgObj, messageLog);
       }

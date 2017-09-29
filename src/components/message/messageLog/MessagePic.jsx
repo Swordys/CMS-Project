@@ -20,32 +20,32 @@ class MessagePic extends Component {
   }
 
   renderPic = () => {
-    const { position } = this.props;
-
-    const picStyle = {
-      height: "35px",
-      opacity: `${this.state.opacity}`,
-      width: "35px",
-      borderRadius: "50%",
-      background: "white",
-      position: "absolute",
-      right: "-45px",
-      bottom: "0",
-      transform: `translateY(${position}px)`,
-      transition: `transform 300ms cubic-bezier(.67,.35,.34,.91) 100ms`,
-      overflow: "hidden"
-    };
-
-    const picImage = {
-      backgroundImage: "url(https://placeimg.com/50/50/tech)",
-      height: "100%",
-      width: "100%",
-      backgroundSize: "contain"
+    const { position, sender } = this.props;
+    const picStyles = {
+      picStyle: {
+        height: "35px",
+        opacity: `${this.state.opacity}`,
+        width: "35px",
+        borderRadius: "50%",
+        background: "white",
+        position: "absolute",
+        [sender ? "right" : "left"]: "-45px",
+        bottom: "0",
+        // transform: `translateY(${position}px)`,
+        transition: `transform 300ms cubic-bezier(.67,.35,.34,.91) 100ms`,
+        overflow: "hidden"
+      },
+      picImage: {
+        backgroundImage: "url(https://placeimg.com/50/50/tech)",
+        height: "100%",
+        width: "100%",
+        backgroundSize: "contain"
+      }
     };
 
     return (
-      <div style={picStyle}>
-        <div style={picImage} />
+      <div style={picStyles.picStyle}>
+        <div style={picStyles.picImage} />
       </div>
     );
   };
@@ -56,7 +56,8 @@ class MessagePic extends Component {
 }
 
 MessagePic.propTypes = {
-  position: PropTypes.number.isRequired
+  position: PropTypes.number.isRequired,
+  noDelay: PropTypes.bool.isRequired
 };
 
 export default MessagePic;

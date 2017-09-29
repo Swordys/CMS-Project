@@ -38,24 +38,25 @@ class MessageLog extends Component {
     );
 
     const retunLog = [];
-    messageLog.forEach(item => {
+    messageLog.forEach(messageObj => {
       const retItem = (
         <CSSTransition
-          key={item.key}
+          key={messageObj.key}
           classNames="fade"
           timeout={{ enter: 400, exit: 400 }}
         >
-          <Message {...item} />
+          <Message {...messageObj} />
         </CSSTransition>
       );
-      if (item.timeStamp) {
+
+      if (messageObj.timeStamp) {
         retunLog.push(
           <CSSTransition
-            key={item.id}
+            key={messageObj.id}
             classNames="zade"
             timeout={{ enter: 100, exit: 100 }}
           >
-            <div className="messageBoxDate">{item.date}</div>
+            <div className="messageBoxDate">{messageObj.date}</div>
           </CSSTransition>
         );
       }
