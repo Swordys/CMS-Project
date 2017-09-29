@@ -16,7 +16,6 @@ class MessageSendBox extends Component {
   state = {
     inputValue: "",
     cursorPosition: 0,
-    sender: false
   };
 
   componentWillReceiveProps(nextProps) {
@@ -55,7 +54,6 @@ class MessageSendBox extends Component {
       if (checkText) {
         this.setState({
           inputValue: "",
-          sender: !this.state.sender
         });
 
         const { sendNow, messageLog } = this.props;
@@ -72,7 +70,7 @@ class MessageSendBox extends Component {
             position: 0
           },
           timeCheck,
-          sender: !this.state.sender
+          sender: Math.random() >= 0.5
         };
         sendNow(msgObj, messageLog);
       }
