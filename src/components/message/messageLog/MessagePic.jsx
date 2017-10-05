@@ -57,7 +57,8 @@ class MessagePic extends Component {
 
 MessagePic.propTypes = {
   position: PropTypes.number.isRequired,
-  noDelay: PropTypes.bool.isRequired
+  noDelay: PropTypes.bool.isRequired,
+  sender: PropTypes.bool.isRequired
 };
 
 export default MessagePic;
