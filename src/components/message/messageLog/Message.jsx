@@ -1,5 +1,8 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import TransitionGroup from "react-transition-group/TransitionGroup";
+import CSSTransition from "react-transition-group/CSSTransition";
+import './css/picTrans.css';
 
 // Helpers
 import emojifyText from "../../../helpers/messageHelper";
@@ -13,6 +16,15 @@ const msgStyle = {
   fontSize: "14px",
   wordBreak: "break-word"
 };
+
+
+const PicTransition = props => (
+  <CSSTransition
+    {...props}
+    classNames="picPop"
+    timeout={{ enter: 500, exit: 500 }}
+  />
+);
 
 class Message extends Component {
   renderText = () => {
@@ -41,18 +53,21 @@ class Message extends Component {
   renderPic = () => {
     const { picProp, noDelay, sender } = this.props;
     if (picProp.showPic) {
-      return <MessagePic sender={sender} noDelay={noDelay} {...picProp} />;
+      return (
+        <PicTransition key={this.props.id}>
+          <MessagePic sender={sender} noDelay={noDelay} {...picProp} />
+        </PicTransition>
+      );
     }
     return null;
   };
 
   render() {
     const { sender } = this.props;
-
     return (
       <div className={sender ? "messageBoxWrap" : "messageBoxWrapInbox"}>
         {this.renderText()}
-        {this.renderPic()}
+        <TransitionGroup>{this.renderPic()}</TransitionGroup>
       </div>
     );
   }

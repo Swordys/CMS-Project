@@ -15,6 +15,14 @@ import EmojiBox from "./EmojiBox";
 // Actions
 import { closeEmoji } from "../../../actions/Actions";
 
+const MessageTransition = props => (
+  <CSSTransition
+    {...props}
+    classNames="fade"
+    timeout={{ enter: 400, exit: 400 }}
+  />
+);
+
 class MessageLog extends Component {
   componentDidMount() {
     this.bottomMsg.scrollIntoView();
@@ -27,37 +35,29 @@ class MessageLog extends Component {
   renderMessages = () => {
     const { messageLog } = this.props;
     const bottomMsg = (
-      <CSSTransition key={"bot"} timeout={{ enter: 100, exit: 100 }}>
+      <MessageTransition key={"bot"}>
         <div
           ref={e => {
             this.bottomMsg = e;
           }}
           className="bottom"
         />
-      </CSSTransition>
+      </MessageTransition>
     );
 
     const retunLog = [];
     messageLog.forEach(messageObj => {
       const retItem = (
-        <CSSTransition
-          key={messageObj.key}
-          classNames="fade"
-          timeout={{ enter: 400, exit: 400 }}
-        >
+        <MessageTransition key={messageObj.key}>
           <Message {...messageObj} />
-        </CSSTransition>
+        </MessageTransition>
       );
 
       if (messageObj.timeStamp) {
         retunLog.push(
-          <CSSTransition
-            key={messageObj.id}
-            classNames="zade"
-            timeout={{ enter: 100, exit: 100 }}
-          >
+          <MessageTransition key={messageObj.id}>
             <div className="messageBoxDate">{messageObj.date}</div>
-          </CSSTransition>
+          </MessageTransition>
         );
       }
       retunLog.push(retItem);

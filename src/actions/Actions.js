@@ -27,28 +27,25 @@ export const sendMessageNow = (msg, log) => dispatch => {
   if (logLen < 1) {
     currentMsg.timeStamp = true;
     currentMsg.noDelay = true;
-    const picPropNew = {
+    currentMsg.picProp = {
       showPic: true,
       position: 0
     };
-    currentMsg.picProp = picPropNew;
   } else {
-    // console.log(msg);
-    // console.log(log);
-
     const previousMsg = log[logLen - 1];
-    const prevPicProp = {
-      showPic: true,
-      position: 43
-    };
-
-    previousMsg.picProp = prevPicProp;
-
-    // If the last message is mine
+    currentMsg.noDelay = true;
     currentMsg.picProp.showPic = true;
-    // setTimeout(() => {
-    //   previousMsg.picProp.showPic = false;
-    // }, 10);
+
+    if (
+      (previousMsg.sender && msg.sender) ||
+      (!previousMsg.sender && !msg.sender)
+    ) {
+      previousMsg.picProp = {
+        showPic: false,
+        position: 43
+      };
+      currentMsg.noDelay = false;
+    }
 
     // -------- TIME STUFF -------
 

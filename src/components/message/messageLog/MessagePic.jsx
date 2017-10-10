@@ -16,7 +16,7 @@ class MessagePic extends Component {
         this.setState({
           opacity: "1"
         });
-      }, 450);
+      }, 250);
   }
 
   renderPic = () => {
@@ -32,7 +32,7 @@ class MessagePic extends Component {
         [sender ? "right" : "left"]: "-45px",
         bottom: "0",
         // transform: `translateY(${position}px)`,
-        transition: `transform 300ms cubic-bezier(.67,.35,.34,.91) 100ms`,
+        transition: `opacity 200ms cubic-bezier(.67,.35,.34,.91)`,
         overflow: "hidden"
       },
       picImage: {
