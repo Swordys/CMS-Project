@@ -103,18 +103,19 @@
 .messageBoxTextInbox {
   padding: 9px 13px;
   max-width: 600px;
-  margin-top: 10px;
+  font-size: 14px;
+  margin-top: 8px;
   position: relative;
-  line-height: 1.1em;
+  line-height: 1.2em;
   border-radius: 15px;
   display: flex;
   flex-shrink: 0;
   justify-content: center;
   align-items: flex-start;
-  box-shadow: 0px 1.5px 2px -1px rgba(0, 0, 0, 0.5);
-  cursor: default;
   background: rgba(0, 91, 234, 0.85);
   color: white;
+  box-shadow: 0px 1.5px 2px -1px rgba(0, 0, 0, 0.5);
+  cursor: default;
 }
 
 /* --- MY MESSAGE --- */

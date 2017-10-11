@@ -15,7 +15,7 @@ class MessagePic extends Component {
       setTimeout(() => {
         this.setState({
           opacity: "1"
-        });
+        }); 
       }, 250);
   }
 
@@ -24,19 +24,18 @@ class MessagePic extends Component {
     const picStyles = {
       picStyle: {
         height: "35px",
-        opacity: `${this.state.opacity}`,
         width: "35px",
+        opacity: `${this.state.opacity}`,
         borderRadius: "50%",
         background: "white",
         position: "absolute",
         [sender ? "right" : "left"]: "-45px",
         bottom: "0",
-        // transform: `translateY(${position}px)`,
-        transition: `opacity 200ms cubic-bezier(.67,.35,.34,.91)`,
+        transition: "opacity 200ms cubic-bezier(.67,.35,.34,.91)",
         overflow: "hidden"
       },
       picImage: {
-        backgroundImage: "url(https://placeimg.com/50/50/tech)",
+        backgroundImage: "url(https://picsum.photos/100)",
         height: "100%",
         width: "100%",
         backgroundSize: "contain"

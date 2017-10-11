@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import TransitionGroup from "react-transition-group/TransitionGroup";
 import CSSTransition from "react-transition-group/CSSTransition";
-import './css/picTrans.css';
+import "./css/picTrans.css";
 
 // Helpers
 import emojifyText from "../../../helpers/messageHelper";
@@ -16,15 +16,6 @@ const msgStyle = {
   fontSize: "14px",
   wordBreak: "break-word"
 };
-
-
-const PicTransition = props => (
-  <CSSTransition
-    {...props}
-    classNames="picPop"
-    timeout={{ enter: 500, exit: 500 }}
-  />
-);
 
 class Message extends Component {
   renderText = () => {
@@ -54,9 +45,13 @@ class Message extends Component {
     const { picProp, noDelay, sender } = this.props;
     if (picProp.showPic) {
       return (
-        <PicTransition key={this.props.id}>
+        <CSSTransition
+          key={this.props.id}
+          classNames="picPop"
+          timeout={{ enter: 500, exit: 800 }}
+        >
           <MessagePic sender={sender} noDelay={noDelay} {...picProp} />
-        </PicTransition>
+        </CSSTransition>
       );
     }
     return null;

@@ -70,8 +70,8 @@ class MessageSendBox extends Component {
             position: 0
           },
           timeCheck,
-          // sender: true,
-          sender: Math.random() >= 0.5
+          sender: false,
+          // sender: Math.random() >= 0.5
         };
         sendNow(msgObj, messageLog);
       }
