@@ -1,1 +1,1 @@
-# React Messanger Project
+# React/Redux Messanger Project
