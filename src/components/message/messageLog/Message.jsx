@@ -42,15 +42,15 @@ class Message extends Component {
   };
 
   renderPic = () => {
-    const { picProp, noDelay, sender } = this.props;
-    if (picProp.showPic) {
+    const { showPic, noDelay, sender } = this.props;
+    if (showPic) {
       return (
         <CSSTransition
           key={this.props.id}
           classNames="picPop"
           timeout={{ enter: 500, exit: 800 }}
         >
-          <MessagePic sender={sender} noDelay={noDelay} {...picProp} />
+          <MessagePic sender={sender} noDelay={noDelay} {...showPic} />
         </CSSTransition>
       );
     }
@@ -73,7 +73,8 @@ Message.propTypes = {
   date: PropTypes.string.isRequired,
   sender: PropTypes.bool.isRequired,
   noDelay: PropTypes.bool.isRequired,
-  picProp: PropTypes.objectOf(PropTypes.any).isRequired
+  showPic: PropTypes.bool.isRequired,
+  id: PropTypes.string.isRequired
 };
 
 export default Message;

@@ -20,7 +20,7 @@ class MessagePic extends Component {
   }
 
   renderPic = () => {
-    const { position, sender } = this.props;
+    const { sender } = this.props;
     const picStyles = {
       picStyle: {
         height: "35px",
@@ -55,7 +55,6 @@ class MessagePic extends Component {
 }
 
 MessagePic.propTypes = {
-  position: PropTypes.number.isRequired,
   noDelay: PropTypes.bool.isRequired,
   sender: PropTypes.bool.isRequired
 };

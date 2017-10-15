@@ -15,7 +15,7 @@ import { sendMessageNow } from "../../../actions/Actions";
 class MessageSendBox extends Component {
   state = {
     inputValue: "",
-    cursorPosition: 0,
+    cursorPosition: 0
   };
 
   componentWillReceiveProps(nextProps) {
@@ -53,27 +53,25 @@ class MessageSendBox extends Component {
 
       if (checkText) {
         this.setState({
-          inputValue: "",
+          inputValue: ""
         });
 
-        const { sendNow, messageLog } = this.props;
+        const { messageLog } = this.props;
         const msgObj = {
           key: uuid(),
+          id: uuid(),
           text: checkText,
           date: timeMin,
           dateFull: timeFull,
-          noDelay: false,
-          id: uuid(),
-          timeStamp: false,
-          picProp: {
-            showPic: false,
-            position: 0
-          },
           timeCheck,
-          sender: false,
+          height: this.textInput.state.height + 25,
+          noDelay: false,
+          timeStamp: false,
+          showPic: false,
+          sender: false
           // sender: Math.random() >= 0.5
         };
-        sendNow(msgObj, messageLog);
+        this.props.sendMessageNow(msgObj, messageLog);
       }
     }
   };
@@ -120,19 +118,14 @@ class MessageSendBox extends Component {
 
 MessageSendBox.propTypes = {
   emoji: PropTypes.objectOf(PropTypes.any).isRequired,
-  sendNow: PropTypes.func.isRequired,
+  sendMessageNow: PropTypes.func.isRequired,
   messageLog: PropTypes.arrayOf(PropTypes.object).isRequired
 };
 
-const mapDispatchToProps = dispatch => ({
-  sendNow: (message, log) => {
-    dispatch(sendMessageNow(message, log));
-  }
-});
 
 const mapStateToProps = state => ({
   messageLog: state.getMessages,
   emoji: state.getSentEmoji
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(MessageSendBox);
+export default connect(mapStateToProps, { sendMessageNow })(MessageSendBox);

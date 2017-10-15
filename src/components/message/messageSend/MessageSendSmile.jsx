@@ -6,9 +6,7 @@ import { Emoji } from "emoji-mart";
 // Actions
 import { toggleEmoji } from "../../../actions/Actions";
 
-const MessageSendSmile = props => {
-  const { toggleEmojiWrap } = props;
-  return (
+const MessageSendSmile = (props) => (
     <div
       role="presentation"
       style={{
@@ -16,22 +14,17 @@ const MessageSendSmile = props => {
         justifyContent: "center",
         alignItems: "center"
       }}
-      onClick={() => toggleEmojiWrap()}
+      onClick={() => props.toggleEmoji()}
       className="sendThatSmile"
     >
-      <Emoji emoji="smile" size={22} set="emojione" />
+      {<Emoji emoji="smile" size={22} set="emojione" />}
+      {/* <img style={{height: '20px'}} src={icon} alt=""/> */}
     </div>
   );
-};
 
 MessageSendSmile.propTypes = {
-  toggleEmojiWrap: ProptTypes.func.isRequired
+  toggleEmoji: ProptTypes.func.isRequired
 };
 
-const mapDispatchToProps = dispatch => ({
-  toggleEmojiWrap: () => {
-    dispatch(toggleEmoji());
-  }
-});
 
-export default connect(null, mapDispatchToProps)(MessageSendSmile);
+export default connect(null, {toggleEmoji})(MessageSendSmile);

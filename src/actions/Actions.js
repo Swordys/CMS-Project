@@ -27,23 +27,17 @@ export const sendMessageNow = (msg, log) => dispatch => {
   if (logLen < 1) {
     currentMsg.timeStamp = true;
     currentMsg.noDelay = true;
-    currentMsg.picProp = {
-      showPic: true,
-      position: 0
-    };
+    currentMsg.showPic = true;
   } else {
     const previousMsg = log[logLen - 1];
     currentMsg.noDelay = true;
-    currentMsg.picProp.showPic = true;
+    currentMsg.showPic = true;
 
     if (
       (previousMsg.sender && msg.sender) ||
       (!previousMsg.sender && !msg.sender)
     ) {
-      previousMsg.picProp = {
-        showPic: false,
-        position: 43
-      };
+      previousMsg.showPic = false;
       currentMsg.noDelay = false;
     }
 

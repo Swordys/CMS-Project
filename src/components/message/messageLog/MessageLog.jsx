@@ -92,10 +92,4 @@ const mapStateToProps = state => ({
   messageLog: state.getMessages
 });
 
-const dispatchToProps = dispatch => ({
-  closeEmoji: () => {
-    dispatch(closeEmoji());
-  }
-});
-
-export default connect(mapStateToProps, dispatchToProps)(MessageLog);
+export default connect(mapStateToProps, { closeEmoji })(MessageLog);

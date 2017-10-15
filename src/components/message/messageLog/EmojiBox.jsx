@@ -11,7 +11,7 @@ import "./css/emoji-mart.css";
 // Actions
 import { sendEmoji } from "../../../actions/Actions";
 
-const EmojiBox = ({ showEmoji, sendEmojicon }) => {
+const EmojiBox = (props) => {
   const duration = 200;
 
   const defaultStyle = {
@@ -48,13 +48,13 @@ const EmojiBox = ({ showEmoji, sendEmojicon }) => {
       onClick={emoji => {
         const newMoji = emoji;
         newMoji.id = uuid();
-        sendEmojicon(newMoji);
+        props.sendEmoji(newMoji);
       }}
     />
   );
 
   return (
-    <Transition in={showEmoji} timeout={duration}>
+    <Transition in={props.showEmoji} timeout={duration}>
       {state => (
         <div
           role="presentation"
@@ -74,17 +74,12 @@ const EmojiBox = ({ showEmoji, sendEmojicon }) => {
 
 EmojiBox.propTypes = {
   showEmoji: PropTypes.bool.isRequired,
-  sendEmojicon: PropTypes.func.isRequired
+  sendEmoji: PropTypes.func.isRequired
 };
 
-const mapDispatchToProps = dispatch => ({
-  sendEmojicon: emoji => {
-    dispatch(sendEmoji(emoji));
-  }
-});
 
 const mapStateToProps = state => ({
   showEmoji: state.getEmojiState
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(EmojiBox);
+export default connect(mapStateToProps, {sendEmoji})(EmojiBox);
