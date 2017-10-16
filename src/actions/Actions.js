@@ -30,6 +30,20 @@ export const sendMessageNow = (msg, log) => dispatch => {
     currentMsg.showPic = true;
   } else {
     const previousMsg = log[logLen - 1];
+    // -------- TIME STUFF -------
+
+    const lastTime = previousMsg.timeCheck;
+    const thisTime = msg.timeCheck;
+    const timeDiff = thisTime.diff(lastTime, "minutes");
+
+    if (timeDiff >= 30) {
+      currentMsg.timeStamp = true;
+      currentMsg.noDelay = true;
+      currentMsg.showPic = true;
+    }
+
+    // ------- ICON ANIMATIONS --------
+
     currentMsg.noDelay = true;
     currentMsg.showPic = true;
 
@@ -37,18 +51,10 @@ export const sendMessageNow = (msg, log) => dispatch => {
       (previousMsg.sender && msg.sender) ||
       (!previousMsg.sender && !msg.sender)
     ) {
-      previousMsg.showPic = false;
-      currentMsg.noDelay = false;
-    }
-
-    // -------- TIME STUFF -------
-
-    const lastTime = previousMsg.timeCheck;
-    const thisTime = msg.timeCheck;
-    const timeDiff = thisTime.diff(lastTime, "minutes");
-
-    if (timeDiff >= 29) {
-      currentMsg.timeStamp = true;
+      if (!currentMsg.timeStamp) {
+        previousMsg.showPic = false;
+        currentMsg.noDelay = false;
+      }
     }
   }
   dispatch(sendMessage(currentMsg));

@@ -42,7 +42,7 @@ class Message extends Component {
   };
 
   renderPic = () => {
-    const { showPic, noDelay, sender } = this.props;
+    const { showPic } = this.props;
     if (showPic) {
       return (
         <CSSTransition
@@ -50,7 +50,7 @@ class Message extends Component {
           classNames="picPop"
           timeout={{ enter: 500, exit: 800 }}
         >
-          <MessagePic sender={sender} noDelay={noDelay} {...showPic} />
+          <MessagePic {...this.props} />
         </CSSTransition>
       );
     }
