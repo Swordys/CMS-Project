@@ -1,24 +1,26 @@
+import {
+  SEND_MESSAGE,
+  TOGGLE_EMOJI,
+  CLOSE_EMOJI,
+  SEND_EMOJI
+} from "./ActionTypes";
+
 export const sendMessage = msg => ({
-  type: "SEND_MESSAGE",
+  type: SEND_MESSAGE,
   msg
 });
 
 export const toggleEmoji = () => ({
-  type: "TOGGLE_EMOJI"
+  type: TOGGLE_EMOJI
 });
 
 export const closeEmoji = () => ({
-  type: "CLOSE_EMOJI"
+  type: CLOSE_EMOJI
 });
 
 export const sendEmoji = emoji => ({
-  type: "SEND_EMOJI",
+  type: SEND_EMOJI,
   emoji
-});
-
-export const heightChange = height => ({
-  type: "height",
-  height
 });
 
 export const sendMessageNow = (msg, log) => dispatch => {
