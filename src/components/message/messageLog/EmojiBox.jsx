@@ -11,7 +11,7 @@ import "./css/emoji-mart.css";
 // Actions
 import { sendEmoji } from "../../../actions/Actions";
 
-const EmojiBox = (props) => {
+const EmojiBox = props => {
   const duration = 200;
 
   const defaultStyle = {
@@ -77,9 +77,8 @@ EmojiBox.propTypes = {
   sendEmoji: PropTypes.func.isRequired
 };
 
-
 const mapStateToProps = state => ({
   showEmoji: state.getEmojiState
 });
 
-export default connect(mapStateToProps, {sendEmoji})(EmojiBox);
+export default connect(mapStateToProps, { sendEmoji })(EmojiBox);

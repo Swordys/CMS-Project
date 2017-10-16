@@ -11,12 +11,10 @@ import "./css/index.css";
 import App from "./components/App";
 
 // Redux
-import configStore from "./store/Store";
-
-const store = configStore();
+import store from "./store/Store";
 
 ReactDOM.render(
-  <Provider store={store}>
+  <Provider store={store()}>
     <App />
   </Provider>,
   document.getElementById("root")

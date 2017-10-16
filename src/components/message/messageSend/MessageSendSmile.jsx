@@ -18,7 +18,6 @@ const MessageSendSmile = (props) => (
       className="sendThatSmile"
     >
       {<Emoji emoji="smile" size={22} set="emojione" />}
-      {/* <img style={{height: '20px'}} src={icon} alt=""/> */}
     </div>
   );
 

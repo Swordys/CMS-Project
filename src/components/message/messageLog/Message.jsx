@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import TransitionGroup from "react-transition-group/TransitionGroup";
 import CSSTransition from "react-transition-group/CSSTransition";
@@ -16,10 +16,8 @@ const msgStyle = {
   fontSize: "14px",
   wordBreak: "break-word"
 };
-
-class Message extends Component {
-  renderText = () => {
-    const { text, date, sender } = this.props;
+const Message = ({ text, date, sender, showPic, id, noDelay }) => {
+  const renderText = () => {
     const { textReturnArr, IsOnlyEmojy } = emojifyText(text);
 
     const classObj = {
@@ -41,32 +39,26 @@ class Message extends Component {
     );
   };
 
-  renderPic = () => {
-    const { showPic } = this.props;
-    if (showPic) {
-      return (
-        <CSSTransition
-          key={this.props.id}
-          classNames="picPop"
-          timeout={{ enter: 500, exit: 800 }}
-        >
-          <MessagePic {...this.props} />
-        </CSSTransition>
-      );
-    }
-    return null;
-  };
-
-  render() {
-    const { sender } = this.props;
-    return (
-      <div className={sender ? "messageBoxWrap" : "messageBoxWrapInbox"}>
-        {this.renderText()}
-        <TransitionGroup>{this.renderPic()}</TransitionGroup>
-      </div>
+  const renderPic = () =>
+    showPic ? (
+      <CSSTransition
+        key={id}
+        classNames="picPop"
+        timeout={{ enter: 500, exit: 800 }}
+      >
+        <MessagePic noDelay={noDelay} sender={sender} />
+      </CSSTransition>
+    ) : (
+      undefined
     );
-  }
-}
+
+  return (
+    <div className={sender ? "messageBoxWrap" : "messageBoxWrapInbox"}>
+      {renderText()}
+      <TransitionGroup>{renderPic()}</TransitionGroup>
+    </div>
+  );
+};
 
 Message.propTypes = {
   text: PropTypes.string.isRequired,
