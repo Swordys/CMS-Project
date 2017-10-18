@@ -1,29 +1,22 @@
 import React from "react";
 import ProptTypes from "prop-types";
 import { connect } from "react-redux";
-import { Emoji } from "emoji-mart";
-
+import emojiIcon from "../../../icons/sendSmile.svg";
 // Actions
 import { toggleEmoji } from "../../../actions/Actions";
 
-const MessageSendSmile = (props) => (
-    <div
-      role="presentation"
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center"
-      }}
-      onClick={() => props.toggleEmoji()}
-      className="sendThatSmile"
-    >
-      {<Emoji emoji="smile" size={22} set="emojione" />}
-    </div>
-  );
+const MessageSendSmile = props => (
+  <div
+    role="presentation"
+    onClick={() => props.toggleEmoji()}
+    className="messageSendSmile"
+  >
+    <img className='messageSendSmile_icon' src={emojiIcon} alt="" />
+  </div>
+);
 
 MessageSendSmile.propTypes = {
   toggleEmoji: ProptTypes.func.isRequired
 };
 
-
-export default connect(null, {toggleEmoji})(MessageSendSmile);
+export default connect(null, { toggleEmoji })(MessageSendSmile);
