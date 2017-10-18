@@ -1,20 +1,15 @@
-.sendThatText::-webkit-scrollbar-track {
-  background-color: #f5f5f5;
-}
-
-.sendThatText::-webkit-scrollbar {
+.messageSendMessage_textArea_text::-webkit-scrollbar {
   width: 4px;
-  background-color: #f5f5f5;
 }
 
-.sendThatText::-webkit-scrollbar-thumb {
+.messageSendMessage_textArea_text::-webkit-scrollbar-thumb {
   background-color: #3c3c3c;
   border-radius: 3px;
 }
 
 /* Main styles */
 
-.messageSendWrap {
+.messageSend {
   width: 100%;
   display: flex;
   align-items: flex-end;
@@ -22,35 +17,41 @@
   flex-shrink: 0;
   padding: 15px;
   box-sizing: border-box;
-  border-top: 1px solid #b3b3b3;
+  border-top: 1px solid #ececec;
 }
 
-.sendThatTextWrap {
-  border: 1px solid #b3b3b3;
+.messageSendMessage {
+  border: 1px solid #ececec;
   display: flex;
   width: 100%;
   border-radius: 3px;
   overflow: hidden;
+  position: relative;
 }
 
-.sendThatFile {
-  height: auto;
-  width: 35px;
-  border-right: 1px solid #b3b3b3;
-  flex-shrink: 0;
-  cursor: pointer;
+.messageSendMessage_textArea {
+  width: 100%;
+  position: relative;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  color: rgba(60, 60, 60, 0.9);
 }
 
-.sendThatText {
+.messageSendMessage_textArea::after {
+  content: "";
+  position: absolute;
+  height: 70%;
+  width: 1px;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(40, 40, 40, 0.1);
+}
+
+.messageSendMessage_textArea_text {
   resize: none;
   max-height: 140px;
   width: 100%;
-  background: #f7f7f7;
-  padding: 10px;
+  background: #ebebeb;
+  padding: 12px;
   border: none;
   outline: none;
   font-size: 14px;
@@ -58,28 +59,41 @@
   color: #282828;
 }
 
-.messageSendSmile {
-  height: 35px;
-  width: 35px;
-  border-left: 1px solid #b3b3b3;
+/* MessageSend Fields */
+
+.messageSendField {
+  width: 38px;
   flex-shrink: 0;
   cursor: pointer;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
+  background: #ebebeb;
 }
 
-.messageSendSmile_icon{
-  height: 70%;
-  width: 70%;
+.messageSendField_content {
+  height: 40px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: transform 100ms ease-out;
+  box-sizing: border-box;
+}
+
+.messageSendField_content > i {
+  color: rgba(0, 91, 234, 0.85);
+  font-size: 22px;
+}
+
+.messageSendField_content > img {
+  height: 22px;
+  width: 22px;
   pointer-events: none;
   user-select: none;
-}
-
-.sendThatSmile > span {
   transition: transform 150ms ease-out;
 }
 
-.sendThatSmile:hover > span {
+.messageSendField_content:hover > img {
   transform: scale(1.2);
 }

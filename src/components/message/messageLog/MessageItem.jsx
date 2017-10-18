@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import TransitionGroup from "react-transition-group/TransitionGroup";
 import CSSTransition from "react-transition-group/CSSTransition";
-// import "./css/picTrans.css";
 
 // Helpers
 import emojifyText from "../../../helpers/messageHelper";
@@ -11,30 +10,38 @@ import emojifyText from "../../../helpers/messageHelper";
 import MessagePic from "./MessagePic";
 
 // Styles
-const msgStyle = {
-  whiteSpace: "pre-wrap",
-  fontSize: "14px",
-  wordBreak: "break-word"
-};
-const Message = ({ text, date, sender, showPic, id, noDelay }) => {
+import "../../../css/messageApp/message/messageLog/messageItem.css";
+
+const MessageItem = ({ text, date, sender, showPic, id, noDelay }) => {
   const renderText = () => {
     const { textReturnArr, IsOnlyEmojy } = emojifyText(text);
 
     const classObj = {
-      msgClass: sender ? "messageBoxText" : "messageBoxTextInbox"
+      msgClass: sender ? "messageItem_textOutbox" : "messageItem_textInbox",
+      textClass: ""
     };
 
     if (IsOnlyEmojy) {
-      classObj.msgClass = "messageBoxEmoji";
-      classObj.textClass = "textContainEmoji";
+      classObj.msgClass = "messageItem_emoji";
+      classObj.textClass = "messageItem_containEmoji";
     }
 
     return (
-      <div className={classObj.msgClass}>
-        <div style={msgStyle}>
+      <div
+        className={`${!IsOnlyEmojy
+          ? "messageItem_text"
+          : ""} ${classObj.msgClass}`}
+      >
+        <div
+          style={{
+            whiteSpace: "pre-wrap",
+            fontSize: "14px",
+            wordBreak: "break-word"
+          }}
+        >
           <div className={classObj.textClass}>{textReturnArr}</div>
         </div>
-        <div className="timeInfo">{date}</div>
+        <div className="messageItem_timeInfo">{date}</div>
       </div>
     );
   };
@@ -43,7 +50,7 @@ const Message = ({ text, date, sender, showPic, id, noDelay }) => {
     showPic ? (
       <CSSTransition
         key={id}
-        classNames="picPop"
+        classNames="messagePicTrans"
         timeout={{ enter: 500, exit: 800 }}
       >
         <MessagePic noDelay={noDelay} sender={sender} />
@@ -53,14 +60,14 @@ const Message = ({ text, date, sender, showPic, id, noDelay }) => {
     );
 
   return (
-    <div className={sender ? "messageBoxWrap" : "messageBoxWrapInbox"}>
+    <div className={sender ? "messageItem" : "messageItem_inbox"}>
       {renderText()}
       <TransitionGroup>{renderPic()}</TransitionGroup>
     </div>
   );
 };
 
-Message.propTypes = {
+MessageItem.propTypes = {
   text: PropTypes.string.isRequired,
   date: PropTypes.string.isRequired,
   sender: PropTypes.bool.isRequired,
@@ -69,4 +76,4 @@ Message.propTypes = {
   id: PropTypes.string.isRequired
 };
 
-export default Message;
+export default MessageItem;

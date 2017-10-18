@@ -5,7 +5,7 @@ import '../../../css/messageApp/message/messageSend/messageSend.css'
 import MessageSendMessage from "./MessageSendMessage";
 
 const MessageSend = () => (
-  <div className="messageSendWrap">
+  <div className="messageSend">
     <MessageSendMessage />
   </div>
 );

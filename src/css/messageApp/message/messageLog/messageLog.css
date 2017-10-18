@@ -3,37 +3,13 @@
   clear: both;
 }
 
-.messageLog::-webkit-scrollbar {
+.messageLog_list::-webkit-scrollbar {
   width: 4px;
 }
 
-.messageLog::-webkit-scrollbar-thumb {
+.messageLog_list::-webkit-scrollbar-thumb {
   background-color: rgba(68, 68, 68, 0.9);
   border-radius: 3px;
-}
-
-/* MESSAGE LOG GENERAL */
-
-.messageLogWrap {
-  height: 100vh;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  position: relative;
-  background: #eceff0;
-}
-
-.messageLog {
-  max-height: 100%;
-  width: 100%;
-  overflow: auto;
-  padding: 5px 60px 20px 60px;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-end;
 }
 
 .emojiWrap {
@@ -45,144 +21,26 @@
   will-change: transform;
 }
 
-/* MESSAGE BOX TIME */
+/* MESSAGE LOG GENERAL */
 
-.timeInfo {
-  position: absolute;
-  margin-bottom: 7px;
-  background: black;
-  bottom: 100%;
-  opacity: 0;
-  transition: opacity 180ms ease-out, transform 180ms ease-out;
-  color: white;
-  text-align: center;
-  font-size: 12px;
-  padding: 5px;
-  width: 80px;
-  transform: translateY(-5px);
-  border-radius: 2px;
-  z-index: -500;
-}
-
-.timeInfo::after {
-  content: "";
-  position: absolute;
-  height: 10px;
-  width: 10px;
-  background: black;
-  left: calc(50% - 5px);
-  bottom: -1px;
-  transform: rotate(45deg);
-  z-index: -1;
-}
-
-.messageBoxDate {
-  font-size: 12px;
-  margin: 10px 0;
-  color: #949494;
-  align-self: center;
-}
-
-/* --- INBOX MESSAGE --- */
-
-.messageBoxWrapInbox {
-  align-self: flex-start;
-  position: relative;
-}
-
-.messageBoxWrapInbox:hover .timeInfo {
-  opacity: 0.8;
-  transform: translateY(0);
-  z-index: 1;
-}
-
-.messageBoxTextInbox {
-  padding: 9px 13px;
-  max-width: 600px;
-  font-size: 14px;
-  margin-top: 7px;
-  position: relative;
-  line-height: 1.2em;
-  border-radius: 15px;
+.messageLog {
+  height: 100vh;
+  width: 100%;
   display: flex;
-  flex-shrink: 0;
-  justify-content: center;
-  align-items: flex-start;
-  background: rgba(0, 91, 234, 0.85);
-  color: white;
-  box-shadow: 0px 1.5px 2px -1px rgba(0, 0, 0, 0.5);
-  cursor: default;
-}
-
-/* --- MY MESSAGE --- */
-
-.messageBoxWrap {
+  flex-direction: column;
+  justify-content: flex-end;
   position: relative;
+  background: #eceff0;
 }
 
-.messageBoxWrap:hover .timeInfo {
-  opacity: 0.8;
-  transform: translateY(0);
-  z-index: 1;
-}
-
-.messageBoxText {
-  padding: 9px 13px;
-  max-width: 600px;
-  font-size: 14px;
-  margin-top: 7px;
-  position: relative;
-  line-height: 1.2em;
-  border-radius: 15px;
+.messageLog_list {
+  max-height: 100%;
+  width: 100%;
+  overflow: auto;
+  padding: 5px 60px 20px 60px;
+  box-sizing: border-box;
   display: flex;
-  flex-shrink: 0;
-  justify-content: center;
-  align-items: flex-start;
-  background: white;
-  box-shadow: 0px 1.5px 2px -1px rgba(0, 0, 0, 0.5);
-  cursor: default;
-  color: rgb(51, 51, 51);
-}
-
-/* --- EMOJI GENERAL --- */
-
-.messageBoxEmoji {
-  position: relative;
-  padding: 5px 0;
-  max-width: 500px;
-  margin-top: 7.5px;
-  line-height: 1.1em;
-  border-radius: 0 0 3px 3px;
-  display: flex;
-  flex-shrink: 0;
-  justify-content: center;
-  align-items: flex-start;
-  /* border: 1px solid red; */
-}
-
-.inline-emoji {
-  object-fit: contain;
-  width: 1rem;
-  height: 1rem;
-  min-width: 1.4em;
-  min-height: 1.4em;
-  margin: 0 0.05em 0 0.1em !important;
-  vertical-align: -0.35em;
-  display: inline-block;
-}
-
-.textContainEmoji {
-  text-align: right;
-}
-
-.textContainEmoji > .inline-emoji {
-  object-fit: contain;
-  width: 1.5rem;
-  height: 1.5rem;
-  min-width: 1.6em;
-  min-height: 1.6em;
-  margin: 0 0.04em 0 0.1em !important;
-  vertical-align: -0.35em;
-  display: inline-block;
-  user-select: initial;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-end;
 }

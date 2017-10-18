@@ -1,42 +1,42 @@
 /* Message transitions */
 
-.fade-enter {
+.messageItemTrans-enter {
   opacity: 0.01;
   transform: translate3d(0, 5px, 0);
 }
 
-.fade-enter.fade-enter-active {
+.messageItemTrans-enter.messageItemTrans-enter-active {
   opacity: 1;
   transform: translate3d(0, 0, 0);
   transition: opacity 250ms cubic-bezier(0.65, 0.36, 0.34, 0.91) 50ms,
     transform 250ms cubic-bezier(0.65, 0.36, 0.34, 0.91) 50ms;
 }
 
-.fade-exit {
+.messageItemTrans-exit {
   opacity: 1;
 }
 
-.fade-exit.fade-exit-active {
+.messageItemTrans-exit.messageItemTrans-exit-active {
   opacity: 0.01;
   transition: opacity 250ms cubic-bezier(0.65, 0.36, 0.34, 0.91);
 }
 
 /* Picture transitions */
 
-.picPop-enter {
+.messagePicTrans-enter {
   opacity: 0;
 }
 
-.picPop-enter.picPop-enter-active {
+.messagePicTrans-enter.messagePicTrans-enter-active {
   opacity: 1;
   transition: opacity 250ms cubic-bezier(0.65, 0.36, 0.34, 0.91);
 }
 
-.picPop-exit {
+.messagePicTrans-exit {
   opacity: 1;
 }
 
-.picPop-exit.picPop-exit-active {
+.messagePicTrans-exit.messagePicTrans-exit-active {
   opacity: 0;
   transform: translate3d(0, 41px, 0);
   transition: transform 300ms cubic-bezier(0.65, 0.36, 0.34, 0.91) 50ms,

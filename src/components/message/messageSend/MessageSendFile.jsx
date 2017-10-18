@@ -1,8 +1,10 @@
 import React from "react";
 
 const MessageSendFile = () => (
-  <div className="sendThatFile">
-    <i className="fa fa-plus" aria-hidden="true" />
+  <div className="messageSendField">
+    <div className="messageSendField_content">
+      <i className="fa fa-plus-circle" aria-hidden="true" />
+    </div>
   </div>
 );
 

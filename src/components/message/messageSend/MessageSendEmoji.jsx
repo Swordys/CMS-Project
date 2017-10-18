@@ -9,9 +9,11 @@ const MessageSendSmile = props => (
   <div
     role="presentation"
     onClick={() => props.toggleEmoji()}
-    className="messageSendSmile"
+    className="messageSendField"
   >
-    <img className='messageSendSmile_icon' src={emojiIcon} alt="" />
+    <div className="messageSendField_content">
+      <img src={emojiIcon} alt="" />
+    </div>
   </div>
 );
 

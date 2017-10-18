@@ -12,7 +12,7 @@ import MessageSendEmoji from "./MessageSendEmoji";
 // Actions
 import { sendMessageNow } from "../../../actions/Actions";
 
-class MessageSendBox extends Component {
+class MessageSendMessage extends Component {
   state = {
     inputValue: "",
     cursorPosition: 0
@@ -79,54 +79,55 @@ class MessageSendBox extends Component {
 
   render() {
     return (
-      <div className="sendThatTextWrap">
+      <div className="messageSendMessage">
         <MessageSendFile />
-        <Textarea
-          ref={input => {
-            this.textInput = input;
-          }}
-          onKeyPress={this.sendMessage}
-          onKeyUp={e => {
-            const value = e.target.selectionStart;
-            const { cursorPosition } = this.state;
-            if (value !== cursorPosition) {
-              this.setState({
-                cursorPosition: value
-              });
-            }
-          }}
-          onClick={e => {
-            const value = e.target.selectionStart;
-            const { cursorPosition } = this.state;
-            if (value !== cursorPosition) {
-              this.setState({
-                cursorPosition: value
-              });
-            }
-          }}
-          onChange={e => {
-            this.setState({ inputValue: e.target.value });
-          }}
-          value={this.state.inputValue}
-          className="sendThatText"
-          placeholder="Type a message"
-        />
+        <div className='messageSendMessage_textArea'>
+          <Textarea
+            ref={input => {
+              this.textInput = input;
+            }}
+            onKeyPress={this.sendMessage}
+            onKeyUp={e => {
+              const value = e.target.selectionStart;
+              const { cursorPosition } = this.state;
+              if (value !== cursorPosition) {
+                this.setState({
+                  cursorPosition: value
+                });
+              }
+            }}
+            onClick={e => {
+              const value = e.target.selectionStart;
+              const { cursorPosition } = this.state;
+              if (value !== cursorPosition) {
+                this.setState({
+                  cursorPosition: value
+                });
+              }
+            }}
+            onChange={e => {
+              this.setState({ inputValue: e.target.value });
+            }}
+            value={this.state.inputValue}
+            className="messageSendMessage_textArea_text"
+            placeholder="Type a message"
+          />
+        </div>
         <MessageSendEmoji />
       </div>
     );
   }
 }
 
-MessageSendBox.propTypes = {
+MessageSendMessage.propTypes = {
   emoji: PropTypes.objectOf(PropTypes.any).isRequired,
   sendMessageNow: PropTypes.func.isRequired,
   messageLog: PropTypes.arrayOf(PropTypes.object).isRequired
 };
-
 
 const mapStateToProps = state => ({
   messageLog: state.getMessages,
   emoji: state.getSentEmoji
 });
 
-export default connect(mapStateToProps, { sendMessageNow })(MessageSendBox);
+export default connect(mapStateToProps, { sendMessageNow })(MessageSendMessage);

@@ -18,7 +18,7 @@ import { closeEmoji } from "../../../actions/Actions";
 const MessageTransition = props => (
   <CSSTransition
     {...props}
-    classNames="fade"
+    classNames="messageItemTrans"
     timeout={{ enter: 400, exit: 400 }}
   />
 );
@@ -56,7 +56,7 @@ class MessageLog extends Component {
       if (messageObj.timeStamp) {
         retunLog.push(
           <MessageTransition key={messageObj.id}>
-            <div className="messageBoxDate">{messageObj.date}</div>
+            <div className="messageItem_date">{messageObj.date}</div>
           </MessageTransition>
         );
       }
@@ -72,10 +72,10 @@ class MessageLog extends Component {
       <div
         role="presentation"
         onClick={() => this.props.closeEmoji()}
-        className="messageLogWrap"
+        className="messageLog"
       >
         <EmojiBox />
-        <TransitionGroup className="messageLog">
+        <TransitionGroup className="messageLog_list">
           {this.renderMessages()}
         </TransitionGroup>
       </div>
