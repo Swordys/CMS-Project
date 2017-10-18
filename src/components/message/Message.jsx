@@ -1,6 +1,5 @@
 import React from "react";
-import "./css/message.css";
-
+import '../../css/messageApp/message/message.css';
 // Components
 import MessageLog from "./messageLog/MessageLog";
 import MessageSend from "./messageSend/MessageSend";

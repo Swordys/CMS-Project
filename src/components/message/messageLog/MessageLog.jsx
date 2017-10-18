@@ -5,12 +5,12 @@ import TransitionGroup from "react-transition-group/TransitionGroup";
 import CSSTransition from "react-transition-group/CSSTransition";
 
 // CSS
-import "./css/messageLog.css";
-import "./css/reactTrans.css";
+import '../../../css/messageApp/message/messageLog/messageLog.css';
+import '../../../css/messageApp/message/messageLog/transitions/messageTrans.css';
 
 // Components
-import Message from "./Message";
-import EmojiBox from "./EmojiBox";
+import MessageItem from "./MessageItem";
+import EmojiBox from "../../general/EmojiBox";
 
 // Actions
 import { closeEmoji } from "../../../actions/Actions";
@@ -49,7 +49,7 @@ class MessageLog extends Component {
     messageLog.forEach(messageObj => {
       const retItem = (
         <MessageTransition key={messageObj.key}>
-          <Message {...messageObj} />
+          <MessageItem {...messageObj} />
         </MessageTransition>
       );
 

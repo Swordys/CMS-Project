@@ -1,14 +1,14 @@
 import React from "react";
-import "./css/App.css";
+import '../css/messageApp/app/App.css';
 
 // Components
 import Sidebar from "./sidebar/Sidebar";
-import MessageWrap from "./message/MessageWrap";
+import Message from "./message/Message";
 
 const App = () => (
   <div className="App">
     <Sidebar />
-    <MessageWrap />
+    <Message />
   </div>
 );
 

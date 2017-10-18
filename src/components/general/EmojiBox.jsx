@@ -6,10 +6,10 @@ import Transition from "react-transition-group/Transition";
 import uuid from "uuid";
 
 // CSS
-import "./css/emoji-mart.css";
+import '../../css/messageApp/general/emojiBox.css';
 
 // Actions
-import { sendEmoji } from "../../../actions/Actions";
+import { sendEmoji } from '../../actions/Actions';
 
 const EmojiBox = props => {
   const duration = 200;

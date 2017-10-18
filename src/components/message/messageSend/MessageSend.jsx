@@ -1,12 +1,12 @@
 import React from "react";
-import "./css/messageSend.css";
+import '../../../css/messageApp/message/messageSend/messageSend.css'
 
 // Components
-import MessageSendBox from "./MessageSendBox";
+import MessageSendMessage from "./MessageSendMessage";
 
 const MessageSend = () => (
   <div className="messageSendWrap">
-    <MessageSendBox />
+    <MessageSendMessage />
   </div>
 );
 
