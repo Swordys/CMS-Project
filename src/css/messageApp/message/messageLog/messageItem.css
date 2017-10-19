@@ -92,7 +92,7 @@
   position: relative;
   padding: 5px 0;
   max-width: 500px;
-  margin-top: 7.5px;
+  margin-top: 7px;
   line-height: 1.1em;
   border-radius: 0 0 3px 3px;
   display: flex;
@@ -109,8 +109,6 @@
   object-fit: contain;
   width: 1.5rem;
   height: 1.5rem;
-  min-width: 1.6em;
-  min-height: 1.6em;
   margin: 0 0.04em 0 0.1em !important;
   vertical-align: -0.35em;
   display: inline-block;

@@ -39,6 +39,7 @@ const emojifyText = text => {
         key: i,
         emoji: item,
         size: 22,
+        sheetSize: 32,
         set: "emojione"
       });
       if (emojiObj) {

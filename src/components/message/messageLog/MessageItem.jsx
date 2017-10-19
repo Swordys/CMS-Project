@@ -14,6 +14,7 @@ import "../../../css/messageApp/message/messageLog/messageItem.css";
 
 const MessageItem = ({ text, date, sender, showPic, id, noDelay }) => {
   const renderText = () => {
+    // console.log(this.divElement && this.divElement.clientHeight);
     const { textReturnArr, IsOnlyEmojy } = emojifyText(text);
 
     const classObj = {
@@ -60,7 +61,12 @@ const MessageItem = ({ text, date, sender, showPic, id, noDelay }) => {
     );
 
   return (
-    <div className={sender ? "messageItem" : "messageItem_inbox"}>
+    <div
+      ref={e => {
+        this.divElement = e;
+      }}
+      className={sender ? "messageItem" : "messageItem_inbox"}
+    >
       {renderText()}
       <TransitionGroup>{renderPic()}</TransitionGroup>
     </div>
