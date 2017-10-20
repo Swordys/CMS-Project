@@ -1,4 +1,4 @@
-export const SEND_MESSAGE = "SEND_MESSAGE";
-export const TOGGLE_EMOJI = "TOGGLE_EMOJI";
-export const CLOSE_EMOJI = "CLOSE_EMOJI";
-export const SEND_EMOJI = "SEND_EMOJI";
+export const MESSAGE_SENT = "MESSAGE_SENT";
+export const EMOJI_TOGGLED = "EMOJI_TOGGLED";
+export const EMOJI_CLOSED = "EMOJI_CLOSED";
+export const EMOJI_SENT = "EMOJI_SENT";

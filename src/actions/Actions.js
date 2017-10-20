@@ -1,25 +1,25 @@
 import {
-  SEND_MESSAGE,
-  TOGGLE_EMOJI,
-  CLOSE_EMOJI,
-  SEND_EMOJI
+  MESSAGE_SENT,
+  EMOJI_TOGGLED,
+  EMOJI_CLOSED,
+  EMOJI_SENT,
 } from "./ActionTypes";
 
-export const sendMessage = msg => ({
-  type: SEND_MESSAGE,
+const sendMessage = msg => ({
+  type: MESSAGE_SENT,
   msg
 });
 
 export const toggleEmoji = () => ({
-  type: TOGGLE_EMOJI
+  type: EMOJI_TOGGLED
 });
 
 export const closeEmoji = () => ({
-  type: CLOSE_EMOJI
+  type: EMOJI_CLOSED
 });
 
 export const sendEmoji = emoji => ({
-  type: SEND_EMOJI,
+  type: EMOJI_SENT,
   emoji
 });
 
