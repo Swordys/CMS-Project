@@ -91,6 +91,8 @@ export const sendMessageNow = (msg, log) => dispatch => {
     }
   }
 
-  database.ref("data").push(currentMsg);
+  const currentNew = { ...currentMsg };
+  currentNew.noDelay = true;
+  database.ref("data").push(currentNew);
   dispatch(sendMessage(currentMsg));
 };

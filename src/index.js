@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import registerServiceWorker from "./registerServiceWorker";
 
@@ -12,13 +13,11 @@ import App from "./components/App";
 // Redux
 import store from "./store/Store";
 
-// require("dotenv").config({ path: __dirname + "/../.env" });
-
-console.log(process.env);
-
 ReactDOM.render(
   <Provider store={store()}>
-    <App />
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
   </Provider>,
   document.getElementById("root")
 );

@@ -66,7 +66,6 @@ class MessageSendMessage extends Component {
           noDelay: false,
           timeStamp: false,
           showPic: false,
-          position: 0,
           // sender: true
           sender: Math.random() >= 0.5
         };
