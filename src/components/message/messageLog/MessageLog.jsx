@@ -5,15 +5,15 @@ import TransitionGroup from "react-transition-group/TransitionGroup";
 import CSSTransition from "react-transition-group/CSSTransition";
 
 // CSS
-import '../../../css/messageApp/message/messageLog/messageLog.css';
-import '../../../css/messageApp/message/messageLog/transitions/messageTrans.css';
+import "../../../css/messageApp/message/messageLog/messageLog.css";
+import "../../../css/messageApp/message/messageLog/transitions/messageTrans.css";
 
 // Components
 import MessageItem from "./MessageItem";
 import EmojiBox from "../../general/EmojiBox";
 
 // Actions
-import { closeEmoji } from "../../../actions/Actions";
+import { closeEmoji, loadMessageLog } from "../../../actions/Actions";
 
 const MessageTransition = props => (
   <CSSTransition
@@ -25,6 +25,7 @@ const MessageTransition = props => (
 
 class MessageLog extends Component {
   componentDidMount() {
+    this.props.loadMessageLog();
     this.bottomMsg.scrollIntoView();
   }
 
@@ -85,6 +86,7 @@ class MessageLog extends Component {
 
 MessageLog.propTypes = {
   messageLog: ProptTypes.arrayOf(ProptTypes.object).isRequired,
+  loadMessageLog: ProptTypes.func.isRequired,
   closeEmoji: ProptTypes.func.isRequired
 };
 
@@ -92,4 +94,6 @@ const mapStateToProps = state => ({
   messageLog: state.getMessages
 });
 
-export default connect(mapStateToProps, { closeEmoji })(MessageLog);
+export default connect(mapStateToProps, { closeEmoji, loadMessageLog })(
+  MessageLog
+);

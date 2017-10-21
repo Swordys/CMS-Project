@@ -7,4 +7,4 @@ const config = {
   storageBucket: process.env.STORAGE_BUCKET
 };
 
-firebase.initializeApp(config);
+export default firebase.initializeApp(config).database();

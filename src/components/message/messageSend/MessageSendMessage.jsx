@@ -49,7 +49,6 @@ class MessageSendMessage extends Component {
       const checkText = textValue.trim();
       const timeFull = moment().format("YYYY-MM-DD HH:mm:ss");
       const timeMin = moment().format("ddd, h:mm a");
-      const timeCheck = moment(timeFull);
 
       if (checkText) {
         this.setState({
@@ -63,14 +62,13 @@ class MessageSendMessage extends Component {
           text: checkText,
           date: timeMin,
           dateFull: timeFull,
-          timeCheck,
           height: this.textInput.state.height + 25,
           noDelay: false,
           timeStamp: false,
           showPic: false,
           position: 0,
-          sender: true
-          // sender: Math.random() >= 0.5
+          // sender: true
+          sender: Math.random() >= 0.5
         };
         this.props.sendMessageNow(msgObj, messageLog);
       }
@@ -81,7 +79,7 @@ class MessageSendMessage extends Component {
     return (
       <div className="messageSendMessage">
         <MessageSendFile />
-        <div className='messageSendMessage_textArea'>
+        <div className="messageSendMessage_textArea">
           <Textarea
             ref={input => {
               this.textInput = input;
