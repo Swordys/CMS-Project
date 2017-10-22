@@ -1,8 +1,19 @@
 import React from "react";
 import { Emoji } from "emoji-mart";
 import emoticons from "emoticons";
+import linkify from "linkify-it";
 
-const emojifyText = text => {
+export const linkifyText = text => {
+  let textProcess = text;
+  const linkArr = linkify().match(textProcess);
+  if (linkArr)
+    linkArr.forEach(e => {
+      textProcess = textProcess.replace(e.raw, "wow");
+    });
+  // console.log(textProcess);
+};
+
+export const emojifyText = text => {
   const defenition = {
     smile: {
       title: ":slightly_smiling_face:",
@@ -71,5 +82,3 @@ const emojifyText = text => {
     IsOnlyEmojy: textReturnArr.every(e => e.key)
   };
 };
-
-export default emojifyText;

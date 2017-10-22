@@ -1,5 +1,5 @@
 import moment from "moment";
-import database from "../firebase/firebase";
+import firebase from "../firebase/firebase";
 
 import {
   MESSAGE_SENT,
@@ -36,15 +36,18 @@ export const sendEmoji = emoji => ({
   emoji
 });
 
-export const loadMessageLog = () => dispatch => {
-  database.ref("data").once("value", snap => {
-    const snapShot = snap.val();
-    dispatch(
-      snapShot
-        ? loadedMessagesSuccess(Object.values(snap.val()))
-        : loadedMessageFailure()
-    );
-  });
+export const loadMessageLog = () => async dispatch => {
+  // console.log("yes");
+  const snapShot = await firebase
+    .database()
+    .ref("data")
+    .once("value");
+  const messageData = snapShot.val();
+  dispatch(
+    messageData
+      ? loadedMessagesSuccess(Object.values(messageData))
+      : loadedMessageFailure()
+  );
 };
 
 export const sendMessageNow = (msg, log) => dispatch => {
@@ -80,12 +83,16 @@ export const sendMessageNow = (msg, log) => dispatch => {
       if (!currentMsg.timeStamp) {
         previousMsg.showPic = false;
         currentMsg.noDelay = false;
-        database
+        firebase
+          .database()
           .ref("data")
           .limitToLast(2)
           .once("value", snap => {
             const key = Object.keys(snap.val())[0];
-            database.ref(`data/${key}`).set(previousMsg);
+            firebase
+              .database()
+              .ref(`data/${key}`)
+              .set(previousMsg);
           });
       }
     }
@@ -93,6 +100,24 @@ export const sendMessageNow = (msg, log) => dispatch => {
 
   const currentNew = { ...currentMsg };
   currentNew.noDelay = true;
-  database.ref("data").push(currentNew);
+  firebase
+    .database()
+    .ref("data")
+    .push(currentNew);
   dispatch(sendMessage(currentMsg));
 };
+
+// if (!currentMsg.timeStamp) {
+//         previousMsg.showPic = false;
+//         currentMsg.noDelay = false;
+//         const snapShot = await firebase
+//           .database()
+//           .ref("data")
+//           .limitToLast(2)
+//           .once("value");
+//         const previousKey = await Object.keys(snapShot.val())[1];
+//         firebase
+//           .database()
+//           .ref(`data/${previousKey}`)
+//           .set(previousMsg);
+//       }

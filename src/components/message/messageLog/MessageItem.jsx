@@ -4,7 +4,7 @@ import TransitionGroup from "react-transition-group/TransitionGroup";
 import CSSTransition from "react-transition-group/CSSTransition";
 
 // Helpers
-import emojifyText from "../../../helpers/messageHelper";
+import { emojifyText, linkifyText } from "../../../helpers/messageHelper";
 
 // Components
 import MessagePic from "./MessagePic";
@@ -14,9 +14,9 @@ import "../../../css/messageApp/message/messageLog/messageItem.css";
 
 const MessageItem = ({ text, date, sender, showPic, id, noDelay }) => {
   const renderText = () => {
-    // console.log(this.divElement && this.divElement.clientHeight);
+    linkifyText(text);
     const { textReturnArr, IsOnlyEmojy } = emojifyText(text);
-
+    console.log(textReturnArr);
     const classObj = {
       msgClass: sender ? "messageItem_textOutbox" : "messageItem_textInbox",
       textClass: ""
