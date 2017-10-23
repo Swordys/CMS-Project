@@ -2,7 +2,7 @@ import React from "react";
 import { Emoji } from "emoji-mart";
 import emoticons from "emoticons";
 import linkify from "linkify-it";
-// import metascraper from "metascraper";
+import metascraper from "metascraper";
 
 export const linkifyText = (textInput, sender) => {
   const textProcess = textInput;
@@ -30,15 +30,7 @@ export const linkifyText = (textInput, sender) => {
     });
 
   // if (linkArr) {
-  //   linkArr.forEach(e => {
-  //     metascraper
-  //       .scrapeUrl(
-  //         "http://www.bloomberg.com/news/articles/2016-05-24/as-zenefits-stumbles-gusto-goes-head-on-by-selling-insurance"
-  //       )
-  //       .then(metadata => {
-  //         console.log(metadata);
-  //       });
-  //   });
+  //   metascraper.scrape('https://facebook.com').then(res=> res);
   // }
 
   return linkArr ? returnArr : textInput;

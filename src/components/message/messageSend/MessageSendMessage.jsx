@@ -40,38 +40,41 @@ class MessageSendMessage extends Component {
     }
   }
 
-  sendMessage = e => {
+  checkEvent = e => {
     const isShift = e.nativeEvent.shiftKey;
     const isEnter = e.nativeEvent.keyCode === 13;
     const textValue = this.state.inputValue;
 
     if (isEnter && !isShift) {
       e.preventDefault();
-      const checkText = textValue.trim();
-      const timeFull = moment().format("YYYY-MM-DD HH:mm:ss");
-      const timeMin = moment().format("ddd, h:mm a");
+      this.sendMessage(textValue);
+    }
+  };
 
-      if (checkText) {
-        this.setState({
-          inputValue: "",
-        });
+  sendMessage = text => {
+    const checkText = text.trim();
+    const timeFull = moment().format("YYYY-MM-DD HH:mm:ss");
+    const timeMin = moment().format("ddd, h:mm a");
+    if (checkText) {
+      this.setState({
+        inputValue: ""
+      });
 
-        const { messageLog } = this.props;
-        const msgObj = {
-          key: uuid(),
-          id: uuid(),
-          text: checkText,
-          date: timeMin,
-          dateFull: timeFull,
-          height: this.textInput.state.height + 25,
-          noDelay: false,
-          timeStamp: false,
-          showPic: false,
-          // sender: true
-          sender: Math.random() >= 0.5
-        };
-        this.props.sendMessageNow(msgObj, messageLog);
-      }
+      const { messageLog } = this.props;
+      const msgObj = {
+        key: uuid(),
+        id: uuid(),
+        text: checkText,
+        date: timeMin,
+        dateFull: timeFull,
+        height: this.textInput.state.height + 25,
+        noDelay: false,
+        timeStamp: false,
+        showPic: false,
+        // sender: true
+        sender: Math.random() >= 0.5
+      };
+      this.props.sendMessageNow(msgObj, messageLog);
     }
   };
 
@@ -85,7 +88,7 @@ class MessageSendMessage extends Component {
             ref={input => {
               this.textInput = input;
             }}
-            onKeyPress={this.sendMessage}
+            onKeyPress={this.checkEvent}
             onKeyUp={e => {
               const value = e.target.selectionStart;
               const { cursorPosition } = this.state;
