@@ -15,7 +15,8 @@ import { sendMessageNow } from "../../../actions/Actions";
 class MessageSendMessage extends Component {
   state = {
     inputValue: "",
-    cursorPosition: 0
+    cursorPosition: 0,
+    readOnly: false
   };
 
   componentWillReceiveProps(nextProps) {
@@ -52,7 +53,7 @@ class MessageSendMessage extends Component {
 
       if (checkText) {
         this.setState({
-          inputValue: ""
+          inputValue: "",
         });
 
         const { messageLog } = this.props;
@@ -80,6 +81,7 @@ class MessageSendMessage extends Component {
         <MessageSendFile />
         <div className="messageSendMessage_textArea">
           <Textarea
+            readOnly={this.state.readOnly}
             ref={input => {
               this.textInput = input;
             }}

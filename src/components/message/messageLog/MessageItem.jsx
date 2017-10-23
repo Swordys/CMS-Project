@@ -4,7 +4,7 @@ import TransitionGroup from "react-transition-group/TransitionGroup";
 import CSSTransition from "react-transition-group/CSSTransition";
 
 // Helpers
-import { emojifyText, linkifyText } from "../../../helpers/messageHelper";
+import { processText } from "../../../helpers/messageHelper";
 
 // Components
 import MessagePic from "./MessagePic";
@@ -14,22 +14,20 @@ import "../../../css/messageApp/message/messageLog/messageItem.css";
 
 const MessageItem = ({ text, date, sender, showPic, id, noDelay }) => {
   const renderText = () => {
-    linkifyText(text);
-    const { textReturnArr, IsOnlyEmojy } = emojifyText(text);
-    console.log(textReturnArr);
+    const { textArr, onlyEmojy } = processText(text, sender);
     const classObj = {
       msgClass: sender ? "messageItem_textOutbox" : "messageItem_textInbox",
       textClass: ""
     };
 
-    if (IsOnlyEmojy) {
+    if (onlyEmojy) {
       classObj.msgClass = "messageItem_emoji";
       classObj.textClass = "messageItem_containEmoji";
     }
 
     return (
       <div
-        className={`${!IsOnlyEmojy
+        className={`${!onlyEmojy
           ? "messageItem_text"
           : ""} ${classObj.msgClass}`}
       >
@@ -40,7 +38,7 @@ const MessageItem = ({ text, date, sender, showPic, id, noDelay }) => {
             wordBreak: "break-word"
           }}
         >
-          <div className={classObj.textClass}>{textReturnArr}</div>
+          <div className={classObj.textClass}>{textArr}</div>
         </div>
         <div className="messageItem_timeInfo">{date}</div>
       </div>

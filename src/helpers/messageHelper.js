@@ -2,18 +2,49 @@ import React from "react";
 import { Emoji } from "emoji-mart";
 import emoticons from "emoticons";
 import linkify from "linkify-it";
+// import metascraper from "metascraper";
 
-export const linkifyText = text => {
-  let textProcess = text;
+export const linkifyText = (textInput, sender) => {
+  const textProcess = textInput;
   const linkArr = linkify().match(textProcess);
+  const returnArr = [];
+  let indx = 0;
   if (linkArr)
-    linkArr.forEach(e => {
-      textProcess = textProcess.replace(e.raw, "wow");
+    linkArr.forEach((e, i) => {
+      const text = textProcess.substring(indx, e.index);
+      const link = (
+        <a
+          className={`messageItemLink ${sender ? "outbox_link" : "inbox_link"}`}
+          key={e.index}
+          href={`${e.url}`}
+        >
+          {e.text}
+        </a>
+      );
+      returnArr.push(text, link);
+      indx = e.lastIndex;
+      if (i === linkArr.length - 1) {
+        const lastText = textProcess.substring(indx, textProcess.length);
+        returnArr.push(lastText);
+      }
     });
-  // console.log(textProcess);
+
+  // if (linkArr) {
+  //   linkArr.forEach(e => {
+  //     metascraper
+  //       .scrapeUrl(
+  //         "http://www.bloomberg.com/news/articles/2016-05-24/as-zenefits-stumbles-gusto-goes-head-on-by-selling-insurance"
+  //       )
+  //       .then(metadata => {
+  //         console.log(metadata);
+  //       });
+  //   });
+  // }
+
+  return linkArr ? returnArr : textInput;
 };
 
-export const emojifyText = text => {
+export const processText = (text, sender) => {
   const defenition = {
     smile: {
       title: ":slightly_smiling_face:",
@@ -32,16 +63,16 @@ export const emojifyText = text => {
       codes: [":*"]
     }
   };
-  let processText = text;
 
+  let newText = text;
   emoticons.define(defenition);
 
-  processText = emoticons.replace(processText, (n, c, t) => t);
+  newText = emoticons.replace(newText, (n, c, t) => t);
 
   const reggoEmoji = /(:[a-zA-Z0-9-_+]+:(:skin-tone-[2-6]:)?)/g;
   const filterSkin = /^(:skin-tone-[2-6]:)/;
-  const textReturnArr = [];
-  const textToArr = processText.split(reggoEmoji).filter(e => e);
+  const textToArr = newText.split(reggoEmoji).filter(e => e);
+  const textArr = [];
 
   for (let i = 0; i < textToArr.length; i += 1) {
     const item = textToArr[i];
@@ -68,17 +99,18 @@ export const emojifyText = text => {
             }}
           />
         );
-        textReturnArr.push(retEmoji);
+        textArr.push(retEmoji);
       } else if (!filterSkin.test(item)) {
-        textReturnArr.push(item);
+        textArr.push(item);
       }
     } else if (/\S/.test(item)) {
-      textReturnArr.push(item);
+      const newItem = linkifyText(item, sender);
+      textArr.push(newItem);
     }
   }
 
   return {
-    textReturnArr,
-    IsOnlyEmojy: textReturnArr.every(e => e.key)
+    textArr,
+    onlyEmojy: textArr.every(e => e.key)
   };
 };
