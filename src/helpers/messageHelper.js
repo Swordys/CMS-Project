@@ -2,7 +2,7 @@ import React from "react";
 import { Emoji } from "emoji-mart";
 import emoticons from "emoticons";
 import linkify from "linkify-it";
-import metascraper from "metascraper";
+// import metascraper from "metascraper";
 
 export const linkifyText = (textInput, sender) => {
   const textProcess = textInput;
@@ -30,7 +30,7 @@ export const linkifyText = (textInput, sender) => {
     });
 
   // if (linkArr) {
-  //   metascraper.scrape('https://facebook.com').then(res=> res);
+
   // }
 
   return linkArr ? returnArr : textInput;
