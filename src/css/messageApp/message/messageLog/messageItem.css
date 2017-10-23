@@ -79,6 +79,14 @@
 
 /* --- GENERAL --- */
 
+.messageItem_container{
+  border: 1px solid orangered;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  flex-shrink: 0;
+}
+
 .messageItem_text {
   padding: 9px 13px;
   max-width: 600px;

@@ -37,7 +37,6 @@ export const sendEmoji = emoji => ({
 });
 
 export const loadMessageLog = () => async dispatch => {
-  // console.log("yes");
   const snapShot = await firebase
     .database()
     .ref("data")
@@ -106,18 +105,3 @@ export const sendMessageNow = (msg, log) => dispatch => {
     .push(currentNew);
   dispatch(sendMessage(currentMsg));
 };
-
-// if (!currentMsg.timeStamp) {
-//         previousMsg.showPic = false;
-//         currentMsg.noDelay = false;
-//         const snapShot = await firebase
-//           .database()
-//           .ref("data")
-//           .limitToLast(2)
-//           .once("value");
-//         const previousKey = await Object.keys(snapShot.val())[1];
-//         firebase
-//           .database()
-//           .ref(`data/${previousKey}`)
-//           .set(previousMsg);
-//       }

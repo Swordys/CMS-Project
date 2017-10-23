@@ -4,13 +4,13 @@ import { combineReducers } from "redux";
 import {
   messageLogReducer,
   toggleEmojiReducer,
-  sendEmojiReducer
+  sendEmojiReducer,
 } from "./Reducers";
 
 const rootReducer = combineReducers({
   getMessages: messageLogReducer,
   getEmojiState: toggleEmojiReducer,
-  getSentEmoji: sendEmojiReducer
+  getSentEmoji: sendEmojiReducer,
 });
 
 export default rootReducer;

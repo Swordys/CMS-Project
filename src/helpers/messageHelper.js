@@ -2,11 +2,38 @@ import React from "react";
 import { Emoji } from "emoji-mart";
 import emoticons from "emoticons";
 import linkify from "linkify-it";
-// import metascraper from "metascraper";
+import metascraper from "metascraper";
+
+export const getMetaData = text => {
+  const objArr = [];
+  const linkArr = linkify()
+    .set({ fuzzyLink: false })
+    .match(text);
+  return new Promise((resolve, reject) => {
+    if (linkArr) {
+      linkArr.forEach((e, i) => {
+        metascraper.scrapeUrl(e.url).then(res => {
+          if (res.image && res.description && res.title) {
+            objArr.push(res);
+          }
+          if (i === linkArr.length - 1) {
+            resolve(objArr);
+          } else if (objArr.length === 0) {
+            reject();
+          }
+        });
+      });
+    } else {
+      reject();
+    }
+  });
+};
 
 export const linkifyText = (textInput, sender) => {
   const textProcess = textInput;
-  const linkArr = linkify().match(textProcess);
+  const linkArr = linkify()
+    .set({ fuzzyLink: false })
+    .match(textProcess);
   const returnArr = [];
   let indx = 0;
   if (linkArr)
@@ -28,10 +55,6 @@ export const linkifyText = (textInput, sender) => {
         returnArr.push(lastText);
       }
     });
-
-  // if (linkArr) {
-
-  // }
 
   return linkArr ? returnArr : textInput;
 };

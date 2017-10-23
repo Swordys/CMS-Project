@@ -4,7 +4,7 @@ import TransitionGroup from "react-transition-group/TransitionGroup";
 import CSSTransition from "react-transition-group/CSSTransition";
 
 // Helpers
-import { processText } from "../../../helpers/messageHelper";
+import { processText, getMetaData } from "../../../helpers/messageHelper";
 
 // Components
 import MessagePic from "./MessagePic";
@@ -12,8 +12,23 @@ import MessagePic from "./MessagePic";
 // Styles
 import "../../../css/messageApp/message/messageLog/messageItem.css";
 
-const MessageItem = ({ text, date, sender, showPic, id, noDelay }) => {
-  const renderText = () => {
+class MessageItem extends React.Component {
+  state = {
+    urlMeta: []
+  };
+
+  componentDidMount() {
+    getMetaData(this.props.text)
+      .then(urlMeta => {
+        this.setState({
+          urlMeta
+        });
+      })
+      .catch(() => {});
+  }
+
+  renderText = () => {
+    const { text, sender, date } = this.props;
     const { textArr, onlyEmojy } = processText(text, sender);
     const classObj = {
       msgClass: sender ? "messageItem_textOutbox" : "messageItem_textInbox",
@@ -45,8 +60,13 @@ const MessageItem = ({ text, date, sender, showPic, id, noDelay }) => {
     );
   };
 
-  const renderPic = () =>
-    showPic ? (
+  renderMeta = () => this.state.urlMeta.map(meta => (
+      <div key={this.props.id}>{meta.title}</div>
+    ));
+
+  renderPic = () => {
+    const { showPic, id, noDelay, sender } = this.props;
+    return showPic ? (
       <CSSTransition
         key={id}
         classNames="messagePicTrans"
@@ -57,19 +77,26 @@ const MessageItem = ({ text, date, sender, showPic, id, noDelay }) => {
     ) : (
       undefined
     );
+  };
 
-  return (
-    <div
-      ref={e => {
-        this.divElement = e;
-      }}
-      className={sender ? "messageItem" : "messageItem_inbox"}
-    >
-      {renderText()}
-      <TransitionGroup>{renderPic()}</TransitionGroup>
-    </div>
-  );
-};
+  render() {
+    const { sender } = this.props;
+    return (
+      <div
+        className={`messageItem_container ${sender
+          ? "messageItem"
+          : "messageItem_inbox"}`}
+        style={{ alignItems: `${sender ? "flex-end" : "flex-start"}` }}
+      >
+        <div>
+          {this.renderText()}
+          <TransitionGroup>{this.renderPic()}</TransitionGroup>
+        </div>
+        {this.renderMeta()}
+      </div>
+    );
+  }
+}
 
 MessageItem.propTypes = {
   text: PropTypes.string.isRequired,

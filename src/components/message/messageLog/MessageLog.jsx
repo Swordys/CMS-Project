@@ -36,7 +36,7 @@ class MessageLog extends Component {
   renderMessages = () => {
     const { messageLog } = this.props;
     const bottomMsg = (
-      <MessageTransition key={"bot"}>
+      <MessageTransition key="bot">
         <div
           ref={e => {
             this.bottomMsg = e;
@@ -73,6 +73,7 @@ class MessageLog extends Component {
       <div
         role="presentation"
         onClick={() => this.props.closeEmoji()}
+        onKeyUp={k => k}
         className="messageLog"
       >
         <EmojiBox />
