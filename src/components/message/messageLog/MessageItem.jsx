@@ -13,6 +13,22 @@ import MessagePic from "./MessagePic";
 import "../../../css/messageApp/message/messageLog/messageItem.css";
 
 class MessageItem extends React.Component {
+  static defaultProps = {
+    urlMeta: []
+  };
+
+  static propTypes = {
+    text: PropTypes.string.isRequired,
+    date: PropTypes.string.isRequired,
+    sender: PropTypes.bool.isRequired,
+    noDelay: PropTypes.bool.isRequired,
+    showPic: PropTypes.bool.isRequired,
+    id: PropTypes.string.isRequired,
+    urlMeta: PropTypes.arrayOf(
+      PropTypes.shape({ title: PropTypes.string.isRequired })
+    )
+  };
+
   renderText = () => {
     const { text, sender, date } = this.props;
     const { textArr, onlyEmojy } = processText(text, sender);
@@ -84,17 +100,5 @@ class MessageItem extends React.Component {
     );
   }
 }
-
-MessageItem.propTypes = {
-  text: PropTypes.string.isRequired,
-  date: PropTypes.string.isRequired,
-  sender: PropTypes.bool.isRequired,
-  noDelay: PropTypes.bool.isRequired,
-  showPic: PropTypes.bool.isRequired,
-  id: PropTypes.string.isRequired,
-  urlMeta: PropTypes.arrayOf(
-    PropTypes.shape({ title: PropTypes.string.isRequired })
-  ).isRequired
-};
 
 export default MessageItem;

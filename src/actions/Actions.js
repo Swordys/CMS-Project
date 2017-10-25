@@ -4,18 +4,21 @@ import { getMetaData } from "../helpers/messageHelper";
 
 import {
   MESSAGE_SENT,
+  MESSAGE_LOG_LOADED,
+  MESSAGE_LOG_EMPTY,
+  MESSAGE_URL_LOADED,
   EMOJI_TOGGLED,
   EMOJI_CLOSED,
   EMOJI_SENT
 } from "./ActionTypes";
 
 const loadedMessagesSuccess = msgArr => ({
-  type: "MESSAGELOG_LOADED",
+  type: MESSAGE_LOG_LOADED,
   msgArr
 });
 
 const loadedMessageFailure = msgArr => ({
-  type: "MESSAGELOG_EMPTY",
+  type: MESSAGE_LOG_EMPTY,
   msgArr
 });
 
@@ -25,7 +28,7 @@ const sendMessage = msg => ({
 });
 
 const loadedUrlMeta = urlObj => ({
-  type: "MESSAGE_URL_LOADED",
+  type: MESSAGE_URL_LOADED,
   urlObj
 });
 
@@ -57,13 +60,15 @@ export const loadMessageLog = () => async dispatch => {
 
 export const sendMessageNow = (msg, log) => async dispatch => {
   const logLen = log.length;
+  let condition = false;
+  let previousMsg = null;
   const currentMsg = msg;
   if (logLen < 1) {
     currentMsg.timeStamp = true;
     currentMsg.noDelay = true;
     currentMsg.showPic = true;
   } else {
-    const previousMsg = log[logLen - 1];
+    previousMsg = log[logLen - 1];
     // -------- TIME STUFF -------
 
     const lastTime = moment(previousMsg.dateFull);
@@ -80,14 +85,37 @@ export const sendMessageNow = (msg, log) => async dispatch => {
 
     currentMsg.noDelay = true;
     currentMsg.showPic = true;
+    condition =
+      ((previousMsg.sender && msg.sender) ||
+        (!previousMsg.sender && !msg.sender)) &&
+      !currentMsg.timeStamp;
 
-    if (
-      (previousMsg.sender && msg.sender) ||
-      (!previousMsg.sender && !msg.sender)
-    ) {
-      if (!currentMsg.timeStamp) {
-        previousMsg.showPic = false;
-        currentMsg.noDelay = false;
+    if (condition) {
+      previousMsg.showPic = false;
+      currentMsg.noDelay = false;
+    }
+  }
+
+  dispatch(sendMessage(currentMsg));
+
+  const currentNew = { ...currentMsg };
+  currentNew.noDelay = true;
+
+  // IF THERE IS URL META LOAD HERE
+
+  const urlMeta = await getMetaData(currentNew.text).catch(err => err);
+  if (urlMeta) {
+    dispatch(loadedUrlMeta({ urlMeta, id: currentNew.id }));
+    currentNew.urlMeta = urlMeta;
+  }
+
+  // PUSH MESSAGE && UPDATE PREVIOUS ONE
+  firebase
+    .database()
+    .ref("data")
+    .push(currentNew)
+    .then(() => {
+      if (condition) {
         firebase
           .database()
           .ref("data")
@@ -100,21 +128,5 @@ export const sendMessageNow = (msg, log) => async dispatch => {
               .set(previousMsg);
           });
       }
-    }
-  }
-
-  dispatch(sendMessage(currentMsg));
-
-  const currentNew = { ...currentMsg };
-  currentNew.noDelay = true;
-  const urlMeta = await getMetaData(currentMsg.text).catch(err => err);
-
-  // IF THERE IS URL META LOAD HERE
-  if (urlMeta) dispatch(loadedUrlMeta({ urlMeta, id: currentMsg.id }));
-  currentNew.urlMeta = urlMeta;
-
-  firebase
-    .database()
-    .ref("data")
-    .push(currentNew);
+    });
 };

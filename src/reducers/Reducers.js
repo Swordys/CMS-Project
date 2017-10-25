@@ -1,20 +1,23 @@
 import {
   MESSAGE_SENT,
+  MESSAGE_LOG_LOADED,
+  MESSAGE_LOG_EMPTY,
+  MESSAGE_URL_LOADED,
   EMOJI_TOGGLED,
   EMOJI_CLOSED,
   EMOJI_SENT
 } from ".././actions/ActionTypes";
 
-import {updateMessage} from '../helpers/messageHelper';
+import { updateMessage } from "../helpers/messageHelper";
 
 export const messageLogReducer = (state = [], action) => {
   switch (action.type) {
-    case "MESSAGELOG_LOADED":
+    case MESSAGE_LOG_LOADED:
       return action.msgArr;
-    case "MESSAGELOG_EMPTY":
+    case MESSAGE_LOG_EMPTY:
       return state;
-    case "MESSAGE_URL_LOADED":
-      return [...updateMessage(state, action.urlObj)]
+    case MESSAGE_URL_LOADED:
+      return [...updateMessage(state, action.urlObj)];
     case MESSAGE_SENT:
       return [...state, action.msg];
     default:

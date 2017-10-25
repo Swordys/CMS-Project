@@ -43,7 +43,7 @@
   position: relative;
 }
 
-.messageItem_inbox *::selection{
+.messageItem_inbox *::selection {
   background: white;
 }
 
@@ -64,12 +64,10 @@
   position: relative;
 }
 
-
 .messageItem_textOutbox {
   background: white;
   color: rgb(51, 51, 51);
 }
-
 
 .messageItem:hover .messageItem_timeInfo {
   opacity: 0.8;
@@ -79,12 +77,16 @@
 
 /* --- GENERAL --- */
 
-.messageItem_container{
+.messageItem_container {
   border: 1px solid orangered;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   flex-shrink: 0;
+}
+
+.messageItem_container:first-child {
+  margin-top: 20px;
 }
 
 .messageItem_text {
@@ -102,7 +104,6 @@
   box-shadow: 0px 1.5px 2px -1px rgba(0, 0, 0, 0.2);
   cursor: default;
 }
-
 
 .messageItem_emoji {
   position: relative;
