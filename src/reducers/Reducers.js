@@ -5,12 +5,16 @@ import {
   EMOJI_SENT
 } from ".././actions/ActionTypes";
 
+import {updateMessage} from '../helpers/messageHelper';
+
 export const messageLogReducer = (state = [], action) => {
   switch (action.type) {
     case "MESSAGELOG_LOADED":
       return action.msgArr;
     case "MESSAGELOG_EMPTY":
       return state;
+    case "MESSAGE_URL_LOADED":
+      return [...updateMessage(state, action.urlObj)]
     case MESSAGE_SENT:
       return [...state, action.msg];
     default:

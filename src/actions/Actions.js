@@ -1,5 +1,6 @@
 import moment from "moment";
 import firebase from "../firebase/firebase";
+import { getMetaData } from "../helpers/messageHelper";
 
 import {
   MESSAGE_SENT,
@@ -21,6 +22,11 @@ const loadedMessageFailure = msgArr => ({
 const sendMessage = msg => ({
   type: MESSAGE_SENT,
   msg
+});
+
+const loadedUrlMeta = urlObj => ({
+  type: "MESSAGE_URL_LOADED",
+  urlObj
 });
 
 export const toggleEmoji = () => ({
@@ -49,7 +55,7 @@ export const loadMessageLog = () => async dispatch => {
   );
 };
 
-export const sendMessageNow = (msg, log) => dispatch => {
+export const sendMessageNow = (msg, log) => async dispatch => {
   const logLen = log.length;
   const currentMsg = msg;
   if (logLen < 1) {
@@ -97,11 +103,18 @@ export const sendMessageNow = (msg, log) => dispatch => {
     }
   }
 
+  dispatch(sendMessage(currentMsg));
+
   const currentNew = { ...currentMsg };
   currentNew.noDelay = true;
+  const urlMeta = await getMetaData(currentMsg.text).catch(err => err);
+
+  // IF THERE IS URL META LOAD HERE
+  if (urlMeta) dispatch(loadedUrlMeta({ urlMeta, id: currentMsg.id }));
+  currentNew.urlMeta = urlMeta;
+
   firebase
     .database()
     .ref("data")
     .push(currentNew);
-  dispatch(sendMessage(currentMsg));
 };

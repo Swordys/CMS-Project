@@ -3,6 +3,23 @@ import { Emoji } from "emoji-mart";
 import emoticons from "emoticons";
 import linkify from "linkify-it";
 import metascraper from "metascraper";
+import uuid from "uuid";
+
+export const updateMessage = (state, urlObj) => {
+  let indx = 0;
+  const item = state.find((e, i) => {
+    indx = i;
+    return e.id === urlObj.id;
+  });
+  if (item) {
+    const newItem = { ...item };
+    newItem.urlMeta = urlObj.urlMeta;
+    const newState = [...state];
+    newState[indx] = newItem;
+    return newState;
+  }
+  return state;
+};
 
 export const getMetaData = text => {
   const objArr = [];
@@ -14,7 +31,9 @@ export const getMetaData = text => {
       linkArr.forEach((e, i) => {
         metascraper.scrapeUrl(e.url).then(res => {
           if (res.image && res.description && res.title) {
-            objArr.push(res);
+            const newRes = { ...res };
+            newRes.id = uuid();
+            objArr.push(newRes);
           }
           if (i === linkArr.length - 1) {
             resolve(objArr);

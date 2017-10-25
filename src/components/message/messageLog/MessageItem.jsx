@@ -4,7 +4,7 @@ import TransitionGroup from "react-transition-group/TransitionGroup";
 import CSSTransition from "react-transition-group/CSSTransition";
 
 // Helpers
-import { processText, getMetaData } from "../../../helpers/messageHelper";
+import { processText } from "../../../helpers/messageHelper";
 
 // Components
 import MessagePic from "./MessagePic";
@@ -13,20 +13,6 @@ import MessagePic from "./MessagePic";
 import "../../../css/messageApp/message/messageLog/messageItem.css";
 
 class MessageItem extends React.Component {
-  state = {
-    urlMeta: []
-  };
-
-  componentDidMount() {
-    getMetaData(this.props.text)
-      .then(urlMeta => {
-        this.setState({
-          urlMeta
-        });
-      })
-      .catch(() => {});
-  }
-
   renderText = () => {
     const { text, sender, date } = this.props;
     const { textArr, onlyEmojy } = processText(text, sender);
@@ -59,11 +45,12 @@ class MessageItem extends React.Component {
       </div>
     );
   };
-
-  renderMeta = () => this.state.urlMeta.map(meta => (
-      <div key={this.props.id}>{meta.title}</div>
-    ));
-
+  renderMeta = () => {
+    const { urlMeta } = this.props;
+    return urlMeta
+      ? urlMeta.map(meta => <div key={meta.id}>{meta.title}</div>)
+      : null;
+  };
   renderPic = () => {
     const { showPic, id, noDelay, sender } = this.props;
     return showPic ? (
@@ -104,7 +91,10 @@ MessageItem.propTypes = {
   sender: PropTypes.bool.isRequired,
   noDelay: PropTypes.bool.isRequired,
   showPic: PropTypes.bool.isRequired,
-  id: PropTypes.string.isRequired
+  id: PropTypes.string.isRequired,
+  urlMeta: PropTypes.arrayOf(
+    PropTypes.shape({ title: PropTypes.string.isRequired })
+  ).isRequired
 };
 
 export default MessageItem;
