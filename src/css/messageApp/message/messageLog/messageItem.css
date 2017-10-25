@@ -78,7 +78,7 @@
 /* --- GENERAL --- */
 
 .messageItem_container {
-  border: 1px solid orangered;
+  /* border: 1px solid orangered; */
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -163,4 +163,11 @@
 
 .outbox_link:hover {
   text-decoration: underline;
+}
+
+.messageItem_meta {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-end;
 }

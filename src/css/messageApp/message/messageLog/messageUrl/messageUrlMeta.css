@@ -1,0 +1,42 @@
+.messageItem_url_meta {
+  max-width: 500px;
+  margin-top: 8px;
+  box-sizing: border-box;
+  padding: 15px;
+  border-radius: 8px;
+  overflow: hidden;
+  display: flex;
+  background: white;
+  box-shadow: 0px 1.5px 2px -1px rgba(0, 0, 0, 0.2);
+}
+
+.meta_url_publisher {
+  font-size: 12px;
+  color: rgb(50, 50, 50);
+  margin-bottom: 5px;
+}
+
+.meta_url_title {
+  margin-bottom: 5px;
+}
+
+.meta_url_title > a {
+  color: blue;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.meta_url_description {
+  font-size: 14px;
+  color: rgb(22, 22, 22);
+}
+
+.messageItem_url_image {
+  height: 70px;
+  width: 70px;
+  flex-shrink: 0;
+  background-size: cover;
+  background-position: center center;
+  margin-left: 20px;
+}

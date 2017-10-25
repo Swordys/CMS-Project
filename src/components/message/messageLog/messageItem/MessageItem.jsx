@@ -4,13 +4,14 @@ import TransitionGroup from "react-transition-group/TransitionGroup";
 import CSSTransition from "react-transition-group/CSSTransition";
 
 // Helpers
-import { processText } from "../../../helpers/messageHelper";
+import { processText } from "../../../../helpers/messageHelper";
 
 // Components
 import MessagePic from "./MessagePic";
+import MessageUrlMeta from "./MessageUrlMeta";
 
 // Styles
-import "../../../css/messageApp/message/messageLog/messageItem.css";
+import "../../../../css/messageApp/message/messageLog/messageItem.css";
 
 class MessageItem extends React.Component {
   static defaultProps = {
@@ -63,8 +64,9 @@ class MessageItem extends React.Component {
   };
   renderMeta = () => {
     const { urlMeta } = this.props;
+    console.log(urlMeta);
     return urlMeta
-      ? urlMeta.map(meta => <div key={meta.id}>{meta.title}</div>)
+      ? urlMeta.map(meta => <MessageUrlMeta key={meta.id} {...meta} />)
       : null;
   };
   renderPic = () => {
@@ -95,7 +97,7 @@ class MessageItem extends React.Component {
           {this.renderText()}
           <TransitionGroup>{this.renderPic()}</TransitionGroup>
         </div>
-        {this.renderMeta()}
+        <div className="messageItem_meta">{this.renderMeta()}</div>
       </div>
     );
   }

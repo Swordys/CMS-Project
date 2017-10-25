@@ -9,7 +9,7 @@ import "../../../css/messageApp/message/messageLog/messageLog.css";
 import "../../../css/messageApp/message/messageLog/transitions/messageTrans.css";
 
 // Components
-import MessageItem from "./MessageItem";
+import MessageItem from "./messageItem/MessageItem";
 import EmojiBox from "../../general/EmojiBox";
 
 // Actions
