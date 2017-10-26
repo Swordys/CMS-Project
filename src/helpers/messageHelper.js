@@ -23,12 +23,20 @@ export const updateMessage = (state, urlObj) => {
 
 export const getMetaData = text => {
   const objArr = [];
+  const uniqArr = [];
+  const uniqObj = {};
   const linkArr = linkify()
     .set({ fuzzyLink: false })
     .match(text);
+  linkArr.forEach(e => {
+    if (!uniqObj[e.text]) {
+      uniqObj[e.text] = e.text;
+      uniqArr.push(e);
+    }
+  });
   return new Promise((resolve, reject) => {
-    if (linkArr) {
-      linkArr.forEach((e, i) => {
+    if (uniqArr) {
+      uniqArr.forEach((e, i) => {
         metascraper.scrapeUrl(e.url).then(res => {
           if (res.image && res.description && res.title) {
             const newRes = { ...res };
@@ -36,7 +44,7 @@ export const getMetaData = text => {
             newRes.inputUrl = e.url;
             objArr.push(newRes);
           }
-          if (i === linkArr.length - 1) {
+          if (i === uniqArr.length - 1) {
             resolve(objArr);
           } else if (objArr.length === 0) {
             reject();

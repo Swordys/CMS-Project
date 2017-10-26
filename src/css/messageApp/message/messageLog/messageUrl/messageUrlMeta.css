@@ -21,7 +21,7 @@
 }
 
 .meta_url_title > a {
-  color: blue;
+  color: rgba(0, 91, 234, 0.85);
   text-decoration: none;
   font-size: 14px;
   font-weight: bold;
