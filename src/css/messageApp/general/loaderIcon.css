@@ -1,0 +1,61 @@
+.messageItem_load_icon {
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: row;
+  width: 96px;
+  flex-wrap: wrap;
+  transform: scale(0.5);
+}
+
+.load_icon_box {
+  height: 30px;
+  width: 30%;
+  flex-grow: 1;
+  margin: 0px;
+  border-radius: 2px;
+  background: rgba(0, 91, 234, 0.85);
+  animation: anim 1.2s cubic-bezier(0, 1.79, 1, -1.67) infinite;
+}
+
+@keyframes anim {
+  50% {
+    transform: scale(0.7);
+    opacity: 0.3;
+  }
+}
+
+.load_icon_box:nth-child(1) {
+  animation-delay: 0.1s;
+}
+
+.load_icon_box:nth-child(2) {
+  animation-delay: 0.3s;
+}
+
+.load_icon_box:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+.load_icon_box:nth-child(4) {
+  animation-delay: 0.3s;
+}
+
+.load_icon_box:nth-child(5) {
+  animation-delay: 0.4s;
+}
+
+.load_icon_box:nth-child(6) {
+  animation-delay: 0.5s;
+}
+
+.load_icon_box:nth-child(7) {
+  animation-delay: 0.4s;
+}
+
+.load_icon_box:nth-child(8) {
+  animation-delay: 0.5s;
+}
+
+.load_icon_box:nth-child(9) {
+  animation-delay: 0.6s;
+}

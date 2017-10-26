@@ -23,6 +23,20 @@
 
 /* MESSAGE LOG GENERAL */
 
+.messageLog_load {
+  height: 100vh;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: white;
+  opacity: 0.9;
+  z-index: 5000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .messageLog {
   height: 100vh;
   width: 100%;

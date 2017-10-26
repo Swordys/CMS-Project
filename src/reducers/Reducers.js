@@ -44,3 +44,14 @@ export const sendEmojiReducer = (state = {}, action) => {
       return state;
   }
 };
+
+export const loadIconReducer = (state = false, action) => {
+  switch (action.type) {
+    case "LOADING_STARTED":
+      return true;
+    case "LOADING_STOPPED":
+      return false;
+    default:
+      return state;
+  }
+};

@@ -45,12 +45,22 @@ export const sendEmoji = emoji => ({
   emoji
 });
 
+const loadingStarted = () => ({
+  type: "LOADING_STARTED"
+});
+
+const loadingStopped = () => ({
+  type: "LOADING_STOPPED"
+});
+
 export const loadMessageLog = () => async dispatch => {
+  dispatch(loadingStarted());
   const snapShot = await firebase
     .database()
     .ref("data")
     .once("value");
   const messageData = snapShot.val();
+  dispatch(loadingStopped());
   dispatch(
     messageData
       ? loadedMessagesSuccess(Object.values(messageData))
