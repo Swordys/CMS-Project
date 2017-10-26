@@ -64,7 +64,6 @@ class MessageItem extends React.Component {
   };
   renderMeta = () => {
     const { urlMeta } = this.props;
-    console.log(urlMeta);
     return urlMeta
       ? urlMeta.map(meta => <MessageUrlMeta key={meta.id} {...meta} />)
       : null;
@@ -97,7 +96,13 @@ class MessageItem extends React.Component {
           {this.renderText()}
           <TransitionGroup>{this.renderPic()}</TransitionGroup>
         </div>
-        <div className="messageItem_meta">{this.renderMeta()}</div>
+        <div
+          className={`messageItem_meta ${sender
+            ? "messageItem_meta_outBox"
+            : "messageItem_meta_inBox"}`}
+        >
+          {this.renderMeta()}
+        </div>
       </div>
     );
   }

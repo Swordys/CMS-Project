@@ -78,7 +78,6 @@
 /* --- GENERAL --- */
 
 .messageItem_container {
-  /* border: 1px solid orangered; */
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -93,7 +92,7 @@
   padding: 9px 13px;
   max-width: 600px;
   font-size: 14px;
-  margin-top: 7px;
+  margin-top: 15px;
   position: relative;
   line-height: 1.2em;
   border-radius: 15px;
@@ -169,5 +168,12 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+}
+
+.messageItem_meta_outBox {
   align-items: flex-end;
+}
+
+.messageItem_meta_inBox {
+  align-items: flex-start;
 }

@@ -33,6 +33,7 @@ export const getMetaData = text => {
           if (res.image && res.description && res.title) {
             const newRes = { ...res };
             newRes.id = uuid();
+            newRes.inputUrl = e.url;
             objArr.push(newRes);
           }
           if (i === linkArr.length - 1) {
