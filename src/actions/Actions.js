@@ -58,7 +58,7 @@ export const loadMessageLog = () => async dispatch => {
   );
 };
 
-export const sendMessageNow = (msg, log) => async dispatch => {
+export const sendMessageNow = (msg, log) => dispatch => {
   const logLen = log.length;
   let condition = false;
   let previousMsg = null;
@@ -101,20 +101,13 @@ export const sendMessageNow = (msg, log) => async dispatch => {
   const currentNew = { ...currentMsg };
   currentNew.noDelay = true;
 
-  // IF THERE IS URL META LOAD HERE
-
-  const urlMeta = await getMetaData(currentNew.text).catch(err => err);
-  if (urlMeta) {
-    dispatch(loadedUrlMeta({ urlMeta, id: currentNew.id }));
-    currentNew.urlMeta = urlMeta;
-  }
-
-  // PUSH MESSAGE && UPDATE PREVIOUS ONE
   firebase
     .database()
     .ref("data")
     .push(currentNew)
-    .then(() => {
+    .then(async el => {
+      // PUSH MESSAGE && UPDATE PREVIOUS ONE
+
       if (condition) {
         firebase
           .database()
@@ -127,6 +120,17 @@ export const sendMessageNow = (msg, log) => async dispatch => {
               .ref(`data/${key}`)
               .set(previousMsg);
           });
+      }
+      // IF THERE IS URL META LOAD HERE
+
+      const urlMeta = await getMetaData(currentNew.text).catch(err => err);
+      if (urlMeta) {
+        dispatch(loadedUrlMeta({ urlMeta, id: currentNew.id }));
+        currentNew.urlMeta = urlMeta;
+        firebase
+          .database()
+          .ref(`data/${el.key}`)
+          .set(currentNew);
       }
     });
 };

@@ -28,12 +28,13 @@ export const getMetaData = text => {
   const linkArr = linkify()
     .set({ fuzzyLink: false })
     .match(text);
-  linkArr.forEach(e => {
-    if (!uniqObj[e.text]) {
-      uniqObj[e.text] = e.text;
-      uniqArr.push(e);
-    }
-  });
+  if (linkArr)
+    linkArr.forEach(e => {
+      if (!uniqObj[e.text]) {
+        uniqObj[e.text] = e.text;
+        uniqArr.push(e);
+      }
+    });
   return new Promise((resolve, reject) => {
     if (uniqArr) {
       uniqArr.forEach((e, i) => {

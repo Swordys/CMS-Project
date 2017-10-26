@@ -3,10 +3,8 @@ import PropTypes from "prop-types";
 import TransitionGroup from "react-transition-group/TransitionGroup";
 import CSSTransition from "react-transition-group/CSSTransition";
 
-// Helpers
-import { processText } from "../../../../helpers/messageHelper";
-
 // Components
+import MessageText from "./MessageText";
 import MessagePic from "./MessagePic";
 import MessageUrlMeta from "./MessageUrlMeta";
 
@@ -30,38 +28,6 @@ class MessageItem extends React.Component {
     )
   };
 
-  renderText = () => {
-    const { text, sender, date } = this.props;
-    const { textArr, onlyEmojy } = processText(text, sender);
-    const classObj = {
-      msgClass: sender ? "messageItem_textOutbox" : "messageItem_textInbox",
-      textClass: ""
-    };
-
-    if (onlyEmojy) {
-      classObj.msgClass = "messageItem_emoji";
-      classObj.textClass = "messageItem_containEmoji";
-    }
-
-    return (
-      <div
-        className={`${!onlyEmojy
-          ? "messageItem_text"
-          : ""} ${classObj.msgClass}`}
-      >
-        <div
-          style={{
-            whiteSpace: "pre-wrap",
-            fontSize: "14px",
-            wordBreak: "break-word"
-          }}
-        >
-          <div className={classObj.textClass}>{textArr}</div>
-        </div>
-        <div className="messageItem_timeInfo">{date}</div>
-      </div>
-    );
-  };
   renderMeta = () => {
     const { urlMeta } = this.props;
     return urlMeta
@@ -93,7 +59,7 @@ class MessageItem extends React.Component {
         style={{ alignItems: `${sender ? "flex-end" : "flex-start"}` }}
       >
         <div>
-          {this.renderText()}
+          <MessageText {...this.props} />
           <TransitionGroup>{this.renderPic()}</TransitionGroup>
         </div>
         <div
