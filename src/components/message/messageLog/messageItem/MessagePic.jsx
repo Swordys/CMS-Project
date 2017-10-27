@@ -2,30 +2,12 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 
 class MessagePic extends Component {
-  state = {
-    opacity: "0"
-  };
-
-  componentWillMount() {
-    if (this.props.noDelay) {
-      this.setState({
-        opacity: "1"
-      });
-    } else
-      setTimeout(() => {
-        this.setState({
-          opacity: "1"
-        });
-      }, 250);
-  }
-
   renderPic = () => {
     const { sender } = this.props;
     const picStyles = {
       picStyle: {
         height: "35px",
         width: "35px",
-        opacity: `${this.state.opacity}`,
         borderRadius: "50%",
         background: "white",
         position: "absolute",
@@ -55,7 +37,6 @@ class MessagePic extends Component {
 }
 
 MessagePic.propTypes = {
-  noDelay: PropTypes.bool.isRequired,
   sender: PropTypes.bool.isRequired
 };
 
