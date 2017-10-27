@@ -5,7 +5,11 @@ import {
   MESSAGE_URL_LOADED,
   EMOJI_TOGGLED,
   EMOJI_CLOSED,
-  EMOJI_SENT
+  EMOJI_SENT,
+  LOADING_STARTED,
+  LOADING_STOPPED,
+  LOADED_MESSAGE_HEIGHT,
+  LOADED_META_URL_HEIGHT
 } from ".././actions/ActionTypes";
 
 import { updateMessage } from "../helpers/messageHelper";
@@ -47,9 +51,9 @@ export const sendEmojiReducer = (state = {}, action) => {
 
 export const loadIconReducer = (state = false, action) => {
   switch (action.type) {
-    case "LOADING_STARTED":
+    case LOADING_STARTED:
       return true;
-    case "LOADING_STOPPED":
+    case LOADING_STOPPED:
       return false;
     default:
       return state;
@@ -58,7 +62,16 @@ export const loadIconReducer = (state = false, action) => {
 
 export const loadedMessageHeightReducer = (state = 0, action) => {
   switch (action.type) {
-    case "LOADED_MESSAGE_HEIGHT":
+    case LOADED_MESSAGE_HEIGHT:
+      return action.height;
+    default:
+      return state;
+  }
+};
+
+export const loadedMetaUrlHeight = (state = 0, action) => {
+  switch (action.type) {
+    case LOADED_META_URL_HEIGHT:
       return action.height;
     default:
       return state;

@@ -1,40 +1,26 @@
-import React, { Component } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 
-class MessagePic extends Component {
-  renderPic = () => {
-    const { sender } = this.props;
+const MessagePic = ({ sender }) => {
+  const renderPic = () => {
     const picStyles = {
       picStyle: {
-        height: "35px",
-        width: "35px",
-        borderRadius: "50%",
-        background: "white",
-        position: "absolute",
-        [sender ? "right" : "left"]: "-45px",
-        bottom: "0",
-        transition: "opacity 200ms cubic-bezier(.67,.35,.34,.91)",
-        overflow: "hidden"
+        [sender ? "right" : "left"]: "-45px"
       },
       picImage: {
-        backgroundImage: "url(https://picsum.photos/100)",
-        height: "100%",
-        width: "100%",
-        backgroundSize: "contain"
+        backgroundImage: "url(https://picsum.photos/100)"
       }
     };
 
     return (
-      <div style={picStyles.picStyle}>
-        <div style={picStyles.picImage} />
+      <div className="messageItem_pic" style={picStyles.picStyle}>
+        <div className="messageItem_image" style={picStyles.picImage} />
       </div>
     );
   };
 
-  render() {
-    return <div>{this.renderPic()}</div>;
-  }
-}
+  return <div>{renderPic()}</div>;
+};
 
 MessagePic.propTypes = {
   sender: PropTypes.bool.isRequired

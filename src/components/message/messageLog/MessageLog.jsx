@@ -25,6 +25,15 @@ const MessageTransition = props => (
 );
 
 class MessageLog extends Component {
+  static propTypes = {
+    messageLog: ProptTypes.arrayOf(ProptTypes.object).isRequired,
+    loadMessageLog: ProptTypes.func.isRequired,
+    closeEmoji: ProptTypes.func.isRequired,
+    isLoading: ProptTypes.bool.isRequired,
+    nextHeight: ProptTypes.number.isRequired,
+    metaHeight: ProptTypes.number.isRequired
+  };
+
   componentDidMount() {
     this.props.loadMessageLog();
     this.bottomMsg.scrollIntoView();
@@ -51,7 +60,11 @@ class MessageLog extends Component {
     messageLog.forEach(messageObj => {
       const retItem = (
         <MessageTransition key={messageObj.key}>
-          <MessageItem nextHeight={this.props.nextHeight} {...messageObj} />
+          <MessageItem
+            metaHeight={this.props.metaHeight}
+            nextHeight={this.props.nextHeight}
+            {...messageObj}
+          />
         </MessageTransition>
       );
 
@@ -100,18 +113,11 @@ class MessageLog extends Component {
   }
 }
 
-MessageLog.propTypes = {
-  messageLog: ProptTypes.arrayOf(ProptTypes.object).isRequired,
-  loadMessageLog: ProptTypes.func.isRequired,
-  closeEmoji: ProptTypes.func.isRequired,
-  isLoading: ProptTypes.bool.isRequired,
-  nextHeight: ProptTypes.number.isRequired
-};
-
 const mapStateToProps = state => ({
   messageLog: state.getMessages,
   isLoading: state.loadingState,
-  nextHeight: state.nextHeight
+  nextHeight: state.nextHeight,
+  metaHeight: state.metaHeight
 });
 
 export default connect(mapStateToProps, { closeEmoji, loadMessageLog })(

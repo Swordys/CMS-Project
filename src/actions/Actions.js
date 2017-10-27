@@ -9,7 +9,11 @@ import {
   MESSAGE_URL_LOADED,
   EMOJI_TOGGLED,
   EMOJI_CLOSED,
-  EMOJI_SENT
+  EMOJI_SENT,
+  LOADING_STARTED,
+  LOADING_STOPPED,
+  LOADED_MESSAGE_HEIGHT,
+  LOADED_META_URL_HEIGHT
 } from "./ActionTypes";
 
 const loadedMessagesSuccess = msgArr => ({
@@ -46,15 +50,20 @@ export const sendEmoji = emoji => ({
 });
 
 const loadingStarted = () => ({
-  type: "LOADING_STARTED"
+  type: LOADING_STARTED
 });
 
 const loadingStopped = () => ({
-  type: "LOADING_STOPPED"
+  type: LOADING_STOPPED
 });
 
 export const loadedMessageHeight = height => ({
-  type: "LOADED_MESSAGE_HEIGHT",
+  type: LOADED_MESSAGE_HEIGHT,
+  height
+});
+
+export const loadedMetaUrlHeight = height => ({
+  type: LOADED_META_URL_HEIGHT,
   height
 });
 

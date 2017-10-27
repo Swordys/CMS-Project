@@ -1,14 +1,21 @@
-import React from "react";
+import React, { Component } from "react";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
 
 // Components
 import MessageText from "./MessageText";
 import MessageUrlMeta from "./MessageUrlMeta";
 
+// Actions
+import {
+  loadedMetaUrlHeight,
+  loadedMessageHeight
+} from "../../../../actions/Actions";
+
 // Styles
 import "../../../../css/messageApp/message/messageLog/messageItem.css";
 
-class MessageItem extends React.Component {
+class MessageItem extends Component {
   static defaultProps = {
     urlMeta: []
   };
@@ -17,8 +24,22 @@ class MessageItem extends React.Component {
     sender: PropTypes.bool.isRequired,
     urlMeta: PropTypes.arrayOf(
       PropTypes.shape({ title: PropTypes.string.isRequired })
-    )
+    ),
+    loadedMetaUrlHeight: PropTypes.func.isRequired,
+    loadedMessageHeight: PropTypes.func.isRequired
   };
+
+  componentDidMount() {
+    const msgHeight = this.msgDom.clientHeight;
+    this.props.loadedMessageHeight(msgHeight + 7);
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.urlMeta) {
+      const metaUrlHeight = this.metaDom.clientHeight;
+      this.props.loadedMetaUrlHeight(metaUrlHeight);
+    }
+  }
 
   renderMeta = () => {
     const { urlMeta } = this.props;
@@ -31,6 +52,9 @@ class MessageItem extends React.Component {
     const { sender } = this.props;
     return (
       <div
+        ref={e => {
+          this.msgDom = e;
+        }}
         className={`messageItem_container ${sender
           ? "messageItem"
           : "messageItem_inbox"}`}
@@ -40,6 +64,9 @@ class MessageItem extends React.Component {
           <MessageText {...this.props} />
         </div>
         <div
+          ref={e => {
+            this.metaDom = e;
+          }}
           className={`messageItem_meta ${sender
             ? "messageItem_meta_outBox"
             : "messageItem_meta_inBox"}`}
@@ -51,4 +78,6 @@ class MessageItem extends React.Component {
   }
 }
 
-export default MessageItem;
+export default connect(null, { loadedMetaUrlHeight, loadedMessageHeight })(
+  MessageItem
+);

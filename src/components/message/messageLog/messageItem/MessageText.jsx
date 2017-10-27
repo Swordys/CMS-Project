@@ -12,15 +12,23 @@ const duration = 300;
 const bezier = "ease-in-out";
 const defaultStyle = {
   transition: `transform ${duration}ms ${bezier}, opacity 10ms ease-in-out ${duration -
-    15}ms`
+    20}ms`
 };
 
-const MessageText = ({ showPic, noDelay, text, sender, date, nextHeight }) => {
-  // console.log(nextHeight);
+const MessageText = ({
+  showPic,
+  noDelay,
+  text,
+  sender,
+  date,
+  nextHeight,
+  metaHeight
+}) => {
+  const combineHeight = nextHeight + metaHeight;
   const transitionStyles = {
     entering: { opacity: 1 },
     entered: { opacity: 1 },
-    exiting: { transform: `translate3d(0, ${nextHeight}px, 0)` },
+    exiting: { transform: `translate3d(0, ${combineHeight}px, 0)` },
     exited: { opacity: 0 }
   };
   const { textArr, onlyEmojy } = processText(text, sender);
@@ -34,7 +42,7 @@ const MessageText = ({ showPic, noDelay, text, sender, date, nextHeight }) => {
     classObj.textClass = "messageItem_containEmoji";
   }
 
-  const renderPicV2 = (
+  const renderPic = (
     <Transition appear={!noDelay} unmountOnExit in={showPic} timeout={duration}>
       {state => (
         <div
@@ -67,7 +75,7 @@ const MessageText = ({ showPic, noDelay, text, sender, date, nextHeight }) => {
         </div>
         <div className="messageItem_timeInfo">{date}</div>
       </div>
-      {renderPicV2}
+      {renderPic}
     </div>
   );
 };
@@ -78,7 +86,8 @@ MessageText.propTypes = {
   sender: PropTypes.bool.isRequired,
   showPic: PropTypes.bool.isRequired,
   noDelay: PropTypes.bool.isRequired,
-  nextHeight: PropTypes.number.isRequired
+  nextHeight: PropTypes.number.isRequired,
+  metaHeight: PropTypes.number.isRequired
 };
 
 export default MessageText;

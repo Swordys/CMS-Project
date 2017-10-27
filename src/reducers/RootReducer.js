@@ -6,7 +6,8 @@ import {
   toggleEmojiReducer,
   sendEmojiReducer,
   loadIconReducer,
-  loadedMessageHeightReducer
+  loadedMessageHeightReducer,
+  loadedMetaUrlHeight,
 } from "./Reducers";
 
 const rootReducer = combineReducers({
@@ -14,7 +15,8 @@ const rootReducer = combineReducers({
   getEmojiState: toggleEmojiReducer,
   getSentEmoji: sendEmojiReducer,
   loadingState: loadIconReducer,
-  nextHeight: loadedMessageHeightReducer
+  nextHeight: loadedMessageHeightReducer,
+  metaHeight: loadedMetaUrlHeight,
 });
 
 export default rootReducer;
