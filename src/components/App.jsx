@@ -5,7 +5,7 @@ import "../css/messageApp/app/App.css";
 // Components
 import Home from "./home/Home";
 import Login from "./login/Login";
-import Sidebar from "./sidebar/Sidebar";
+// import Sidebar from "./sidebar/Sidebar";
 import Message from "./message/Message";
 
 const App = () => (

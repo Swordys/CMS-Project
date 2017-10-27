@@ -82,6 +82,7 @@
   flex-direction: column;
   justify-content: flex-start;
   flex-shrink: 0;
+  margin: 7px 36px 0 40px;
 }
 
 .messageItem_container:first-child {
@@ -90,7 +91,6 @@
 
 .messageItem_text_container {
   position: relative;
-  margin: 7px 36px 0 40px;
 }
 
 .messageItem_text {

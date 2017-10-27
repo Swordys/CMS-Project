@@ -41,6 +41,10 @@
   font-weight: bold;
 }
 
+.meta_url_title:hover > a {
+  text-decoration: underline;
+}
+
 .meta_url_description {
   font-size: 14px;
   color: rgb(22, 22, 22);
