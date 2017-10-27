@@ -53,6 +53,11 @@ const loadingStopped = () => ({
   type: "LOADING_STOPPED"
 });
 
+export const loadedMessageHeight = height => ({
+  type: "LOADED_MESSAGE_HEIGHT",
+  height
+});
+
 export const loadMessageLog = () => async dispatch => {
   dispatch(loadingStarted());
   const snapShot = await firebase

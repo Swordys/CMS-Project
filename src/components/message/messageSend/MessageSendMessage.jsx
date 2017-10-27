@@ -10,7 +10,7 @@ import MessageSendFile from "./MessageSendFile";
 import MessageSendEmoji from "./MessageSendEmoji";
 
 // Actions
-import { sendMessageNow } from "../../../actions/Actions";
+import { sendMessageNow, loadedMessageHeight } from "../../../actions/Actions";
 
 class MessageSendMessage extends Component {
   state = {
@@ -61,13 +61,14 @@ class MessageSendMessage extends Component {
       });
 
       const { messageLog } = this.props;
+      const nextHeight = this.textInput.state.height + 25;
+      this.props.loadedMessageHeight(nextHeight);
       const msgObj = {
         key: uuid(),
         id: uuid(),
         text: checkText,
         date: timeMin,
         dateFull: timeFull,
-        height: this.textInput.state.height + 25,
         noDelay: false,
         timeStamp: false,
         showPic: false,
@@ -125,7 +126,8 @@ class MessageSendMessage extends Component {
 MessageSendMessage.propTypes = {
   emoji: PropTypes.objectOf(PropTypes.any).isRequired,
   sendMessageNow: PropTypes.func.isRequired,
-  messageLog: PropTypes.arrayOf(PropTypes.object).isRequired
+  messageLog: PropTypes.arrayOf(PropTypes.object).isRequired,
+  loadedMessageHeight: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -133,4 +135,7 @@ const mapStateToProps = state => ({
   emoji: state.getSentEmoji
 });
 
-export default connect(mapStateToProps, { sendMessageNow })(MessageSendMessage);
+export default connect(mapStateToProps, {
+  sendMessageNow,
+  loadedMessageHeight
+})(MessageSendMessage);

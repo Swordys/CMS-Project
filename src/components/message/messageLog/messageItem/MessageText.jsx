@@ -1,8 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-import CSSTransition from "react-transition-group/CSSTransition";
-import TransitionGroup from "react-transition-group/TransitionGroup";
 import Transition from "react-transition-group/Transition";
+import { connect } from "react-redux";
 
 // Helpers
 import { processText } from "../../../../helpers/messageHelper";
@@ -10,20 +9,20 @@ import { processText } from "../../../../helpers/messageHelper";
 // Components
 import MessagePic from "./MessagePic";
 
-const duration = 250;
-const bezier = "cubic-bezier(0.65, 0.36, 0.34, 0.91)";
+const duration = 300;
+const bezier = "ease-in-out";
 const defaultStyle = {
-  transition: `transform ${duration}ms ${bezier}, opacity 10ms ease-in-out 240ms`
+  transition: `transform ${duration}ms ${bezier}, opacity 10ms ease-in-out ${duration-15}ms`
 };
 
-const transitionStyles = {
-  entering: { opacity: 1 },
-  entered: { opacity: 1 },
-  exiting: { transform: "translate3d(0, 41px, 0)" },
-  exited: { opacity: 0 }
-};
-
-const MessageText = ({ showPic, noDelay, text, sender, date }) => {
+const MessageText = ({ showPic, noDelay, text, sender, date, nextHeight }) => {
+  // console.log(nextHeight);
+  const transitionStyles = {
+    entering: { opacity: 1 },
+    entered: { opacity: 1 },
+    exiting: { transform: `translate3d(0, ${nextHeight}px, 0)` },
+    exited: { opacity: 0 }
+  };
   const { textArr, onlyEmojy } = processText(text, sender);
   const classObj = {
     msgClass: sender ? "messageItem_textOutbox" : "messageItem_textInbox",
@@ -78,8 +77,12 @@ MessageText.propTypes = {
   date: PropTypes.string.isRequired,
   sender: PropTypes.bool.isRequired,
   showPic: PropTypes.bool.isRequired,
-  id: PropTypes.string.isRequired,
-  noDelay: PropTypes.bool.isRequired
+  noDelay: PropTypes.bool.isRequired,
+  nextHeight: PropTypes.number.isRequired
 };
 
-export default MessageText;
+const mapStateToProps = state => ({
+  nextHeight: state.nextHeight
+});
+
+export default connect(mapStateToProps)(MessageText);

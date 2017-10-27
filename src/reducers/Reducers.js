@@ -55,3 +55,12 @@ export const loadIconReducer = (state = false, action) => {
       return state;
   }
 };
+
+export const loadedMessageHeightReducer = (state = 0, action) => {
+  switch (action.type) {
+    case "LOADED_MESSAGE_HEIGHT":
+      return action.height;
+    default:
+      return state;
+  }
+};

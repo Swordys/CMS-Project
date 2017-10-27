@@ -5,14 +5,16 @@ import {
   messageLogReducer,
   toggleEmojiReducer,
   sendEmojiReducer,
-  loadIconReducer
+  loadIconReducer,
+  loadedMessageHeightReducer
 } from "./Reducers";
 
 const rootReducer = combineReducers({
   getMessages: messageLogReducer,
   getEmojiState: toggleEmojiReducer,
   getSentEmoji: sendEmojiReducer,
-  loadingState: loadIconReducer
+  loadingState: loadIconReducer,
+  nextHeight: loadedMessageHeightReducer
 });
 
 export default rootReducer;
