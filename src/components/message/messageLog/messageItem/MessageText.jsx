@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Transition from "react-transition-group/Transition";
-import { connect } from "react-redux";
 
 // Helpers
 import { processText } from "../../../../helpers/messageHelper";
@@ -12,7 +11,8 @@ import MessagePic from "./MessagePic";
 const duration = 300;
 const bezier = "ease-in-out";
 const defaultStyle = {
-  transition: `transform ${duration}ms ${bezier}, opacity 10ms ease-in-out ${duration-15}ms`
+  transition: `transform ${duration}ms ${bezier}, opacity 10ms ease-in-out ${duration -
+    15}ms`
 };
 
 const MessageText = ({ showPic, noDelay, text, sender, date, nextHeight }) => {
@@ -81,8 +81,4 @@ MessageText.propTypes = {
   nextHeight: PropTypes.number.isRequired
 };
 
-const mapStateToProps = state => ({
-  nextHeight: state.nextHeight
-});
-
-export default connect(mapStateToProps)(MessageText);
+export default MessageText;

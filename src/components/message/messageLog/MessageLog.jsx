@@ -51,7 +51,7 @@ class MessageLog extends Component {
     messageLog.forEach(messageObj => {
       const retItem = (
         <MessageTransition key={messageObj.key}>
-          <MessageItem {...messageObj} />
+          <MessageItem nextHeight={this.props.nextHeight} {...messageObj} />
         </MessageTransition>
       );
 
@@ -104,12 +104,14 @@ MessageLog.propTypes = {
   messageLog: ProptTypes.arrayOf(ProptTypes.object).isRequired,
   loadMessageLog: ProptTypes.func.isRequired,
   closeEmoji: ProptTypes.func.isRequired,
-  isLoading: ProptTypes.bool.isRequired
+  isLoading: ProptTypes.bool.isRequired,
+  nextHeight: ProptTypes.number.isRequired
 };
 
 const mapStateToProps = state => ({
   messageLog: state.getMessages,
-  isLoading: state.loadingState
+  isLoading: state.loadingState,
+  nextHeight: state.nextHeight
 });
 
 export default connect(mapStateToProps, { closeEmoji, loadMessageLog })(
