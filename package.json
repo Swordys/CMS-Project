@@ -3,10 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "dotenv": "^4.0.0",
     "emoji-mart": "^2.1.1",
     "emoticons": "^0.1.8",
     "firebase": "^4.6.0",
+    "get-image-colors": "^1.8.1",
     "linkify-it": "^2.0.3",
     "metascraper": "^1.0.7",
     "moment": "^2.19.1",

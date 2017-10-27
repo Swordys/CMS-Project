@@ -1,11 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
-import TransitionGroup from "react-transition-group/TransitionGroup";
-import CSSTransition from "react-transition-group/CSSTransition";
 
 // Components
 import MessageText from "./MessageText";
-import MessagePic from "./MessagePic";
 import MessageUrlMeta from "./MessageUrlMeta";
 
 // Styles
@@ -17,12 +14,7 @@ class MessageItem extends React.Component {
   };
 
   static propTypes = {
-    text: PropTypes.string.isRequired,
-    date: PropTypes.string.isRequired,
     sender: PropTypes.bool.isRequired,
-    noDelay: PropTypes.bool.isRequired,
-    showPic: PropTypes.bool.isRequired,
-    id: PropTypes.string.isRequired,
     urlMeta: PropTypes.arrayOf(
       PropTypes.shape({ title: PropTypes.string.isRequired })
     )
@@ -33,20 +25,6 @@ class MessageItem extends React.Component {
     return urlMeta
       ? urlMeta.map(meta => <MessageUrlMeta key={meta.id} {...meta} />)
       : null;
-  };
-  renderPic = () => {
-    const { showPic, id, noDelay, sender } = this.props;
-    return showPic ? (
-      <CSSTransition
-        key={id}
-        classNames="messagePicTrans"
-        timeout={{ enter: 500, exit: 800 }}
-      >
-        <MessagePic noDelay={noDelay} sender={sender} />
-      </CSSTransition>
-    ) : (
-      undefined
-    );
   };
 
   render() {
@@ -60,7 +38,6 @@ class MessageItem extends React.Component {
       >
         <div>
           <MessageText {...this.props} />
-          <TransitionGroup>{this.renderPic()}</TransitionGroup>
         </div>
         <div
           className={`messageItem_meta ${sender

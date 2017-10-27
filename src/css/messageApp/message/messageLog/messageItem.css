@@ -88,11 +88,15 @@
   margin-top: 20px;
 }
 
+.messageItem_text_container {
+  position: relative;
+  margin: 7px 36px 0 40px;
+}
+
 .messageItem_text {
   padding: 9px 13px;
   max-width: 600px;
   font-size: 14px;
-  margin-top: 7px;
   position: relative;
   line-height: 1.2em;
   border-radius: 15px;
@@ -162,18 +166,4 @@
 
 .outbox_link:hover {
   text-decoration: underline;
-}
-
-.messageItem_meta {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-}
-
-.messageItem_meta_outBox {
-  align-items: flex-end;
-}
-
-.messageItem_meta_inBox {
-  align-items: flex-start;
 }

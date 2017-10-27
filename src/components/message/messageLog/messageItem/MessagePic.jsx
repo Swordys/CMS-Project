@@ -15,7 +15,7 @@ class MessagePic extends Component {
       setTimeout(() => {
         this.setState({
           opacity: "1"
-        }); 
+        });
       }, 250);
   }
 

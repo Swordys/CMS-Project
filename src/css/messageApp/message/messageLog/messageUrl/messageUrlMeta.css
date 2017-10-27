@@ -1,3 +1,17 @@
+.messageItem_meta {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.messageItem_meta_outBox {
+  align-items: flex-end;
+}
+
+.messageItem_meta_inBox {
+  align-items: flex-start;
+}
+
 .messageItem_url_meta {
   max-width: 500px;
   margin-top: 8px;

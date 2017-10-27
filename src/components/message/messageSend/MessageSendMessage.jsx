@@ -71,8 +71,9 @@ class MessageSendMessage extends Component {
         noDelay: false,
         timeStamp: false,
         showPic: false,
-        sender: Math.random() >= 0.5,
-        metaUrl: null,
+        // sender: Math.random() >= 0.5,
+        sender: true,
+        metaUrl: null
       };
       this.props.sendMessageNow(msgObj, messageLog);
     }

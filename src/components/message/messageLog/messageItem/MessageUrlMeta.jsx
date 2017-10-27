@@ -4,13 +4,7 @@ import PropTypes from "prop-types";
 // CSS
 import "../../../../css/messageApp/message/messageLog/messageUrl/messageUrlMeta.css";
 
-const MessageUrlMeta = ({
-  description,
-  image,
-  publisher,
-  title,
-  inputUrl
-}) => (
+const MessageUrlMeta = ({ description, image, publisher, title, inputUrl }) => (
   <div className="messageItem_url_meta">
     <div className="messageItem_url_text">
       <div className={publisher ? "meta_url_publisher" : ""}>{publisher}</div>
@@ -27,7 +21,7 @@ const MessageUrlMeta = ({
 );
 
 MessageUrlMeta.defaultProps = {
-  publisher: "",
+  publisher: ""
 };
 
 MessageUrlMeta.propTypes = {
