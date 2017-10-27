@@ -6,10 +6,10 @@ import Transition from "react-transition-group/Transition";
 import uuid from "uuid";
 
 // CSS
-import '../../css/messageApp/general/emojiBox.css';
+import "../../css/messageApp/general/emojiBox.css";
 
 // Actions
-import { sendEmoji } from '../../actions/Actions';
+import { sendEmoji } from "../../actions/Actions";
 
 const EmojiBox = props => {
   const duration = 200;
@@ -42,9 +42,9 @@ const EmojiBox = props => {
       exclude={["recent", "activity", "objects", "flags", "places", "custom"]}
       emojiSize={23}
       perLine={8}
-      title={""}
+      title=""
       sheetSize={32}
-      color={"rgba(0, 91, 234, 0.9)"}
+      color="rgba(0, 91, 234, 0.9)"
       onClick={emoji => {
         const newMoji = emoji;
         newMoji.id = uuid();

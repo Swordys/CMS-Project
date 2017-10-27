@@ -21,7 +21,9 @@ export const updateMessage = (state, urlObj) => {
   return state;
 };
 
-export const getMetaData = text => {
+const metaResult = objArr => objArr;
+
+export const getMetaData = async text => {
   const objArr = [];
   const uniqArr = [];
   const uniqObj = {};
@@ -32,30 +34,30 @@ export const getMetaData = text => {
     linkArr.forEach(e => {
       if (!uniqObj[e.text]) {
         uniqObj[e.text] = e.text;
-        uniqArr.push(e);
+        const newObj = { ...e };
+        uniqArr.push(newObj);
       }
     });
-  return new Promise((resolve, reject) => {
-    if (uniqArr) {
-      uniqArr.forEach((e, i) => {
-        metascraper.scrapeUrl(e.url).then(res => {
-          if (res.image && res.description && res.title) {
-            const newRes = { ...res };
-            newRes.id = uuid();
-            newRes.inputUrl = e.url;
-            objArr.push(newRes);
-          }
-          if (i === uniqArr.length - 1) {
-            resolve(objArr);
-          } else if (objArr.length === 0) {
-            reject();
-          }
-        });
-      });
-    } else {
-      reject();
+
+  for (let i = 0; i < uniqArr.length; i += 1) {
+    objArr.push({
+      meta: metascraper.scrapeUrl(uniqArr[i].url),
+      url: uniqArr[i].url
+    });
+  }
+  const resultArr = await Promise.all(objArr.map(e => e.meta));
+  const returnArr = [];
+
+  for (let m = 0; m < resultArr.length; m += 1) {
+    if (resultArr[m].image && resultArr[m].description && resultArr[m].title) {
+      const newRes = { ...resultArr[m] };
+      newRes.id = uuid();
+      newRes.inputUrl = objArr[m].url;
+      returnArr.push(newRes);
     }
-  });
+  }
+
+  return metaResult(returnArr);
 };
 
 export const linkifyText = (textInput, sender) => {
