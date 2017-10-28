@@ -59,6 +59,7 @@ const EmojiBox = props => {
         <div
           role="presentation"
           onClick={e => e.stopPropagation()}
+          onKeyUp={e=> e}
           className="emojiWrap"
           style={{
             ...defaultStyle,

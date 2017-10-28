@@ -123,6 +123,8 @@ export const processText = (text, sender) => {
   for (let i = 0; i < textToArr.length; i += 1) {
     const item = textToArr[i];
     if (item.match(reggoEmoji)) {
+
+      // ERROR ON UNLISTED EMOJI
       const emojiObj = Emoji({
         key: i,
         emoji: item,
