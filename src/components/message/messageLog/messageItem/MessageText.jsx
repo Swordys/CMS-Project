@@ -31,7 +31,7 @@ const MessageText = ({
     exiting: { transform: `translate3d(0, ${combineHeight}px, 0)` },
     exited: { opacity: 0 }
   };
-  const { textArr, onlyEmojy } = processText(text, sender);
+  const { processArray, onlyEmojy } = processText(text, sender);
   const classObj = {
     msgClass: sender ? "messageItem_textOutbox" : "messageItem_textInbox",
     textClass: ""
@@ -71,7 +71,7 @@ const MessageText = ({
             wordBreak: "break-word"
           }}
         >
-          <div className={classObj.textClass}>{textArr}</div>
+          <div className={classObj.textClass}>{processArray}</div>
         </div>
         <div className="messageItem_timeInfo">{date}</div>
       </div>

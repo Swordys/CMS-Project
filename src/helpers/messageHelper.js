@@ -1,5 +1,5 @@
 import React from "react";
-import { Emoji } from "emoji-mart";
+import { Emoji, emojiIndex } from "emoji-mart";
 import emoticons from "emoticons";
 import linkify from "linkify-it";
 import metascraper from "metascraper";
@@ -112,33 +112,41 @@ export const processText = (text, sender) => {
 
   let newText = text;
   emoticons.define(defenition);
-
   newText = emoticons.replace(newText, (n, c, t) => t);
 
-  const reggoEmoji = /(:[a-zA-Z0-9-_+]+:(:skin-tone-[2-6]:)?)/g;
-  const filterSkin = /^(:skin-tone-[2-6]:)/;
-  const textToArr = newText.split(reggoEmoji).filter(e => e);
-  const textArr = [];
+  const reggoEmoji = /(:(?!skin-tone-[2-6])[a-zA-Z0-9-_+]+:(:skin-tone-[2-6]:)?)/g;
+  const reggoSkin = /(^:skin-tone-[2-6]:$)/;
+  const textToArr = newText
+    .split(reggoEmoji)
+    .filter(e => e)
+    .filter(c => !c.match(reggoSkin) && c !== "");
 
+  const processArray = [];
   for (let i = 0; i < textToArr.length; i += 1) {
-    const item = textToArr[i];
-    if (item.match(reggoEmoji)) {
+    const arraySring = textToArr[i];
+    if (arraySring.match(reggoEmoji)) {
+      const itemText = arraySring
+        .substring(1, arraySring.length - 1)
+        .replace(/::skin-tone-[2-6]/, "");
 
-      // ERROR ON UNLISTED EMOJI
-      const emojiObj = Emoji({
-        key: i,
-        emoji: item,
-        size: 22,
-        sheetSize: 32,
-        set: "emojione"
-      });
-      if (emojiObj) {
+      const emojiPresent = emojiIndex
+        .search(itemText)
+        .some(e => e.colons === `:${itemText}:`);
+
+      if (emojiPresent) {
+        const emojiObj = Emoji({
+          key: i,
+          emoji: arraySring,
+          size: 22,
+          sheetSize: 32,
+          set: "emojione"
+        });
         const styleObj = emojiObj.props.children.props.style;
         const retEmoji = (
           <img
             src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
             className="inline-emoji"
-            alt={item}
+            alt={arraySring}
             key={i}
             style={{
               backgroundImage: `${styleObj.backgroundImage}`,
@@ -147,18 +155,18 @@ export const processText = (text, sender) => {
             }}
           />
         );
-        textArr.push(retEmoji);
-      } else if (!filterSkin.test(item)) {
-        textArr.push(item);
+        processArray.push(retEmoji);
+      } else {
+        processArray.push(arraySring);
       }
-    } else if (/\S/.test(item)) {
-      const newItem = linkifyText(item, sender);
-      textArr.push(newItem);
+    } else if (/\S/.test(arraySring)) {
+      const newItem = linkifyText(arraySring, sender);
+      processArray.push(newItem);
     }
   }
 
   return {
-    textArr,
-    onlyEmojy: textArr.every(e => e.key)
+    processArray,
+    onlyEmojy: processArray.every(e => e.key)
   };
 };
