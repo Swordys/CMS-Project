@@ -12,6 +12,9 @@ import MessageSendEmoji from "./MessageSendEmoji";
 // Actions
 import { sendMessageNow } from "../../../actions/Actions";
 
+// Helpers
+import { processText } from "../../../helpers/messageHelper";
+
 class MessageSendMessage extends Component {
   static propTypes = {
     emoji: PropTypes.objectOf(PropTypes.any).isRequired,
@@ -67,10 +70,13 @@ class MessageSendMessage extends Component {
       });
 
       const { messageLog } = this.props;
+      const { processArray, onlyEmojy } = processText(text, true);
       const msgObj = {
         key: uuid(),
         id: uuid(),
         text: checkText,
+        processArray,
+        onlyEmojy,
         date: timeMin,
         dateFull: timeFull,
         noDelay: false,

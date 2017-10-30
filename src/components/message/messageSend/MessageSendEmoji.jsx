@@ -7,6 +7,7 @@ import { toggleEmoji } from "../../../actions/Actions";
 
 const MessageSendSmile = props => (
   <div
+    onKeyUp={e => e}
     role="presentation"
     onClick={() => props.toggleEmoji()}
     className="messageSendField"

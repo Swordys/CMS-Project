@@ -2,12 +2,10 @@ import React from "react";
 import PropTypes from "prop-types";
 import Transition from "react-transition-group/Transition";
 
-// Helpers
-import { processText } from "../../../../helpers/messageHelper";
-
 // Components
 import MessagePic from "./MessagePic";
 
+// Picture Transition
 const duration = 300;
 const bezier = "ease-in-out";
 const defaultStyle = {
@@ -18,7 +16,8 @@ const defaultStyle = {
 const MessageText = ({
   showPic,
   noDelay,
-  text,
+  processArray,
+  onlyEmojy,
   sender,
   date,
   nextHeight,
@@ -31,7 +30,7 @@ const MessageText = ({
     exiting: { transform: `translate3d(0, ${combineHeight}px, 0)` },
     exited: { opacity: 0 }
   };
-  const { processArray, onlyEmojy } = processText(text, sender);
+
   const classObj = {
     msgClass: sender ? "messageItem_textOutbox" : "messageItem_textInbox",
     textClass: ""
@@ -57,6 +56,10 @@ const MessageText = ({
     </Transition>
   );
 
+  const renderTextArr = processArray.map(
+    text => (typeof text === "string" ? text : <img alt={text.alt} {...text} />)
+  );
+
   return (
     <div className="messageItem_text_container">
       <div
@@ -71,7 +74,7 @@ const MessageText = ({
             wordBreak: "break-word"
           }}
         >
-          <div className={classObj.textClass}>{processArray}</div>
+          <div className={classObj.textClass}>{renderTextArr}</div>
         </div>
         <div className="messageItem_timeInfo">{date}</div>
       </div>
@@ -81,8 +84,9 @@ const MessageText = ({
 };
 
 MessageText.propTypes = {
-  text: PropTypes.string.isRequired,
+  processArray: PropTypes.arrayOf(PropTypes.any).isRequired,
   date: PropTypes.string.isRequired,
+  onlyEmojy: PropTypes.bool.isRequired,
   sender: PropTypes.bool.isRequired,
   showPic: PropTypes.bool.isRequired,
   noDelay: PropTypes.bool.isRequired,

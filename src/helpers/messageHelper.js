@@ -114,59 +114,63 @@ export const processText = (text, sender) => {
   emoticons.define(defenition);
   newText = emoticons.replace(newText, (n, c, t) => t);
 
-  const reggoEmoji = /(:(?!skin-tone-[2-6])[a-zA-Z0-9-_+]+:(:skin-tone-[2-6]:)?)/g;
-  const reggoSkin = /(^:skin-tone-[2-6]:$)/;
+  const rEmoji = /(:(?!skin-tone-[2-6])[a-zA-Z0-9-_+]+:(:skin-tone-[2-6]:)?)/g;
+  const rSkin = /(^:skin-tone-[2-6]:$)/;
   const textToArr = newText
-    .split(reggoEmoji)
+    .split(rEmoji)
     .filter(e => e)
-    .filter(c => !c.match(reggoSkin) && c !== "");
+    .filter(c => !c.match(rSkin) && c !== "");
 
   const processArray = [];
   for (let i = 0; i < textToArr.length; i += 1) {
-    const arraySring = textToArr[i];
-    if (arraySring.match(reggoEmoji)) {
-      const itemText = arraySring
-        .substring(1, arraySring.length - 1)
+    let arrayString = textToArr[i];
+    if (arrayString.match(rEmoji)) {
+      const itemText = arrayString
+        .substring(1, arrayString.length - 1)
         .replace(/::skin-tone-[2-6]/, "");
 
-      const emojiPresent = emojiIndex
-        .search(itemText)
-        .some(e => e.colons === `:${itemText}:`);
+      const searchRes = emojiIndex.search(itemText);
+
+      const emojiPresent = searchRes.some(e => e.colons === `:${itemText}:`);
+
+      // - Enable if we want to guess the unmatched words -
+      // if (!emojiPresent && searchRes.length > 0) {
+      //   arrayString = searchRes[0].colons;
+      // }
 
       if (emojiPresent) {
         const emojiObj = Emoji({
           key: i,
-          emoji: arraySring,
+          emoji: arrayString,
           size: 22,
           sheetSize: 32,
           set: "emojione"
         });
         const styleObj = emojiObj.props.children.props.style;
-        const retEmoji = (
-          <img
-            src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
-            className="inline-emoji"
-            alt={arraySring}
-            key={i}
-            style={{
-              backgroundImage: `${styleObj.backgroundImage}`,
-              backgroundPosition: `${styleObj.backgroundPosition}`,
-              backgroundSize: `${styleObj.backgroundSize}`
-            }}
-          />
-        );
+        const retEmoji = {
+          src:
+            "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=",
+          className: "inline-emoji",
+          alt: arrayString,
+          key: i,
+          style: {
+            backgroundImage: `${styleObj.backgroundImage}`,
+            backgroundPosition: `${styleObj.backgroundPosition}`,
+            backgroundSize: `${styleObj.backgroundSize}`
+          }
+        };
         processArray.push(retEmoji);
       } else {
-        processArray.push(arraySring);
+        processArray.push(arrayString);
       }
-    } else if (/\S/.test(arraySring)) {
-      const newItem = linkifyText(arraySring, sender);
+    } else if (/\S/.test(arrayString)) {
+      const newItem = linkifyText(arrayString, sender);
       processArray.push(newItem);
     }
   }
 
   return {
     processArray,
-    onlyEmojy: processArray.every(e => e.key)
+    onlyEmojy: processArray.every(e => e.alt)
   };
 };
