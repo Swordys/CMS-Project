@@ -56,9 +56,20 @@ const MessageText = ({
     </Transition>
   );
 
-  const renderTextArr = processArray.map(
-    text => (typeof text === "string" ? text : <img alt={text.alt} {...text} />)
-  );
+  const renderTextArr =
+    processArray &&
+    processArray.map(text => {
+      if (typeof text === "string") {
+        return text;
+      }
+      return text.className === "inline-emoji" ? (
+        <img alt={text.alt} {...text} />
+      ) : (
+        <a href={text.href} key={text.key} className={text.className}>
+          {text.urlText}
+        </a>
+      );
+    });
 
   return (
     <div className="messageItem_text_container">

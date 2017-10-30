@@ -1,4 +1,3 @@
-import React from "react";
 import { Emoji, emojiIndex } from "emoji-mart";
 import emoticons from "emoticons";
 import linkify from "linkify-it";
@@ -45,17 +44,24 @@ export const getMetaData = async text => {
       url: uniqArr[i].url
     });
   }
-  const resultArr = await Promise.all(objArr.map(e => e.meta));
+  const resultArr = await Promise.all(objArr.map(e => e.meta)).catch(err =>
+    console.log(err)
+  );
   const returnArr = [];
 
-  for (let m = 0; m < resultArr.length; m += 1) {
-    if (resultArr[m].image && resultArr[m].description && resultArr[m].title) {
-      const newRes = { ...resultArr[m] };
-      newRes.id = uuid();
-      newRes.inputUrl = objArr[m].url;
-      returnArr.push(newRes);
+  if (resultArr)
+    for (let m = 0; m < resultArr.length; m += 1) {
+      if (
+        resultArr[m].image &&
+        resultArr[m].description &&
+        resultArr[m].title
+      ) {
+        const newRes = { ...resultArr[m] };
+        newRes.id = uuid();
+        newRes.inputUrl = objArr[m].url;
+        returnArr.push(newRes);
+      }
     }
-  }
 
   return metaResult(returnArr);
 };
@@ -70,24 +76,23 @@ export const linkifyText = (textInput, sender) => {
   if (linkArr)
     linkArr.forEach((e, i) => {
       const text = textProcess.substring(indx, e.index);
-      const link = (
-        <a
-          className={`messageItemLink ${sender ? "outbox_link" : "inbox_link"}`}
-          key={e.index}
-          href={`${e.url}`}
-        >
-          {e.text}
-        </a>
-      );
+      const link = {
+        className: `messageItemLink ${sender ? "outbox_link" : "inbox_link"}`,
+        key: e.index,
+        href: e.url,
+        urlText: e.text
+      };
       returnArr.push(text, link);
       indx = e.lastIndex;
       if (i === linkArr.length - 1) {
         const lastText = textProcess.substring(indx, textProcess.length);
-        returnArr.push(lastText);
+        if (lastText) {
+          returnArr.push(lastText);
+        }
       }
     });
 
-  return linkArr ? returnArr : textInput;
+  return linkArr ? returnArr : [textInput];
 };
 
 export const processText = (text, sender) => {
@@ -123,7 +128,7 @@ export const processText = (text, sender) => {
 
   const processArray = [];
   for (let i = 0; i < textToArr.length; i += 1) {
-    let arrayString = textToArr[i];
+    const arrayString = textToArr[i];
     if (arrayString.match(rEmoji)) {
       const itemText = arrayString
         .substring(1, arrayString.length - 1)
@@ -165,7 +170,7 @@ export const processText = (text, sender) => {
       }
     } else if (/\S/.test(arrayString)) {
       const newItem = linkifyText(arrayString, sender);
-      processArray.push(newItem);
+      processArray.push(...newItem);
     }
   }
 
