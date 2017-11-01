@@ -1,5 +1,6 @@
 import moment from "moment";
-import firebase from "../firebase/firebase";
+import firestore from "../firebase/firestore";
+import firebase from "firebase";
 import { getMetaData } from "../helpers/messageHelper";
 
 import {
@@ -69,11 +70,11 @@ export const loadedMetaUrlHeight = height => ({
 
 export const loadMessageLog = () => async dispatch => {
   dispatch(loadingStarted());
-  const snapShot = await firebase
-    .database()
-    .ref("data")
-    .once("value");
-  const messageData = snapShot.val();
+  const snapShot = await firestore
+    .collection("data")
+    .orderBy("timestamp")
+    .get();
+  const messageData = snapShot.docs.map(e => e.data());
   dispatch(loadingStopped());
   dispatch(
     messageData
@@ -88,7 +89,7 @@ export const sendMessageNow = (msg, log) => dispatch => {
   let previousMsg = null;
   const currentMsg = msg;
   if (logLen < 1) {
-    currentMsg.timeStamp = true;
+    currentMsg.showTimeStamp = true;
     currentMsg.noDelay = true;
     currentMsg.showPic = true;
   } else {
@@ -100,7 +101,7 @@ export const sendMessageNow = (msg, log) => dispatch => {
     const timeDiff = thisTime.diff(lastTime, "minutes");
 
     if (timeDiff >= 30) {
-      currentMsg.timeStamp = true;
+      currentMsg.showTimeStamp = true;
       currentMsg.noDelay = true;
       currentMsg.showPic = true;
     }
@@ -112,7 +113,7 @@ export const sendMessageNow = (msg, log) => dispatch => {
     condition =
       ((previousMsg.sender && msg.sender) ||
         (!previousMsg.sender && !msg.sender)) &&
-      !currentMsg.timeStamp;
+      !currentMsg.showTimeStamp;
 
     if (condition) {
       previousMsg.showPic = false;
@@ -120,41 +121,34 @@ export const sendMessageNow = (msg, log) => dispatch => {
     }
   }
 
+  // MESSAGE FOR CLIENT
   dispatch(sendMessage(currentMsg));
 
+  //  MESSAGE FOR FIREBASE
   const currentNew = { ...currentMsg };
   currentNew.noDelay = true;
+  currentNew.timestamp = firebase.firestore.FieldValue.serverTimestamp();
 
-  firebase
-    .database()
-    .ref("data")
-    .push(currentNew)
-    .then(async el => {
-      // PUSH MESSAGE && UPDATE PREVIOUS ONE
-
-      if (condition) {
-        firebase
-          .database()
-          .ref("data")
-          .limitToLast(2)
-          .once("value", snap => {
-            const key = Object.keys(snap.val())[0];
-            firebase
-              .database()
-              .ref(`data/${key}`)
-              .set(previousMsg);
-          });
-      }
-      // IF THERE IS URL META LOAD HERE
-
-      const urlMeta = await getMetaData(currentNew.text).catch(err => err);
-      if (urlMeta) {
-        dispatch(loadedUrlMeta({ urlMeta, id: currentNew.id }));
-        currentNew.urlMeta = urlMeta;
-        firebase
-          .database()
-          .ref(`data/${el.key}`)
-          .set(currentNew);
-      }
+  const convoCollection = firestore.collection("data");
+  convoCollection
+    .doc(currentNew.id)
+    .set(currentNew)
+    .then(el => {
+      previousMsg &&
+        convoCollection.doc(`${previousMsg.id}`).update({
+          showPic: previousMsg.showPic
+        });
+      getMetaData(currentNew.text)
+        .then(urlMeta => {
+          if (urlMeta) {
+            dispatch(loadedUrlMeta({ urlMeta, id: currentNew.id }));
+            currentNew.urlMeta = urlMeta;
+            convoCollection.doc(currentNew.id).set(currentNew);
+          }
+        })
+        .catch(err => console.error(err));
+    })
+    .catch(err => {
+      console.error(err);
     });
 };

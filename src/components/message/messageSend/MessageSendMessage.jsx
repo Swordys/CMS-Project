@@ -80,7 +80,7 @@ class MessageSendMessage extends Component {
         date: timeMin,
         dateFull: timeFull,
         noDelay: false,
-        timeStamp: false,
+        showTimeStamp: false,
         showPic: false,
         // sender: Math.random() >= 0.5,
         sender: true,

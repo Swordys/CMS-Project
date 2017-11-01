@@ -13,7 +13,6 @@ import App from "./components/App";
 // Redux
 import store from "./store/Store";
 
-
 ReactDOM.render(
   <Provider store={store()}>
     <BrowserRouter>

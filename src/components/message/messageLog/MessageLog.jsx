@@ -68,7 +68,7 @@ class MessageLog extends Component {
         </MessageTransition>
       );
 
-      if (messageObj.timeStamp) {
+      if (messageObj.showTimeStamp) {
         retunLog.push(
           <MessageTransition key={messageObj.id}>
             <div className="messageItem_date">{messageObj.date}</div>

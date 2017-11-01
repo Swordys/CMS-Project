@@ -10,5 +10,5 @@ export default {
   sender: PropTypes.string.isRequired,
   showPic: PropTypes.bool.isRequired,
   text: PropTypes.string.isRequired,
-  timeStamp: PropTypes.bool.isRequired
+  showTimeStamp: PropTypes.bool.isRequired
 };
