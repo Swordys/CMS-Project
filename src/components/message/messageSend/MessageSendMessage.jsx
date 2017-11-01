@@ -70,7 +70,8 @@ class MessageSendMessage extends Component {
       });
 
       const { messageLog } = this.props;
-      const { processArray, onlyEmojy } = processText(text, true);
+      const sender = Math.random() >= 0.5;
+      const { processArray, onlyEmojy } = processText(text, sender);
       const msgObj = {
         key: uuid(),
         id: uuid(),
@@ -82,8 +83,8 @@ class MessageSendMessage extends Component {
         noDelay: false,
         showTimeStamp: false,
         showPic: false,
-        // sender: Math.random() >= 0.5,
-        sender: true,
+        sender,
+        // sender: true,
         metaUrl: null
       };
       this.props.sendMessageNow(msgObj, messageLog);

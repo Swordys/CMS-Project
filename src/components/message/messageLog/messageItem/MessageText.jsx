@@ -5,14 +5,6 @@ import Transition from "react-transition-group/Transition";
 // Components
 import MessagePic from "./MessagePic";
 
-// Picture Transition
-const duration = 300;
-const bezier = "ease-in-out";
-const defaultStyle = {
-  transition: `transform ${duration}ms ${bezier}, opacity 10ms ease-in-out ${duration -
-    20}ms`
-};
-
 const MessageText = ({
   showPic,
   noDelay,
@@ -24,6 +16,16 @@ const MessageText = ({
   metaHeight
 }) => {
   const combineHeight = nextHeight + metaHeight;
+  let duration = 300;
+
+  if (combineHeight > 150) {
+    duration = (duration + Math.abs(combineHeight, duration)) / 1.3;
+    if (duration > 700) duration = 600;
+  }
+  const defaultStyle = {
+    transition: `transform ${duration}ms ease-in-out, opacity 10ms ease-in-out ${duration -
+      20}ms`
+  };
   const transitionStyles = {
     entering: { opacity: 1 },
     entered: { opacity: 1 },
