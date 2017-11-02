@@ -7,6 +7,7 @@ import Home from "./home/Home";
 import Login from "./login/Login";
 import Sidebar from "./sidebar/Sidebar";
 import Message from "./message/Message";
+import Infobar from "./infobar/Infobar";
 
 const App = () => (
   <div className="App">
@@ -14,6 +15,7 @@ const App = () => (
     <Route path="/login" exact component={Login} />
     <Route path="/user" exact component={Sidebar} />
     <Route path="/user" exact component={Message} />
+    <Route path="/user" exact component={Infobar} />
   </div>
 );
 
