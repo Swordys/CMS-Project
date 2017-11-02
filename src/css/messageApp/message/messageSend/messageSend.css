@@ -18,6 +18,7 @@
   padding: 15px;
   box-sizing: border-box;
   border-top: 1px solid #ececec;
+  background: white;
 }
 
 .messageSendMessage {
