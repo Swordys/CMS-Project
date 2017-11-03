@@ -4,9 +4,8 @@ import React, { Component } from "react";
 import SidebarSearch from "./SidebarSearch";
 
 class SidebarMenu extends Component {
-  renderMenu = () => {
-    return this.props.clicked === "search" ? <SidebarSearch /> : null;
-  };
+  renderMenu = () =>
+    this.props.clicked === "search" ? <SidebarSearch /> : null;
 
   render() {
     return <SidebarSearch show={this.props.clicked === "search"} />;
