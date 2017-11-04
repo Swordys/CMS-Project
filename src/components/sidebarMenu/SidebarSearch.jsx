@@ -1,10 +1,11 @@
 import React from "react";
+import PropTypes from 'prop-types';
 import Transition from "react-transition-group/Transition";
 
 // CSS
 import "../../css/messageApp/sidebar/sidebarSearch.css";
 
-let duration = 200;
+const duration = 200;
 const defaultStyle = {
   opacity: 0,
   transition: "opacity 200ms ease-out"
@@ -32,4 +33,8 @@ const SidebarSearch = ({ show }) => {
   );
 };
 
+
+SidebarSearch.propTypes = {
+  show: PropTypes.bool.isRequired,
+}
 export default SidebarSearch;
