@@ -2,11 +2,10 @@ import React from "react";
 import PropTypes from "prop-types";
 import Transition from "react-transition-group/Transition";
 
-// CSS
-import "../../css/messageApp/sidebar/sidebarSearch.css";
+import "../../css/messageApp/sidebar/sidebarSettings.css";
 import tr from "../../helpers/transitionPannel";
 
-const SidebarSearch = ({ show }) => (
+const SidebarSetttings = ({ show }) => (
   <Transition appear unmountOnExit in={show} timeout={tr.duration}>
     {state => (
       <div
@@ -14,15 +13,16 @@ const SidebarSearch = ({ show }) => (
           ...tr.defaultStyle,
           ...tr.transitionStyles[state]
         }}
-        className="sidebar_menu sidebar_menu_search"
+        className="sidebar_menu sidebar_menu_settings"
       >
-        Search
+        Settings
       </div>
     )}
   </Transition>
 );
 
-SidebarSearch.propTypes = {
+SidebarSetttings.propTypes = {
   show: PropTypes.bool.isRequired
 };
-export default SidebarSearch;
+
+export default SidebarSetttings;

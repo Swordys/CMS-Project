@@ -15,7 +15,13 @@ const styles = {
 
 class Sidebar extends React.Component {
   state = {
-    clcked: ""
+    clicked: ""
+  };
+
+  handleClick = c => {
+    this.setState({
+      clicked: c
+    });
   };
 
   render() {
@@ -28,7 +34,10 @@ class Sidebar extends React.Component {
         </div>
         <div className="sidebar_options">
           <div
-            onClick={() => this.setState({ clicked: "search" })}
+            role="button"
+            tabIndex="0"
+            onKeyDown={() => {}}
+            onClick={() => this.handleClick("search")}
             className="sidebar_item sidebar_search"
           >
             <i
@@ -37,10 +46,22 @@ class Sidebar extends React.Component {
               aria-hidden="true"
             />
           </div>
-          <div className="sidebar_item sidebar_messages">
+          <div
+            role="button"
+            tabIndex="-1"
+            onKeyDown={() => {}}
+            onClick={() => this.handleClick("messages")}
+            className="sidebar_item sidebar_messages"
+          >
             <i className="fa fa-inbox" style={styles.icon} aria-hidden="true" />
           </div>
-          <div className="sidebar_item sidebar_settings">
+          <div
+            role="button"
+            tabIndex="-2"
+            onKeyDown={() => {}}
+            onClick={() => this.handleClick("settings")}
+            className="sidebar_item sidebar_settings"
+          >
             <i className="fa fa-cog" style={styles.icon} aria-hidden="true" />
           </div>
         </div>

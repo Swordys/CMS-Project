@@ -59,7 +59,7 @@
 .sidebar_menu {
   height: 100vh;
   width: 300px;
-  background: gray;
+  background: rgb(250, 250, 250);
   position: absolute;
   z-index: 6000;
   left: 70px;

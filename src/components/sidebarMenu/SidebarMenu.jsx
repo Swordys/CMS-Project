@@ -1,15 +1,21 @@
-import React, { Component } from "react";
+import React from "react";
+import PropTypes from "prop-types";
 
 // Components
 import SidebarSearch from "./SidebarSearch";
+import SidebarMessages from "./SidebarMessages";
+import SidebarSettings from "./SidebarSettings";
 
-class SidebarMenu extends Component {
-  renderMenu = () =>
-    this.props.clicked === "search" ? <SidebarSearch /> : null;
+const SidebarMenu = ({ clicked }) => (
+  <div>
+    <SidebarSearch show={clicked === "search"} />
+    <SidebarMessages show={clicked === "messages"} />
+    <SidebarSettings show={clicked === "settings"} />
+  </div>
+);
 
-  render() {
-    return <SidebarSearch show={this.props.clicked === "search"} />;
-  }
-}
+SidebarMenu.propTypes = {
+  clicked: PropTypes.string.isRequired
+};
 
 export default SidebarMenu;
