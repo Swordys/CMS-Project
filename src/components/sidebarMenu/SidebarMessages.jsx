@@ -5,6 +5,9 @@ import Transition from "react-transition-group/Transition";
 import "../../css/messageApp/sidebar/sidebarMessages.css";
 import tr from "../../helpers/transitionPannel";
 
+// Components
+import SidebarMessageItem from "./SidebarMessageItem";
+
 const SidebarMessage = ({ show }) => (
   <Transition appear unmountOnExit in={show} timeout={tr.duration}>
     {state => (
@@ -15,7 +18,7 @@ const SidebarMessage = ({ show }) => (
         }}
         className="sidebar_menu sidebar_menu_message"
       >
-        Messages
+        <SidebarMessageItem />
       </div>
     )}
   </Transition>
