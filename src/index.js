@@ -6,7 +6,6 @@ import registerServiceWorker from "./registerServiceWorker";
 
 // CSS
 import "./css/index.css";
-import "./css/fonts/font-awesome.min.css";
 // Components
 import App from "./components/App";
 
