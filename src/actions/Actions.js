@@ -1,6 +1,6 @@
 import moment from "moment";
-import firestore from "../firebase/firestore";
 import firebase from "firebase";
+import firestore from "../firebase/firestore";
 import { getMetaData } from "../helpers/messageHelper";
 
 import {
@@ -133,11 +133,13 @@ export const sendMessageNow = (msg, log) => dispatch => {
   convoCollection
     .doc(currentNew.id)
     .set(currentNew)
-    .then(el => {
-      previousMsg &&
+    .then(() => {
+      if (previousMsg){
         convoCollection.doc(`${previousMsg.id}`).update({
           showPic: previousMsg.showPic
         });
+      }
+        
       getMetaData(currentNew.text)
         .then(urlMeta => {
           if (urlMeta) {
