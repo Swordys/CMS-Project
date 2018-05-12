@@ -1,7 +1,6 @@
 import { Emoji, emojiIndex } from "emoji-mart";
 import emoticons from "emoticons";
 import linkify from "linkify-it";
-import metascraper from "metascraper";
 import uuid from "uuid";
 
 export const updateMessage = (state, urlObj) => {
@@ -40,7 +39,7 @@ export const getMetaData = async text => {
 
   for (let i = 0; i < uniqArr.length; i += 1) {
     objArr.push({
-      meta: metascraper.scrapeUrl(uniqArr[i].url),
+      meta: {},
       url: uniqArr[i].url
     });
   }
