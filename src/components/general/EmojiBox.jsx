@@ -1,15 +1,13 @@
-import React from "react";
-import PropTypes from "prop-types";
 import { Picker } from "emoji-mart";
+import PropTypes from "prop-types";
+import React from "react";
 import { connect } from "react-redux";
 import Transition from "react-transition-group/Transition";
 import uuid from "uuid";
-
 // CSS
 import "../../css/messageApp/general/emojiBox.css";
 
-// Actions
-import { sendEmoji } from "../../actions/Actions";
+
 
 const EmojiBox = props => {
   const duration = 200;

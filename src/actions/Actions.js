@@ -1,21 +1,9 @@
-import moment from "moment";
 import firebase from "firebase";
+import moment from "moment";
 import firestore from "../firebase/firestore";
 import { getMetaData } from "../helpers/messageHelper";
+import { EMOJI_CLOSED, EMOJI_SENT, EMOJI_TOGGLED, LOADED_MESSAGE_HEIGHT, LOADED_META_URL_HEIGHT, LOADING_STARTED, LOADING_STOPPED, MESSAGE_LOG_EMPTY, MESSAGE_LOG_LOADED, MESSAGE_SENT, MESSAGE_URL_LOADED } from "./ActionTypes";
 
-import {
-  MESSAGE_SENT,
-  MESSAGE_LOG_LOADED,
-  MESSAGE_LOG_EMPTY,
-  MESSAGE_URL_LOADED,
-  EMOJI_TOGGLED,
-  EMOJI_CLOSED,
-  EMOJI_SENT,
-  LOADING_STARTED,
-  LOADING_STOPPED,
-  LOADED_MESSAGE_HEIGHT,
-  LOADED_META_URL_HEIGHT
-} from "./ActionTypes";
 
 const loadedMessagesSuccess = msgArr => ({
   type: MESSAGE_LOG_LOADED,
