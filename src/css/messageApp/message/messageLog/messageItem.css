@@ -1,8 +1,7 @@
 /* --- GENERAL --- */
-
 .message-item {
   flex-shrink: 0;
-  margin-bottom: 8px;
+  margin: 8px;
   display: flex;
 }
 
@@ -13,14 +12,13 @@
 }
 
 .message-item-text {
-  padding: 9px 13px;
+  padding: 10px 15px;
   max-width: 600px;
   font-size: 14px;
   position: relative;
-  line-height: 1.2em;
+  line-height: 1.3em;
   border-radius: 15px;
   display: flex;
-  flex-shrink: 0;
   justify-content: center;
   align-items: flex-start;
   box-shadow: 0px 1.5px 2px -1px rgba(0, 0, 0, 0.2);
@@ -28,9 +26,11 @@
 }
 
 .message-item-pic-wrap {
+  align-self: flex-end;
   width: 35px;
   height: 35px;
   margin: 0 8px;
+  flex-shrink: 0;
   border-radius: 50%;
   background: white;
   overflow: hidden;
@@ -41,7 +41,6 @@
   width: 100%;
   background-size: contain;
 }
-
 
 .message-item-date {
   font-size: 12px;

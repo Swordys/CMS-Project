@@ -1,8 +1,8 @@
-.messageSendMessage_textArea_text::-webkit-scrollbar {
+.message-send-box-text::-webkit-scrollbar {
   width: 4px;
 }
 
-.messageSendMessage_textArea_text::-webkit-scrollbar-thumb {
+.message-send-box-text::-webkit-scrollbar-thumb {
   background-color: #3c3c3c;
   border-radius: 3px;
 }
@@ -23,6 +23,7 @@
 
 .message-send {
   border: 1px solid #ececec;
+  background: #ebebeb;
   display: flex;
   width: 100%;
   border-radius: 3px;
@@ -39,7 +40,7 @@
 .message-send-box::after {
   content: "";
   position: absolute;
-  height: 70%;
+  height: 75%;
   width: 1px;
   left: 0;
   top: 50%;
@@ -51,7 +52,7 @@
   resize: none;
   max-height: 140px;
   width: 100%;
-  background: #ebebeb;
+  background: transparent;
   padding: 12px;
   border: none;
   outline: none;
@@ -70,5 +71,5 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #ebebeb;
+  align-self: center;
 }

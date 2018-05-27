@@ -13,7 +13,7 @@ import MessageItem from "./messageItem/MessageItem";
 import { loadMessageLog } from "../../../actions/Actions";
 
 const MessageTransition = props => (
-  <CSSTransition {...props} classNames="messageItemTrans" timeout={400} />
+  <CSSTransition {...props} classNames="message-item-anim" timeout={400} />
 );
 
 class MessageLog extends Component {
@@ -88,4 +88,7 @@ const mapStateToProps = state => ({
   isLoading: state.loadingState
 });
 
-export default connect(mapStateToProps, { loadMessageLog })(MessageLog);
+export default connect(
+  mapStateToProps,
+  { loadMessageLog }
+)(MessageLog);

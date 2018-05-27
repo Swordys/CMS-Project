@@ -11,7 +11,7 @@ import Message from "./message/Message";
 const App = () => (
   <div className="App">
     <Switch>
-      <Route path="/user" exact component={Message} />
+      <Route path="/" exact component={Message} />
     </Switch>
   </div>
 );
