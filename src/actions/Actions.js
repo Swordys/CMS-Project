@@ -1,19 +1,12 @@
 import firebase from "firebase/app";
 import dayjs from "dayjs";
 import firestore from "../firebase/firestore";
-import { getMetaData } from "../helpers/messageHelper";
 import {
-  EMOJI_CLOSED,
-  EMOJI_SENT,
-  EMOJI_TOGGLED,
-  LOADED_MESSAGE_HEIGHT,
-  LOADED_META_URL_HEIGHT,
   LOADING_STARTED,
   LOADING_STOPPED,
   MESSAGE_LOG_EMPTY,
   MESSAGE_LOG_LOADED,
-  MESSAGE_SENT,
-  MESSAGE_URL_LOADED
+  MESSAGE_SENT
 } from "./ActionTypes";
 
 const loadedMessagesSuccess = msgArr => ({
@@ -31,40 +24,12 @@ const sendMessage = msg => ({
   msg
 });
 
-const loadedUrlMeta = urlObj => ({
-  type: MESSAGE_URL_LOADED,
-  urlObj
-});
-
-export const toggleEmoji = () => ({
-  type: EMOJI_TOGGLED
-});
-
-export const closeEmoji = () => ({
-  type: EMOJI_CLOSED
-});
-
-export const sendEmoji = emoji => ({
-  type: EMOJI_SENT,
-  emoji
-});
-
 const loadingStarted = () => ({
   type: LOADING_STARTED
 });
 
 const loadingStopped = () => ({
   type: LOADING_STOPPED
-});
-
-export const loadedMessageHeight = height => ({
-  type: LOADED_MESSAGE_HEIGHT,
-  height
-});
-
-export const loadedMetaUrlHeight = height => ({
-  type: LOADED_META_URL_HEIGHT,
-  height
 });
 
 export const loadMessageLog = () => async dispatch => {
@@ -121,7 +86,6 @@ export const sendMessageNow = (msg, log) => dispatch => {
 
   //  MESSAGE FOR FIREBASE
   const currentNew = { ...currentMsg };
-  currentNew.noDelay = true;
   currentNew.timestamp = firebase.firestore.FieldValue.serverTimestamp();
 
   const convoCollection = firestore.collection("conversation");
@@ -134,16 +98,6 @@ export const sendMessageNow = (msg, log) => dispatch => {
           showPic: previousMsg.showPic
         });
       }
-
-      getMetaData(currentNew.text)
-        .then(urlMeta => {
-          if (urlMeta) {
-            dispatch(loadedUrlMeta({ urlMeta, id: currentNew.id }));
-            currentNew.urlMeta = urlMeta;
-            convoCollection.doc(currentNew.id).set(currentNew);
-          }
-        })
-        .catch(err => console.error(err));
     })
     .catch(err => {
       console.error(err);

@@ -1,22 +1,11 @@
 import { combineReducers } from "redux";
 
 // reducers
-import {
-  messageLogReducer,
-  toggleEmojiReducer,
-  sendEmojiReducer,
-  loadIconReducer,
-  loadedMessageHeightReducer,
-  loadedMetaUrlHeight,
-} from "./Reducers";
+import { messageLogReducer, loadIconReducer } from "./Reducers";
 
 const rootReducer = combineReducers({
   getMessages: messageLogReducer,
-  getEmojiState: toggleEmojiReducer,
-  getSentEmoji: sendEmojiReducer,
-  loadingState: loadIconReducer,
-  nextHeight: loadedMessageHeightReducer,
-  metaHeight: loadedMetaUrlHeight,
+  loadingState: loadIconReducer
 });
 
 export default rootReducer;

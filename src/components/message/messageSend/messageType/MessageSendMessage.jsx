@@ -9,7 +9,7 @@ import { connect } from "react-redux";
 import MessageSendFile from "./MessageSendFile";
 
 // Actions
-import { sendMessageNow } from "../../../actions/Actions";
+import { sendMessageNow } from "../../../../actions/Actions";
 
 class MessageSendMessage extends Component {
   static propTypes = {
@@ -60,16 +60,16 @@ class MessageSendMessage extends Component {
 
   render() {
     return (
-      <div className="messageSendMessage">
+      <div className="message-send">
         <MessageSendFile />
-        <div className="messageSendMessage_textArea">
+        <div className="message-send-box">
           <Textarea
             onKeyPress={this.handleTypeEvent}
             onChange={e => {
               this.setState({ inputValue: e.target.value });
             }}
             value={this.state.inputValue}
-            className="messageSendMessage_textArea_text"
+            className="message-send-box-text"
             placeholder="Type a message"
           />
         </div>

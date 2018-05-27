@@ -1,10 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-// Components
 import MessageText from "./MessageText";
 import MessagePic from "./MessagePic";
-// Styles
+
 import "../../../../css/messageApp/message/messageLog/messageItem.css";
 
 const MessageItem = props => (

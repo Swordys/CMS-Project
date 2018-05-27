@@ -9,7 +9,7 @@
 
 /* Main styles */
 
-.messageSend {
+.message-send-wrap {
   width: 100%;
   display: flex;
   align-items: flex-end;
@@ -21,7 +21,7 @@
   background: white;
 }
 
-.messageSendMessage {
+.message-send {
   border: 1px solid #ececec;
   display: flex;
   width: 100%;
@@ -30,13 +30,13 @@
   position: relative;
 }
 
-.messageSendMessage_textArea {
+.message-send-box {
   width: 100%;
   position: relative;
   display: flex;
 }
 
-.messageSendMessage_textArea::after {
+.message-send-box::after {
   content: "";
   position: absolute;
   height: 70%;
@@ -47,7 +47,7 @@
   background: rgba(40, 40, 40, 0.1);
 }
 
-.messageSendMessage_textArea_text {
+.message-send-box-text {
   resize: none;
   max-height: 140px;
   width: 100%;
@@ -62,39 +62,13 @@
 
 /* MessageSend Fields */
 
-.messageSendField {
-  width: 38px;
+.message-send-field {
+  width: 40px;
+  height: 40px;
   flex-shrink: 0;
   cursor: pointer;
   display: flex;
   justify-content: center;
-  align-items: flex-start;
-  background: #ebebeb;
-}
-
-.messageSendField_content {
-  height: 40px;
-  width: 100%;
-  display: flex;
-  justify-content: center;
   align-items: center;
-  transition: transform 100ms ease-out;
-  box-sizing: border-box;
-}
-
-.messageSendField_content > i {
-  color: rgba(0, 91, 234, 0.85);
-  font-size: 22px;
-}
-
-.messageSendField_content > img {
-  height: 22px;
-  width: 22px;
-  pointer-events: none;
-  user-select: none;
-  transition: transform 150ms ease-out;
-}
-
-.messageSendField_content:hover > img {
-  transform: scale(1.2);
+  background: #ebebeb;
 }
