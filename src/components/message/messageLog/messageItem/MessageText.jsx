@@ -2,10 +2,10 @@ import React from "react";
 import PropTypes from "prop-types";
 
 const MessageText = ({ text, sender, date }) => {
-  const classAtr = sender ? "messege-item-text__out" : "messege-item-text__in";
+  const classAtr = sender ? "message-item-text__out" : "message-item-text__in";
 
   return (
-    <div className={`messege-item-text ${classAtr}`}>
+    <div className={`message-item-text ${classAtr}`}>
       <div
         style={{
           whiteSpace: "pre-wrap",
@@ -15,7 +15,7 @@ const MessageText = ({ text, sender, date }) => {
       >
         <div>{text}</div>
       </div>
-      <div className="messege-item-time">{date}</div>
+      <div className="message-item-time">{date}</div>
     </div>
   );
 };

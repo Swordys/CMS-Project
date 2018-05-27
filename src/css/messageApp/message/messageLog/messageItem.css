@@ -1,18 +1,18 @@
 /* --- GENERAL --- */
 
-.messege-item {
+.message-item {
   flex-shrink: 0;
   margin-bottom: 8px;
   display: flex;
 }
 
-.messege-item:hover .messege-item-time {
+.message-item:hover .message-item-time {
   opacity: 0.8;
   transform: translateY(0);
   z-index: 1;
 }
 
-.messege-item-text {
+.message-item-text {
   padding: 9px 13px;
   max-width: 600px;
   font-size: 14px;
@@ -43,14 +43,14 @@
 }
 
 
-.messege-item-date {
+.message-item-date {
   font-size: 12px;
   margin: 30px 0 20px 0;
   color: #949494;
   align-self: center;
 }
 
-.messege-item-time {
+.message-item-time {
   position: absolute;
   margin-bottom: 7px;
   background: black;
@@ -67,7 +67,7 @@
   z-index: -500;
 }
 
-.messege-item-time::after {
+.message-item-time::after {
   content: "";
   position: absolute;
   height: 10px;
@@ -81,27 +81,27 @@
 
 /* --- MY MESSAGE --- */
 
-.messege-item__out {
+.message-item__out {
   position: relative;
 }
 
-.messege-item-text__out {
+.message-item-text__out {
   background: white;
   color: rgb(51, 51, 51);
 }
 
 /* --- INBOX MESSAGE --- */
 
-.messege-item__in {
+.message-item__in {
   align-self: flex-start;
   position: relative;
 }
 
-.messege-item__in *::selection {
+.message-item__in *::selection {
   background: white;
 }
 
-.messege-item-text__in {
+.message-item-text__in {
   background: rgba(0, 91, 234, 0.85);
   color: white;
   order: 1;

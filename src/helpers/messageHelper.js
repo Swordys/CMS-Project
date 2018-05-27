@@ -76,7 +76,7 @@ export const linkifyText = (textInput, sender) => {
     linkArr.forEach((e, i) => {
       const text = textProcess.substring(indx, e.index);
       const link = {
-        className: `messege-item-link ${sender ? "messege-item-link__out" : "messege-item-link__in"}`,
+        className: `message-item-link ${sender ? "message-item-link__out" : "message-item-link__in"}`,
         key: e.index,
         href: e.url,
         urlText: e.text

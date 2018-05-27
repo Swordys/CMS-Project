@@ -9,8 +9,8 @@ import "../../../../css/messageApp/message/messageLog/messageItem.css";
 
 const MessageItem = props => (
   <div
-    className={`messege-item ${
-      props.sender ? "messege-item__out" : "messege-item__in"
+    className={`message-item ${
+      props.sender ? "message-item__out" : "message-item__in"
     }`}
     style={{ alignItems: `${props.sender ? "flex-end" : "flex-start"}` }}
   >

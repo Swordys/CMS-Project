@@ -11,7 +11,6 @@ import "../../../css/messageApp/message/messageLog/transitions/messageTrans.css"
 
 // Components
 import MessageItem from "./messageItem/MessageItem";
-// import EmojiBox from "../../general/EmojiBox";
 
 // Actions
 import { closeEmoji, loadMessageLog } from "../../../actions/Actions";
@@ -62,7 +61,7 @@ class MessageLog extends Component {
       if (messageObj.showTimeStamp) {
         retunLog.push(
           <MessageTransition key={messageObj.dateFull}>
-            <div className="messege-item-date">{messageObj.date}</div>
+            <div className="message-item-date">{messageObj.date}</div>
           </MessageTransition>
         );
       }
@@ -76,7 +75,7 @@ class MessageLog extends Component {
   renderLoading = () => {
     const { isLoading } = this.props;
     return isLoading ? (
-      <div className="messege-log-load">
+      <div className="message-log-load">
         <div className="messageItem_load_icon">
           {Array.from({ length: 9 }, (e, i) => i).map(i => (
             <div key={i} className="load_icon_box" />
