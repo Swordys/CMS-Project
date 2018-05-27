@@ -10,7 +10,6 @@ import "../../../css/messageApp/message/messageLog/messageLog.css";
 import "../../../css/messageApp/message/messageLog/transitions/messageTrans.css";
 
 // Components
-import MessageBaner from "./MessageBaner";
 import MessageItem from "./messageItem/MessageItem";
 import EmojiBox from "../../general/EmojiBox";
 
@@ -104,7 +103,6 @@ class MessageLog extends Component {
         onKeyUp={k => k}
         className="messageLog"
       >
-        <MessageBaner />
         {this.renderLoading()}
         <EmojiBox />
         <TransitionGroup className="messageLog_list">

@@ -1,5 +1,5 @@
-const firebase = require("firebase");
-require("firebase/firestore");
+import { initializeApp, firestore } from "firebase/app";
+import "firebase/firestore";
 
 const config = {
   apiKey: process.env.REACT_APP_API_KEY,
@@ -7,5 +7,7 @@ const config = {
   projectId: process.env.REACT_APP_PROJECT_ID
 };
 
-firebase.initializeApp(config);
-export default firebase.firestore();
+initializeApp(config);
+const FIREDB = firestore();
+FIREDB.settings({ timestampsInSnapshots: true });
+export default FIREDB;

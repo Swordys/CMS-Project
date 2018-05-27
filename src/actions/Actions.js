@@ -1,8 +1,20 @@
-import firebase from "firebase";
+import firebase from "firebase/app";
 import moment from "moment";
 import firestore from "../firebase/firestore";
 import { getMetaData } from "../helpers/messageHelper";
-import { EMOJI_CLOSED, EMOJI_SENT, EMOJI_TOGGLED, LOADED_MESSAGE_HEIGHT, LOADED_META_URL_HEIGHT, LOADING_STARTED, LOADING_STOPPED, MESSAGE_LOG_EMPTY, MESSAGE_LOG_LOADED, MESSAGE_SENT, MESSAGE_URL_LOADED } from "./ActionTypes";
+import {
+  EMOJI_CLOSED,
+  EMOJI_SENT,
+  EMOJI_TOGGLED,
+  LOADED_MESSAGE_HEIGHT,
+  LOADED_META_URL_HEIGHT,
+  LOADING_STARTED,
+  LOADING_STOPPED,
+  MESSAGE_LOG_EMPTY,
+  MESSAGE_LOG_LOADED,
+  MESSAGE_SENT,
+  MESSAGE_URL_LOADED
+} from "./ActionTypes";
 
 
 const loadedMessagesSuccess = msgArr => ({
@@ -122,12 +134,12 @@ export const sendMessageNow = (msg, log) => dispatch => {
     .doc(currentNew.id)
     .set(currentNew)
     .then(() => {
-      if (previousMsg){
+      if (previousMsg) {
         convoCollection.doc(`${previousMsg.id}`).update({
           showPic: previousMsg.showPic
         });
       }
-        
+
       getMetaData(currentNew.text)
         .then(urlMeta => {
           if (urlMeta) {

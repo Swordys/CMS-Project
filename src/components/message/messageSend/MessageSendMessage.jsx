@@ -7,7 +7,7 @@ import { connect } from "react-redux";
 
 // Components
 import MessageSendFile from "./MessageSendFile";
-import MessageSendEmoji from "./MessageSendEmoji";
+// import MessageSendEmoji from "./MessageSendEmoji";
 
 // Actions
 import { sendMessageNow } from "../../../actions/Actions";
@@ -128,7 +128,6 @@ class MessageSendMessage extends Component {
             placeholder="Type a message"
           />
         </div>
-        <MessageSendEmoji />
       </div>
     );
   }

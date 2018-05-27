@@ -76,9 +76,9 @@ const MessageText = ({
   return (
     <div className="messageItem_text_container">
       <div
-        className={`${!onlyEmojy
-          ? "messageItem_text"
-          : ""} ${classObj.msgClass}`}
+        className={`${!onlyEmojy ? "messageItem_text" : ""} ${
+          classObj.msgClass
+        }`}
       >
         <div
           style={{

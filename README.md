@@ -1,1 +1,1 @@
-# React/Redux Messanger Project
+# Web Messenger 18 project
