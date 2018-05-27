@@ -11,17 +11,13 @@ import "../../../css/messageApp/message/messageLog/transitions/messageTrans.css"
 
 // Components
 import MessageItem from "./messageItem/MessageItem";
-import EmojiBox from "../../general/EmojiBox";
+// import EmojiBox from "../../general/EmojiBox";
 
 // Actions
 import { closeEmoji, loadMessageLog } from "../../../actions/Actions";
 
 const MessageTransition = props => (
-  <CSSTransition
-    {...props}
-    classNames="messageItemTrans"
-    timeout={{ enter: 400, exit: 400 }}
-  />
+  <CSSTransition {...props} classNames="messageItemTrans" timeout={400} />
 );
 
 class MessageLog extends Component {
@@ -29,9 +25,7 @@ class MessageLog extends Component {
     messageLog: ProptTypes.arrayOf(ProptTypes.object).isRequired,
     loadMessageLog: ProptTypes.func.isRequired,
     closeEmoji: ProptTypes.func.isRequired,
-    isLoading: ProptTypes.bool.isRequired,
-    nextHeight: ProptTypes.number.isRequired,
-    metaHeight: ProptTypes.number.isRequired
+    isLoading: ProptTypes.bool.isRequired
   };
 
   componentDidMount() {
@@ -60,18 +54,14 @@ class MessageLog extends Component {
     messageLog.forEach(messageObj => {
       const retItem = (
         <MessageTransition key={messageObj.key}>
-          <MessageItem
-            metaHeight={this.props.metaHeight}
-            nextHeight={this.props.nextHeight}
-            {...messageObj}
-          />
+          <MessageItem {...messageObj} />
         </MessageTransition>
       );
 
       if (messageObj.showTimeStamp) {
         retunLog.push(
           <MessageTransition key={messageObj.id}>
-            <div className="messageItem_date">{messageObj.date}</div>
+            <div className="messege-item-date">{messageObj.date}</div>
           </MessageTransition>
         );
       }
@@ -85,7 +75,7 @@ class MessageLog extends Component {
   renderLoading = () => {
     const { isLoading } = this.props;
     return isLoading ? (
-      <div className="messageLog_load">
+      <div className="messege-log-load">
         <div className="messageItem_load_icon">
           {Array.from({ length: 9 }, (e, i) => i).map(i => (
             <div key={i} className="load_icon_box" />
@@ -97,17 +87,13 @@ class MessageLog extends Component {
 
   render() {
     return (
-      <div
-        role="presentation"
-        onClick={() => this.props.closeEmoji()}
-        onKeyUp={k => k}
-        className="messageLog"
-      >
+      <div className="convo-wrap">
         {this.renderLoading()}
-        <EmojiBox />
-        <TransitionGroup className="messageLog_list">
-          {this.renderMessages()}
-        </TransitionGroup>
+        <div className="convo-log">
+          <TransitionGroup component={null}>
+            {this.renderMessages()}
+          </TransitionGroup>
+        </div>
       </div>
     );
   }

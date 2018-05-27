@@ -16,7 +16,6 @@ import {
   MESSAGE_URL_LOADED
 } from "./ActionTypes";
 
-
 const loadedMessagesSuccess = msgArr => ({
   type: MESSAGE_LOG_LOADED,
   msgArr
@@ -90,7 +89,6 @@ export const sendMessageNow = (msg, log) => dispatch => {
   const currentMsg = msg;
   if (logLen < 1) {
     currentMsg.showTimeStamp = true;
-    currentMsg.noDelay = true;
     currentMsg.showPic = true;
   } else {
     previousMsg = log[logLen - 1];
@@ -102,13 +100,11 @@ export const sendMessageNow = (msg, log) => dispatch => {
 
     if (timeDiff >= 30) {
       currentMsg.showTimeStamp = true;
-      currentMsg.noDelay = true;
       currentMsg.showPic = true;
     }
 
     // ------- ICON ANIMATIONS --------
 
-    currentMsg.noDelay = true;
     currentMsg.showPic = true;
     condition =
       ((previousMsg.sender && msg.sender) ||
@@ -117,7 +113,6 @@ export const sendMessageNow = (msg, log) => dispatch => {
 
     if (condition) {
       previousMsg.showPic = false;
-      currentMsg.noDelay = false;
     }
   }
 

@@ -49,24 +49,24 @@ class MessageSendMessage extends Component {
     }
   }
 
-  checkEvent = e => {
+  handleTypeEvent = e => {
     const isShift = e.nativeEvent.shiftKey;
     const isEnter = e.nativeEvent.keyCode === 13;
     const textValue = this.state.inputValue;
 
     if (isEnter && !isShift) {
       e.preventDefault();
-      this.sendMessage(textValue);
+      this.handleSendMessage(textValue);
     }
   };
 
-  sendMessage = text => {
-    const checkText = text.trim();
+  handleSendMessage = text => {
+    const trimText = text.trim();
 
     const timeFull = dayjs().format("YYYY-MM-DD HH:mm:ss");
     const timeMin = dayjs().format("dddd, h:mm a");
 
-    if (checkText) {
+    if (trimText) {
       this.setState({
         inputValue: ""
       });
@@ -77,16 +77,14 @@ class MessageSendMessage extends Component {
       const msgObj = {
         key: uuid(),
         id: uuid(),
-        text: checkText,
+        text: trimText,
         processArray,
         onlyEmojy,
         date: timeMin,
         dateFull: timeFull,
-        noDelay: false,
         showTimeStamp: false,
         showPic: false,
         sender,
-        // sender: true,
         metaUrl: null
       };
       this.props.sendMessageNow(msgObj, messageLog);
@@ -103,7 +101,7 @@ class MessageSendMessage extends Component {
             ref={input => {
               this.textInput = input;
             }}
-            onKeyPress={this.checkEvent}
+            onKeyPress={this.handleTypeEvent}
             onKeyUp={e => {
               const value = e.target.selectionStart;
               const { cursorPosition } = this.state;
