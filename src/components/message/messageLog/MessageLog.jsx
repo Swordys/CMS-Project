@@ -38,34 +38,33 @@ class MessageLog extends Component {
 
   renderMessages = () => {
     const { messageLog } = this.props;
+    const retunLog = [];
     const bottomMsg = (
       <MessageTransition key="bot">
         <div
           ref={e => {
             this.bottomMsg = e;
           }}
-          className="bottom"
+          style={{ float: "left", clear: "both" }}
         />
       </MessageTransition>
     );
 
-    const retunLog = [];
-    messageLog.forEach(messageObj => {
-      const retItem = (
-        <MessageTransition key={messageObj.id}>
-          <MessageItem {...messageObj} />
+    messageLog.forEach(messageData => {
+      const messageItem = (
+        <MessageTransition key={messageData.id}>
+          <MessageItem {...messageData} />
         </MessageTransition>
       );
-      
 
-      if (messageObj.showTimeStamp) {
+      if (messageData.showTimeStamp) {
         retunLog.push(
-          <MessageTransition key={messageObj.dateFull}>
-            <div className="message-item-date">{messageObj.date}</div>
+          <MessageTransition key={messageData.dateFull}>
+            <div className="message-item-date">{messageData.date}</div>
           </MessageTransition>
         );
       }
-      retunLog.push(retItem);
+      retunLog.push(messageItem);
     }, this);
 
     retunLog.push(bottomMsg);
@@ -101,9 +100,7 @@ class MessageLog extends Component {
 
 const mapStateToProps = state => ({
   messageLog: state.getMessages,
-  isLoading: state.loadingState,
-  nextHeight: state.nextHeight,
-  metaHeight: state.metaHeight
+  isLoading: state.loadingState
 });
 
 export default connect(mapStateToProps, { closeEmoji, loadMessageLog })(
