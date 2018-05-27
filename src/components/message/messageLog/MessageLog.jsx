@@ -32,14 +32,6 @@ class MessageLog extends Component {
   }
 
   render() {
-    const bottom = (
-      <div
-        ref={e => {
-          this.bottom = e;
-        }}
-        style={{ float: "left", clear: "both" }}
-      />
-    );
     const spinner = this.props.isLoading ? (
       <div className="message-log-load">
         <div className="messageItem_load_icon">
@@ -70,6 +62,15 @@ class MessageLog extends Component {
 
       return messageItem;
     });
+
+    const bottom = (
+      <div
+        ref={e => {
+          this.bottom = e;
+        }}
+        style={{ float: "left", clear: "both" }}
+      />
+    );
 
     return (
       <div className="convo-wrap">

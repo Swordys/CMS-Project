@@ -71,18 +71,14 @@
   position: absolute;
   height: 10px;
   width: 10px;
-  background: black;
+  background: inherit;
   left: calc(50% - 5px);
-  bottom: -1px;
+  bottom: -2px;
   transform: rotate(45deg);
   z-index: -1;
 }
 
 /* --- MY MESSAGE --- */
-
-.message-item__out {
-  position: relative;
-}
 
 .message-item-text__out {
   background: white;

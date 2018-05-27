@@ -6,6 +6,7 @@ const MessageText = ({ text, sender, date }) => {
 
   return (
     <div className={`message-item-text ${classAtr}`}>
+      <div className="message-item-time">{date}</div>
       <div
         style={{
           whiteSpace: "pre-wrap",
@@ -15,7 +16,6 @@ const MessageText = ({ text, sender, date }) => {
       >
         <div>{text}</div>
       </div>
-      <div className="message-item-time">{date}</div>
     </div>
   );
 };

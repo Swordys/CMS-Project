@@ -1,6 +1,7 @@
 import firebase from "firebase/app";
 import dayjs from "dayjs";
 import firestore from "../firebase/firestore";
+
 import {
   LOADING_STARTED,
   LOADING_STOPPED,
@@ -48,9 +49,9 @@ export const loadMessageLog = () => async dispatch => {
 };
 
 export const sendMessageNow = (msg, log) => dispatch => {
-  const logLen = log.length;
   let condition = false;
   let previousMsg = null;
+  const logLen = log.length;
   const currentMsg = msg;
   if (logLen < 1) {
     currentMsg.showTimeStamp = true;
@@ -98,8 +99,5 @@ export const sendMessageNow = (msg, log) => dispatch => {
           showPic: previousMsg.showPic
         });
       }
-    })
-    .catch(err => {
-      console.error(err);
     });
 };
