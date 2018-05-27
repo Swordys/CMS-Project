@@ -1,5 +1,5 @@
 import firebase from "firebase/app";
-import moment from "moment";
+import dayjs from "dayjs";
 import firestore from "../firebase/firestore";
 import { getMetaData } from "../helpers/messageHelper";
 import {
@@ -71,7 +71,7 @@ export const loadedMetaUrlHeight = height => ({
 export const loadMessageLog = () => async dispatch => {
   dispatch(loadingStarted());
   const snapShot = await firestore
-    .collection("data")
+    .collection("conversation")
     .orderBy("timestamp")
     .get();
   const messageData = snapShot.docs.map(e => e.data());
@@ -96,8 +96,8 @@ export const sendMessageNow = (msg, log) => dispatch => {
     previousMsg = log[logLen - 1];
     // -------- TIME STUFF -------
 
-    const lastTime = moment(previousMsg.dateFull);
-    const thisTime = moment(msg.dateFull);
+    const lastTime = dayjs(previousMsg.dateFull);
+    const thisTime = dayjs(msg.dateFull);
     const timeDiff = thisTime.diff(lastTime, "minutes");
 
     if (timeDiff >= 30) {
@@ -129,7 +129,7 @@ export const sendMessageNow = (msg, log) => dispatch => {
   currentNew.noDelay = true;
   currentNew.timestamp = firebase.firestore.FieldValue.serverTimestamp();
 
-  const convoCollection = firestore.collection("data");
+  const convoCollection = firestore.collection("conversation");
   convoCollection
     .doc(currentNew.id)
     .set(currentNew)

@@ -8,7 +8,7 @@ const MessagePic = ({ sender }) => {
         [sender ? "right" : "left"]: "-45px"
       },
       picImage: {
-        backgroundImage: "url(https://picsum.photos/100)"
+        backgroundImage: "url(https://api.adorable.io/avatars/60/david)"
       }
     };
 

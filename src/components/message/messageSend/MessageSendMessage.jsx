@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import Textarea from "react-textarea-autosize";
 import uuid from "uuid";
-import moment from "moment";
+import dayjs from "dayjs";
 import { connect } from "react-redux";
 
 // Components
@@ -62,8 +62,10 @@ class MessageSendMessage extends Component {
 
   sendMessage = text => {
     const checkText = text.trim();
-    const timeFull = moment().format("YYYY-MM-DD HH:mm:ss");
-    const timeMin = moment().format("ddd, h:mm a");
+
+    const timeFull = dayjs().format("YYYY-MM-DD HH:mm:ss");
+    const timeMin = dayjs().format("dddd, h:mm a");
+
     if (checkText) {
       this.setState({
         inputValue: ""
