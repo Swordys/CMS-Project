@@ -53,14 +53,15 @@ class MessageLog extends Component {
     const retunLog = [];
     messageLog.forEach(messageObj => {
       const retItem = (
-        <MessageTransition key={messageObj.key}>
+        <MessageTransition key={messageObj.id}>
           <MessageItem {...messageObj} />
         </MessageTransition>
       );
+      
 
       if (messageObj.showTimeStamp) {
         retunLog.push(
-          <MessageTransition key={messageObj.id}>
+          <MessageTransition key={messageObj.dateFull}>
             <div className="messege-item-date">{messageObj.date}</div>
           </MessageTransition>
         );

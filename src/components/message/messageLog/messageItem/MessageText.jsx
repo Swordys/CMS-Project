@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const MessageText = ({ processArray, sender, date }) => {
+const MessageText = ({ text, sender, date }) => {
   const classAtr = sender ? "messege-item-text__out" : "messege-item-text__in";
 
   return (
@@ -13,7 +13,7 @@ const MessageText = ({ processArray, sender, date }) => {
           wordBreak: "break-word"
         }}
       >
-        <div>{processArray}</div>
+        <div>{text}</div>
       </div>
       <div className="messege-item-time">{date}</div>
     </div>
@@ -21,7 +21,7 @@ const MessageText = ({ processArray, sender, date }) => {
 };
 
 MessageText.propTypes = {
-  processArray: PropTypes.arrayOf(PropTypes.any).isRequired,
+  text: PropTypes.string.isRequired,
   date: PropTypes.string.isRequired,
   sender: PropTypes.bool.isRequired
 };
