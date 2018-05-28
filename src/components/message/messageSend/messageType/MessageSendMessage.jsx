@@ -64,7 +64,7 @@ class MessageSendMessage extends Component {
         date: timeMin,
         dateFull: timeFull,
         showTimeStamp: false,
-        showPic: true,
+        showPic: true
       };
       this.props.sendMessage(msgObj, messageLog);
     }
