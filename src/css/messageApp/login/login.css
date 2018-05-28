@@ -3,6 +3,7 @@
   width: 100%;
   background: lightblue;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
 }
@@ -11,10 +12,15 @@
   background: white;
   padding: 30px;
   border-radius: 2px;
+  height: 110px;
+  transform-style: preserve-3d;
+  transition: transform 250ms ease-out;
 }
 
-.messenger-login-form {
-  margin-bottom: 25px;
+.messenger-login-form__hidden {
+  opacity: 0;
+  z-index: -1;
+  pointer-events: none;
 }
 
 .messenger-login-form label {

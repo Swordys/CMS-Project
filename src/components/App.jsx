@@ -13,7 +13,12 @@ import "../css/messageApp/app/App.css";
 const App = ({ signedIn, signedOut }) => {
   firebase.auth().onAuthStateChanged(user => {
     if (user) {
-      signedIn(user.providerData[0]);
+      const userData = {
+        phone: user.phoneNumber,
+        uid: user.uid
+      };
+      console.log(userData);
+      signedIn(userData);
     } else {
       signedOut();
     }

@@ -7,6 +7,8 @@ const Login = class extends React.Component {
   state = {
     phoneNumber: "",
     confirmCode: "",
+    numberConfirm: false,
+    codeConfirm: false,
     user: null,
     error: null
   };
@@ -15,17 +17,10 @@ const Login = class extends React.Component {
     window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier(
       "sign-in-button",
       {
-        size: "invisible",
-        callback: () => {
-          this.handleVerify();
-        }
+        size: "invisible"
       }
     );
   }
-
-  handleVerify = () => {
-    console.log("Verified");
-  };
 
   handleSubmitNumber = e => {
     e.preventDefault();
@@ -37,11 +32,13 @@ const Login = class extends React.Component {
         .signInWithPhoneNumber(phoneNumber, appVerifier)
         .then(confirmationResult => {
           window.confirmationResult = confirmationResult;
+          this.setState({
+            numberConfirm: true
+          });
         })
         .catch(error => {
           console.log(error);
         });
-      this.setState({ phoneNumber: "" });
     }
   };
 
@@ -53,19 +50,27 @@ const Login = class extends React.Component {
         .confirm(this.state.confirmCode)
         .then(result => {
           const { user } = result.user;
-          this.setState({ user });
+          this.setState({ user, codeConfirm: true });
         })
         .catch(error => {
           this.setState({ error });
         });
-      this.setState({ confirmCode: "" });
     }
   };
 
   render() {
     return (
       <div className="messenger-login-wrap">
-        <div className="messenger-login-form-wrap">
+        <div
+          style={{
+            transform: `${
+              this.state.numberConfirm
+                ? "translate3d(0, 0, 0)"
+                : "translate3d(0, 55px, 0)"
+            }`
+          }}
+          className="messenger-login-form-wrap"
+        >
           <form
             className="messenger-login-form"
             onSubmit={this.handleSubmitNumber}
@@ -84,6 +89,18 @@ const Login = class extends React.Component {
               />
             </label>
           </form>
+        </div>
+        <div
+          style={{
+            transform: `${
+              this.state.numberConfirm
+                ? "translate3d(0, 0, 0)"
+                : "translate3d(0, -55px, 0)"
+            }`,
+            zIndex: `${this.state.numberConfirm ? "1" : "-1"}`
+          }}
+          className="messenger-login-form-wrap"
+        >
           <form
             className="messenger-login-form"
             onSubmit={this.handleConfirmCode}
@@ -102,8 +119,8 @@ const Login = class extends React.Component {
               />
             </label>
           </form>
-          <div id="sign-in-button" />
         </div>
+        <div id="sign-in-button" />
       </div>
     );
   }
