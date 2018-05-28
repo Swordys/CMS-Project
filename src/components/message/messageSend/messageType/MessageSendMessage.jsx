@@ -4,22 +4,29 @@ import Textarea from "react-textarea-autosize";
 import uuid from "uuid";
 import dayjs from "dayjs";
 import { connect } from "react-redux";
+import socket from "../../../../socket/socketClient";
 
-// Components
 import MessageSendFile from "./MessageSendFile";
 
 // Actions
-import { sendMessageNow } from "../../../../actions/Actions";
+import { sendMessage, pushMessageToClient } from "../../../../actions/Actions";
 
 class MessageSendMessage extends Component {
   static propTypes = {
-    sendMessageNow: PropTypes.func.isRequired,
-    messageLog: PropTypes.arrayOf(PropTypes.object).isRequired
+    messageLog: PropTypes.arrayOf(PropTypes.object).isRequired,
+    sendMessage: PropTypes.func.isRequired,
+    pushMessageToClient: PropTypes.func.isRequired
   };
 
   state = {
     inputValue: ""
   };
+
+  componentDidMount() {
+    socket.on("RECEIVE_MESSAGE", message => {
+      this.props.pushMessageToClient(message);
+    });
+  }
 
   handleTypeEvent = e => {
     const isShift = e.nativeEvent.shiftKey;
@@ -51,10 +58,10 @@ class MessageSendMessage extends Component {
         date: timeMin,
         dateFull: timeFull,
         showTimeStamp: false,
-        showPic: false,
+        showPic: true,
         sender
       };
-      this.props.sendMessageNow(msgObj, messageLog);
+      this.props.sendMessage(msgObj, messageLog);
     }
   };
 
@@ -79,10 +86,13 @@ class MessageSendMessage extends Component {
 }
 
 const mapStateToProps = state => ({
-  messageLog: state.getMessages,
-  emoji: state.getSentEmoji
+  messageLog: state.getMessages
 });
 
-export default connect(mapStateToProps, {
-  sendMessageNow
-})(MessageSendMessage);
+export default connect(
+  mapStateToProps,
+  {
+    sendMessage,
+    pushMessageToClient
+  }
+)(MessageSendMessage);

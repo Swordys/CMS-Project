@@ -1,5 +1,6 @@
 import firebase from "firebase/app";
 import dayjs from "dayjs";
+import socket from "../socket/socketClient";
 import firestore from "../firebase/firestore";
 
 import {
@@ -18,11 +19,6 @@ const loadedMessagesSuccess = msgArr => ({
 const loadedMessageFailure = msgArr => ({
   type: MESSAGE_LOG_EMPTY,
   msgArr
-});
-
-const sendMessage = msg => ({
-  type: MESSAGE_SENT,
-  msg
 });
 
 const loadingStarted = () => ({
@@ -48,56 +44,38 @@ export const loadMessageLog = () => async dispatch => {
   );
 };
 
-export const sendMessageNow = (msg, log) => dispatch => {
-  let condition = false;
-  let previousMsg = null;
-  const logLen = log.length;
-  const currentMsg = msg;
-  if (logLen < 1) {
-    currentMsg.showTimeStamp = true;
-    currentMsg.showPic = true;
-  } else {
-    previousMsg = log[logLen - 1];
-    // -------- TIME STUFF -------
+// =========== SEND MESSAGE =========== 
 
+export const pushMessageToClient = msg => ({
+  type: MESSAGE_SENT,
+  msg
+});
+
+const pushMessageToFirebase = msg => {
+  const currentNew = { ...msg };
+  currentNew.timestamp = firebase.firestore.FieldValue.serverTimestamp();
+
+  const convoCollection = firestore.collection("conversation");
+  convoCollection.doc(currentNew.id).set(currentNew);
+};
+
+export const sendMessage = (message, messageLog) => dispatch => {
+  // PROCESS MESSAGE
+  const currentMsg = message;
+  if (messageLog.length < 1) {
+    currentMsg.showTimeStamp = true;
+  } else {
+    // -------- TIME STUFF -------
+    const previousMsg = messageLog[messageLog.length - 1];
     const lastTime = dayjs(previousMsg.dateFull);
-    const thisTime = dayjs(msg.dateFull);
+    const thisTime = dayjs(message.dateFull);
     const timeDiff = thisTime.diff(lastTime, "minutes");
 
     if (timeDiff >= 30) {
       currentMsg.showTimeStamp = true;
-      currentMsg.showPic = true;
-    }
-
-    // ------- ICON ANIMATIONS --------
-
-    currentMsg.showPic = true;
-    condition =
-      ((previousMsg.sender && msg.sender) ||
-        (!previousMsg.sender && !msg.sender)) &&
-      !currentMsg.showTimeStamp;
-
-    if (condition) {
-      previousMsg.showPic = false;
     }
   }
-
-  // MESSAGE FOR CLIENT
-  dispatch(sendMessage(currentMsg));
-
-  //  MESSAGE FOR FIREBASE
-  const currentNew = { ...currentMsg };
-  currentNew.timestamp = firebase.firestore.FieldValue.serverTimestamp();
-
-  const convoCollection = firestore.collection("conversation");
-  convoCollection
-    .doc(currentNew.id)
-    .set(currentNew)
-    .then(() => {
-      if (previousMsg) {
-        convoCollection.doc(`${previousMsg.id}`).update({
-          showPic: previousMsg.showPic
-        });
-      }
-    });
+  // SEND MESSAGE
+  socket.emit("SEND_MESSAGE", currentMsg);
+  pushMessageToFirebase(currentMsg);
 };
