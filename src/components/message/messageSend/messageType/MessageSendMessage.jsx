@@ -89,7 +89,7 @@ class MessageSendMessage extends Component {
 }
 
 const mapStateToProps = state => ({
-  messageLog: state.getMessages
+  messageLog: state.userMessages
 });
 
 export default connect(

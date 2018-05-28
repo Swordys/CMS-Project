@@ -1,11 +1,18 @@
 import { combineReducers } from "redux";
 
 // reducers
-import { messageLogReducer, loadIconReducer } from "./Reducers";
+import {
+  userSignStatusReducer,
+  userDataReducer,
+  loadIconReducer,
+  userMessagesReducer
+} from "./Reducers";
 
 const rootReducer = combineReducers({
-  getMessages: messageLogReducer,
-  loadingState: loadIconReducer
+  userSignediIn: userSignStatusReducer,
+  userData: userDataReducer,
+  loadingState: loadIconReducer,
+  userMessages: userMessagesReducer
 });
 
 export default rootReducer;

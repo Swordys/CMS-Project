@@ -85,7 +85,7 @@ class MessageLog extends Component {
 }
 
 const mapStateToProps = state => ({
-  messageLog: state.getMessages,
+  messageLog: state.userMessages,
   isLoading: state.loadingState
 });
 

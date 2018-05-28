@@ -4,12 +4,47 @@ import firestore from "../firebase/firestore";
 import socketClient from "../socket/socketClient";
 
 import {
+  USER_LOGGEED_IN,
+  USER_LOGGEED_OUT,
+  USER_DATA_LOADED,
+  USER_DATA_NULL,
   LOADING_STARTED,
   LOADING_STOPPED,
   MESSAGE_LOG_EMPTY,
   MESSAGE_LOG_LOADED,
   MESSAGE_SENT
 } from "./ActionTypes";
+
+// ========= USER INFO ==========
+
+const signedIn = () => ({
+  type: USER_LOGGEED_IN
+});
+
+export const userSignedOut = () => ({
+  type: USER_LOGGEED_OUT
+});
+
+const userDataSuccess = userData => ({
+  type: USER_DATA_LOADED,
+  userData
+});
+
+const userDataFailure = () => ({
+  type: USER_DATA_NULL
+});
+
+export const userSignedIn = userData => dispatch => {
+  // LOAD USER DATA
+  dispatch(signedIn());
+  if (userData) {
+    dispatch(userDataSuccess(userData));
+  } else {
+    dispatch(userDataFailure());
+  }
+};
+
+// =========== USER MESSAGES ===========
 
 const loadedMessagesSuccess = msgArr => ({
   type: MESSAGE_LOG_LOADED,
