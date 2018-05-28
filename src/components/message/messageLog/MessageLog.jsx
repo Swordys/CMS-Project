@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import ProptTypes from "prop-types";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import TransitionGroup from "react-transition-group/TransitionGroup";
 import CSSTransition from "react-transition-group/CSSTransition";
@@ -18,9 +18,12 @@ const MessageTransition = props => (
 
 class MessageLog extends Component {
   static propTypes = {
-    loadMessageLog: ProptTypes.func.isRequired,
-    messageLog: ProptTypes.arrayOf(ProptTypes.object).isRequired,
-    isLoading: ProptTypes.bool.isRequired
+    loadMessageLog: PropTypes.func.isRequired,
+    userData: PropTypes.shape({
+      uid: PropTypes.string
+    }).isRequired,
+    messageLog: PropTypes.arrayOf(PropTypes.object).isRequired,
+    isLoading: PropTypes.bool.isRequired
   };
 
   componentDidMount() {
@@ -32,6 +35,8 @@ class MessageLog extends Component {
   }
 
   render() {
+    const { userData } = this.props;
+
     const spinner = this.props.isLoading ? (
       <div className="message-log-load">
         <div className="messageItem_load_icon">
@@ -45,7 +50,10 @@ class MessageLog extends Component {
     const messages = this.props.messageLog.map(messageData => {
       const messageItem = (
         <MessageTransition key={messageData.id}>
-          <MessageItem {...messageData} />
+          <MessageItem
+            sender={userData.uid === messageData.userId}
+            {...messageData}
+          />
         </MessageTransition>
       );
 
@@ -86,6 +94,7 @@ class MessageLog extends Component {
 
 const mapStateToProps = state => ({
   messageLog: state.userMessages,
+  userData: state.userData,
   isLoading: state.loadingState
 });
 

@@ -17,10 +17,3 @@ ReactDOM.render(
   document.getElementById("root")
 );
 registerServiceWorker();
-
-// {
-//   "rules": {
-//     ".read": "auth != null",
-//     ".write":"auth != null"
-//   }
-// }

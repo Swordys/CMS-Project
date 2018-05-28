@@ -94,7 +94,7 @@ const pushMessageToFirebase = msg => {
   convoCollection.doc(currentNew.id).set(currentNew);
 };
 
-export const sendMessage = (message, messageLog) => dispatch => {
+export const sendMessage = (message, messageLog) => () => {
   // PROCESS MESSAGE
   const currentMsg = message;
   if (messageLog.length < 1) {
