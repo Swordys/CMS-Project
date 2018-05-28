@@ -1,7 +1,7 @@
 import firebase from "firebase/app";
 import dayjs from "dayjs";
-import socket from "../socket/socketClient";
 import firestore from "../firebase/firestore";
+import socketClient from "../socket/socketClient";
 
 import {
   LOADING_STARTED,
@@ -44,7 +44,7 @@ export const loadMessageLog = () => async dispatch => {
   );
 };
 
-// =========== SEND MESSAGE =========== 
+// =========== SEND MESSAGE ===========
 
 export const pushMessageToClient = msg => ({
   type: MESSAGE_SENT,
@@ -76,6 +76,6 @@ export const sendMessage = (message, messageLog) => dispatch => {
     }
   }
   // SEND MESSAGE
-  socket.emit("SEND_MESSAGE", currentMsg);
+  socketClient.emit("SEND_MESSAGE", currentMsg);
   pushMessageToFirebase(currentMsg);
 };

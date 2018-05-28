@@ -1,11 +1,12 @@
 const server = require("http").createServer();
 const io = require("socket.io")(server);
 
-io.on("connection", client => {
-  console.log(client.id);
-  io.emit("USER_CONNECTED", client.id);
-  client.on("SEND_MESSAGE", data => {
-    io.emit("RECEIVE_MESSAGE", data);
+io.on("connection", socket => {
+  console.log(socket.id);
+
+  socket.on("SEND_MESSAGE", messageData => {
+    socket.join(messageData.chatID);
+    io.to(messageData.chatID).emit("RECEIVE_MESSAGE", messageData);
   });
 });
 

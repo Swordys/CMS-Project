@@ -1,0 +1,40 @@
+.messenger-login-wrap {
+  height: 100vh;
+  width: 100%;
+  background: lightblue;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.messenger-login-form-wrap {
+  background: white;
+  padding: 30px;
+  border-radius: 2px;
+}
+
+.messenger-login-form {
+  margin-bottom: 25px;
+}
+
+.messenger-login-form label {
+  display: flex;
+  flex-direction: column;
+  letter-spacing: 1px;
+  font-size: 12px;
+}
+
+.messenger-login-form:nth-child(2) {
+  margin: 0;
+}
+
+.login-form-input {
+  border: 0;
+  padding: 4px 0;
+  background: none;
+  border-bottom: 1px solid rgb(75, 120, 240);
+  font-size: 16px;
+  color: rgb(50, 50, 50);
+  margin-top: 10px;
+  outline: none;
+}

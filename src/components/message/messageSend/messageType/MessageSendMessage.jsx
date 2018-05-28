@@ -4,7 +4,7 @@ import Textarea from "react-textarea-autosize";
 import uuid from "uuid";
 import dayjs from "dayjs";
 import { connect } from "react-redux";
-import socket from "../../../../socket/socketClient";
+import socketClient from "../../../../socket/socketClient";
 
 import MessageSendFile from "./MessageSendFile";
 
@@ -23,7 +23,7 @@ class MessageSendMessage extends Component {
   };
 
   componentDidMount() {
-    socket.on("RECEIVE_MESSAGE", message => {
+    socketClient.on("RECEIVE_MESSAGE", message => {
       this.props.pushMessageToClient(message);
     });
   }
@@ -52,7 +52,10 @@ class MessageSendMessage extends Component {
 
       const { messageLog } = this.props;
       const sender = Math.random() >= 0.5;
+      const chatID = sender ? "chat0" : "chat1";
+
       const msgObj = {
+        chatID,
         id: uuid(),
         text: trimText,
         date: timeMin,
