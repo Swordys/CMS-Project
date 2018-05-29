@@ -42,7 +42,7 @@
   left: 0;
   background: #466edc;
   transform-origin: bottom;
-  animation: banner-loaded 350ms ease-in-out forwards;
+  animation: banner-loaded 300ms ease-in-out forwards;
   animation-fill-mode: both;
 }
 
@@ -77,7 +77,7 @@
   left: 0;
   background: #466edc;
   transform-origin: bottom;
-  animation: form-loaded 350ms ease-in-out forwards 300ms;
+  animation: form-loaded 300ms ease-in-out forwards 250ms;
   animation-fill-mode: both;
 }
 
