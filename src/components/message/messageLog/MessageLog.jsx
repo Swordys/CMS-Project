@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import TransitionGroup from "react-transition-group/TransitionGroup";
-import CSSTransition from "react-transition-group/CSSTransition";
 
 import "../../../css/messageApp/general/loaderIcon.css";
 import "../../../css/messageApp/message/messageLog/messageLog.css";
@@ -11,10 +9,6 @@ import "../../../css/messageApp/message/messageLog/transitions/messageTrans.css"
 import MessageItem from "./messageItem/MessageItem";
 
 import { loadMessageLog } from "../../../actions/Actions";
-
-const MessageTransition = props => (
-  <CSSTransition {...props} classNames="message-item-anim" timeout={400} />
-);
 
 class MessageLog extends Component {
   static propTypes = {
@@ -49,26 +43,21 @@ class MessageLog extends Component {
 
     const messages = this.props.messageLog.map(messageData => {
       const messageItem = (
-        <MessageTransition key={messageData.id}>
-          <MessageItem
-            sender={userData.uid === messageData.userId}
-            {...messageData}
-          />
-        </MessageTransition>
+        <MessageItem
+          key={messageData.id}
+          sender={userData.uid === messageData.userId}
+          {...messageData}
+        />
       );
 
-      if (messageData.showTimeStamp) {
-        return (
-          <React.Fragment key={messageData.dateFull}>
-            <MessageTransition>
-              <div className="message-item-date">{messageData.date}</div>
-            </MessageTransition>
-            {messageItem}
-          </React.Fragment>
-        );
-      }
-
-      return messageItem;
+      return messageData.showTimeStamp ? (
+        <React.Fragment key={messageData.id}>
+          <div className="message-item-date">{messageData.date}</div>
+          {messageItem}
+        </React.Fragment>
+      ) : (
+        messageItem
+      );
     });
 
     const bottom = (
@@ -84,7 +73,7 @@ class MessageLog extends Component {
       <div className="convo-wrap">
         {spinner}
         <div className="convo-log">
-          <TransitionGroup component={null}>{messages}</TransitionGroup>
+          {messages}
           {bottom}
         </div>
       </div>

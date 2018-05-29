@@ -3,6 +3,19 @@
   flex-shrink: 0;
   margin: 8px;
   display: flex;
+  animation-fill-mode: both;
+  animation: message-loaded 300ms ease-in-out forwards;
+}
+
+@keyframes message-loaded {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 5px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
 }
 
 .message-item:hover .message-item-time {
@@ -47,6 +60,8 @@
   margin: 30px 0 20px 0;
   color: #949494;
   align-self: center;
+  animation-fill-mode: both;
+  animation: message-loaded 300ms ease-in-out forwards;
 }
 
 .message-item-time {
@@ -60,9 +75,10 @@
   text-align: center;
   font-size: 10px;
   padding: 5px;
-  width: 90px;
+  width: 110px;
   transform: translateY(-5px);
   border-radius: 2px;
+  pointer-events: none;
   z-index: -500;
 }
 
