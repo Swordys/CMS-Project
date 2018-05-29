@@ -1,26 +1,41 @@
-.messenger-login-wrap {
+.messenger-login-page-wrap {
   height: 100vh;
   width: 100%;
   background: lightblue;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
 }
 
-.messenger-login-form-wrap {
-  background: white;
-  padding: 30px;
-  border-radius: 2px;
-  height: 110px;
-  transform-style: preserve-3d;
-  transition: transform 250ms ease-out;
+.messenger-login-wrap {
+  width: 300px;
 }
 
-.messenger-login-form__hidden {
-  opacity: 0;
-  z-index: -1;
-  pointer-events: none;
+.messenger-login-banner {
+  height: 200px;
+  width: 100%;
+  background: rgb(70, 110, 220);
+  border-radius: 2px 2px 0 0;
+  transition: 300ms ease;
+}
+
+.messenger-login-form-wrap {
+  width: 100%;
+  background: rgb(253, 253, 253);
+  padding: 25px;
+  border-radius: 1px 1px 2px 2px;
+  transform-style: preserve-3d;
+  transition: transform 300ms ease, opacity 300ms ease;
+  z-index: 20;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.messenger-login-form-wrap:last-child {
+  border-radius: 0px 0px 2px 2px;
+  border-top: 0;
+  z-index: 10;
 }
 
 .messenger-login-form label {
@@ -28,6 +43,7 @@
   flex-direction: column;
   letter-spacing: 1px;
   font-size: 12px;
+  font-family: "Roboto", sans-serif;
 }
 
 .messenger-login-form:nth-child(2) {
@@ -36,11 +52,18 @@
 
 .login-form-input {
   border: 0;
-  padding: 4px 0;
+  letter-spacing: 0.5px;
+  padding: 10px;
   background: none;
-  border-bottom: 1px solid rgb(75, 120, 240);
   font-size: 16px;
-  color: rgb(50, 50, 50);
+  color: rgb(30, 30, 30);
   margin-top: 10px;
   outline: none;
+  background: rgb(220, 220, 220);
+  border-radius: 2px;
+  font-family: "Roboto", sans-serif;
+}
+
+.login-form-input::placeholder {
+  color: rgb(70, 70, 70);
 }
