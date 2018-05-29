@@ -1,12 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, Redirect, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { userSignedIn, userSignedOut } from "../actions/Actions";
+import PrivateRoute from "./general/protectedRoute";
 
-import Message from "./message/Message";
-import Login from "./login/Login";
 import firebase from "../firebase/firestoreAuth";
+
+import Login from "./login/Login";
+import Message from "./message/Message";
 
 import "../css/messageApp/app/App.css";
 
@@ -24,11 +26,12 @@ const App = ({ signedIn, signedOut }) => {
     }
   });
 
+  // firebase.auth().signOut();
   return (
     <div className="App">
       <Switch>
-        <Route path="/" exact component={Login} />
-        <Route path="/chat" exact component={Message} />
+        <Route exact path="/login" component={Login} />
+        <PrivateRoute path="/user" component={Message} />
       </Switch>
     </div>
   );
@@ -39,10 +42,12 @@ App.propTypes = {
   signedOut: PropTypes.func.isRequired
 };
 
-export default connect(
-  null,
-  {
-    signedIn: userSignedIn,
-    signedOut: userSignedOut
-  }
-)(App);
+export default withRouter(
+  connect(
+    null,
+    {
+      signedIn: userSignedIn,
+      signedOut: userSignedOut
+    }
+  )(App)
+);

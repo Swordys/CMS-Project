@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 
 import "../../../css/messageApp/general/loaderIcon.css";
 import "../../../css/messageApp/message/messageLog/messageLog.css";
-import "../../../css/messageApp/message/messageLog/transitions/messageTrans.css";
 
 import MessageItem from "./messageItem/MessageItem";
 
