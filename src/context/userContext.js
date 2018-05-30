@@ -12,7 +12,6 @@ export class UserProvider extends Component {
   };
 
   componentDidMount() {
-    // console.log(firebaseAuth.currentUser)
     firebaseAuth.onAuthStateChanged(user => {
       if (user) {
         const userData = {

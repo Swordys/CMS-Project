@@ -1,34 +1,22 @@
 import React from "react";
 import "../../../css/messageApp/message/message.css";
-import { UserConsumer } from "../../../context/userContext";
-import {
-  ConversationConsumer,
-  ConversationProvider
-} from "../../../context/conversationContext";
+
+import { ConversationProvider } from "../../../context/conversationContext";
+import withUserAndConvoStore from "../../../hoc/contextHoc";
 
 // Components
 import MessageLog from "./messageLog/MessageLog";
 import MessageSend from "./messageSend/MessageSend";
 
+const MessageLogWithUserAndConvoStore = withUserAndConvoStore(MessageLog);
+const MessageSendWithUserAndConvoStore = withUserAndConvoStore(MessageSend);
+
 const Message = () => (
   <div className="message-wrap">
-    <UserConsumer>
-      {({ userState }) => (
-        <ConversationProvider>
-          <ConversationConsumer>
-            {({ convoState, convoActions }) => (
-              <React.Fragment>
-                <MessageLog userState={userState} convoState={convoState} />
-                <MessageSend
-                  userState={userState}
-                  convoActions={convoActions}
-                />
-              </React.Fragment>
-            )}
-          </ConversationConsumer>
-        </ConversationProvider>
-      )}
-    </UserConsumer>
+    <ConversationProvider>
+      <MessageLogWithUserAndConvoStore />
+      <MessageSendWithUserAndConvoStore />
+    </ConversationProvider>
   </div>
 );
 

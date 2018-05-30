@@ -3,9 +3,19 @@ import React, { Component } from "react";
 import "../../../../css/messageApp/general/loaderIcon.css";
 import "../../../../css/messageApp/message/messageLog/messageLog.css";
 
+import {
+  convoStateInterface,
+  userStateInterface
+} from "../../../../interfaces/interface";
+
 import MessageItem from "./messageItem/MessageItem";
 
 class MessageLog extends Component {
+  static propTypes = {
+    ...convoStateInterface,
+    ...userStateInterface
+  };
+
   componentDidUpdate() {
     this.bottom.scrollIntoView();
   }
@@ -31,6 +41,8 @@ class MessageLog extends Component {
     });
 
   render() {
+    const { convoState, userState } = this.props;
+
     const spinner = (
       <div className="message-log-load">
         <div className="messageItem_load_icon">
@@ -49,8 +61,6 @@ class MessageLog extends Component {
         style={{ float: "left", clear: "both" }}
       />
     );
-
-    const { convoState, userState } = this.props;
 
     return (
       <div className="convo-wrap">

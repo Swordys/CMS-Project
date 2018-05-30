@@ -1,6 +1,8 @@
 import React from "react";
 import "../../../../css/messageApp/message/messageSend/messageSend.css";
 
+import { userStateInterface } from "../../../../interfaces/interface";
+
 // Components
 import MessageSendMessage from "./messageType/MessageSendMessage";
 
@@ -12,5 +14,9 @@ const MessageSend = ({ convoActions, userState }) => (
     />
   </div>
 );
+
+MessageSend.propTypes = {
+  ...userStateInterface
+};
 
 export default MessageSend;
