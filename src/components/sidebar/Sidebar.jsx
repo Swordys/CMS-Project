@@ -64,7 +64,6 @@ class Sidebar extends React.Component {
           >
             <i className="fa fa-cog" style={styles.icon} aria-hidden="true" />
           </div>
-        </div>
         <div className="sidebar_logout_main">
           <div className="sidebar_item sidebar_logout">
             <i

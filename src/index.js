@@ -6,15 +6,12 @@ import registerServiceWorker from "./registerServiceWorker";
 import "./css/index.css";
 import App from "./components/App";
 import { UserProvider } from "./context/userContext";
-import { ConversationProvider } from "./context/conversationContext";
 
 ReactDOM.render(
   <UserProvider>
-    <ConversationProvider>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </ConversationProvider>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
   </UserProvider>,
   document.getElementById("root")
 );

@@ -7,11 +7,12 @@ export const UserConsumer = UserContext.Consumer;
 
 export class UserProvider extends Component {
   state = {
-    signedIn: true,
+    signedIn: false,
     userData: null
   };
 
   componentDidMount() {
+    // console.log(firebaseAuth.currentUser)
     firebaseAuth.onAuthStateChanged(user => {
       if (user) {
         const userData = {
