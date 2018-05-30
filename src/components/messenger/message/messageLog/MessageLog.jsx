@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
-import "../../../css/messageApp/general/loaderIcon.css";
-import "../../../css/messageApp/message/messageLog/messageLog.css";
+import "../../../../css/messageApp/general/loaderIcon.css";
+import "../../../../css/messageApp/message/messageLog/messageLog.css";
 
 import MessageItem from "./messageItem/MessageItem";
 

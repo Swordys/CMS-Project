@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import MessageText from "./MessageText";
 import MessagePic from "./MessagePic";
 
-import "../../../../css/messageApp/message/messageLog/messageItem.css";
+import "../../../../../css/messageApp/message/messageLog/messageItem.css";
 
 const MessageItem = props => (
   <div

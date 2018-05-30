@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 // CSS
-import "../../../../css/messageApp/message/messageLog/messageUrl/messageUrlMeta.css";
+import "../../../../../css/messageApp/message/messageLog/messageUrl/messageUrlMeta.css";
 
 const MessageUrlMeta = ({ description, image, publisher, title, inputUrl }) => (
   <div className="messageItem_url_meta">
