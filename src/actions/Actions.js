@@ -1,6 +1,5 @@
-import firebase from "firebase/app";
 import dayjs from "dayjs";
-import firestore from "../firebase/firestore";
+import { firestore } from "../firebase/index";
 import socketClient from "../socket/socketClient";
 
 import {
@@ -68,14 +67,12 @@ export const loadMessageLog = () => async dispatch => {
   dispatch(loadingStarted());
   const snapShot = await firestore
     .collection("conversation")
-    .orderBy("timestamp")
+    .orderBy("dateFull")
     .get();
-  const messageData = snapShot.docs.map(e => e.data());
+  const conversation = snapShot.docs.map(e => e.data());
   dispatch(loadingStopped());
   dispatch(
-    messageData
-      ? loadedMessagesSuccess(Object.values(messageData))
-      : loadedMessageFailure()
+    conversation ? loadedMessagesSuccess(conversation) : loadedMessageFailure()
   );
 };
 
@@ -86,12 +83,9 @@ export const pushMessageToClient = msg => ({
   msg
 });
 
-const pushMessageToFirebase = msg => {
-  const currentNew = { ...msg };
-  currentNew.timestamp = firebase.firestore.FieldValue.serverTimestamp();
-
+const pushMessageToFirebase = message => {
   const convoCollection = firestore.collection("conversation");
-  convoCollection.doc(currentNew.id).set(currentNew);
+  convoCollection.doc(message.id).set(message);
 };
 
 export const sendMessage = (message, messageLog) => () => {

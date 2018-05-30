@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { GridLoader } from "react-spinners";
-import firebase from "../../firebase/firestoreAuth";
+import { firebaseAuth, ReCaptcha } from "../../firebase/index";
 
 import "../../css/messageApp/login/login.css";
 
@@ -17,12 +17,9 @@ const Login = class extends Component {
   };
 
   componentDidMount() {
-    window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier(
-      "sign-in-button",
-      {
-        size: "invisible"
-      }
-    );
+    window.recaptchaVerifier = new ReCaptcha("sign-in-button", {
+      size: "invisible"
+    });
   }
 
   handleSubmitNumber = e => {
@@ -33,8 +30,7 @@ const Login = class extends Component {
         numberLoading: true
       });
       const appVerifier = window.recaptchaVerifier;
-      firebase
-        .auth()
+      firebaseAuth
         .signInWithPhoneNumber(phoneNumber, appVerifier)
         .then(confirmationResult => {
           window.confirmationResult = confirmationResult;

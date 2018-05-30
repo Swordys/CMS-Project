@@ -7,13 +7,16 @@ import registerServiceWorker from "./registerServiceWorker";
 import "./css/index.css";
 import App from "./components/App";
 import store from "./store/Store";
+import { UserProvider } from "./context/userContext";
 
 ReactDOM.render(
-  <Provider store={store()}>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  </Provider>,
+  <UserProvider>
+    <Provider store={store()}>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </Provider>
+  </UserProvider>,
   document.getElementById("root")
 );
 registerServiceWorker();

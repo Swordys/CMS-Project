@@ -13,12 +13,16 @@ import { sendMessage, pushMessageToClient } from "../../../../actions/Actions";
 
 class MessageSendMessage extends Component {
   static propTypes = {
-    messageLog: PropTypes.arrayOf(PropTypes.object).isRequired,
     userData: PropTypes.shape({
       uid: PropTypes.string
-    }).isRequired,
+    }),
+    messageLog: PropTypes.arrayOf(PropTypes.object).isRequired,
     sendMessage: PropTypes.func.isRequired,
     pushMessageToClient: PropTypes.func.isRequired
+  };
+
+  static defaultProps = {
+    userData: {}
   };
 
   state = {
@@ -91,8 +95,7 @@ class MessageSendMessage extends Component {
 }
 
 const mapStateToProps = state => ({
-  messageLog: state.userMessages,
-  userData: state.userData
+  messageLog: state.userMessages
 });
 
 export default connect(

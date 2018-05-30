@@ -1,25 +1,27 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
-import { connect } from "react-redux";
+import { UserConsumer } from "../../context/userContext";
 
-const PrivateRoute = ({ signedIn, component: Component, ...rest }) => (
-  <Route
-    {...rest}
-    render={props =>
-      signedIn ? (
-        <Component {...props} />
-      ) : (
-        <Redirect
-          to={{
-            pathname: "/login",
-            state: { from: props.location }
-          }}
-        />
-      )
-    }
-  />
+const PrivateRoute = ({ component: Component, ...rest }) => (
+  <UserConsumer>
+    {({ signedIn }) => (
+      <Route
+        {...rest}
+        render={props =>
+          signedIn ? (
+            <Component {...props} />
+          ) : (
+            <Redirect
+              to={{
+                pathname: "/login",
+                state: { from: props.location }
+              }}
+            />
+          )
+        }
+      />
+    )}
+  </UserConsumer>
 );
 
-export default connect(state => ({
-  signedIn: state.userSignediIn
-}))(PrivateRoute);
+export default PrivateRoute;

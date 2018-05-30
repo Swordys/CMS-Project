@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import { UserConsumer } from "../../../context/userContext";
 
 import "../../../css/messageApp/general/loaderIcon.css";
 import "../../../css/messageApp/message/messageLog/messageLog.css";
@@ -14,9 +15,13 @@ class MessageLog extends Component {
     loadMessageLog: PropTypes.func.isRequired,
     userData: PropTypes.shape({
       uid: PropTypes.string
-    }).isRequired,
+    }),
     messageLog: PropTypes.arrayOf(PropTypes.object).isRequired,
     isLoading: PropTypes.bool.isRequired
+  };
+
+  static defaultProps = {
+    userData: {}
   };
 
   componentDidMount() {
@@ -27,20 +32,8 @@ class MessageLog extends Component {
     this.bottom.scrollIntoView();
   }
 
-  render() {
-    const { userData } = this.props;
-
-    const spinner = this.props.isLoading ? (
-      <div className="message-log-load">
-        <div className="messageItem_load_icon">
-          {Array.from({ length: 9 }, (e, i) => i).map(i => (
-            <div key={i} className="load_icon_box" />
-          ))}
-        </div>
-      </div>
-    ) : null;
-
-    const messages = this.props.messageLog.map(messageData => {
+  renderMessages = userData =>
+    this.props.messageLog.map(messageData => {
       const messageItem = (
         <MessageItem
           key={messageData.id}
@@ -59,6 +52,17 @@ class MessageLog extends Component {
       );
     });
 
+  render() {
+    const spinner = this.props.isLoading ? (
+      <div className="message-log-load">
+        <div className="messageItem_load_icon">
+          {Array.from({ length: 9 }, (e, i) => i).map(i => (
+            <div key={i} className="load_icon_box" />
+          ))}
+        </div>
+      </div>
+    ) : null;
+
     const bottom = (
       <div
         ref={e => {
@@ -69,20 +73,23 @@ class MessageLog extends Component {
     );
 
     return (
-      <div className="convo-wrap">
-        {spinner}
-        <div className="convo-log">
-          {messages}
-          {bottom}
-        </div>
-      </div>
+      <UserConsumer>
+        {({ userData }) => (
+          <div className="convo-wrap">
+            {spinner}
+            <div className="convo-log">
+              {this.renderMessages(userData)}
+              {bottom}
+            </div>
+          </div>
+        )}
+      </UserConsumer>
     );
   }
 }
 
 const mapStateToProps = state => ({
   messageLog: state.userMessages,
-  userData: state.userData,
   isLoading: state.loadingState
 });
 

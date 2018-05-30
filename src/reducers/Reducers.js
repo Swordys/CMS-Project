@@ -10,7 +10,7 @@ import {
   LOADING_STOPPED
 } from ".././actions/ActionTypes";
 
-export const userSignStatusReducer = (state = false, action) => {
+export const userSignStatusReducer = (state = true, action) => {
   switch (action.type) {
     case USER_LOGGEED_IN:
       return true;
