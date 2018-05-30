@@ -1,15 +1,15 @@
 import React from "react";
-import { UserConsumer } from "../../../context/userContext";
 import "../../../css/messageApp/message/messageSend/messageSend.css";
 
 // Components
 import MessageSendMessage from "./messageType/MessageSendMessage";
 
-const MessageSend = () => (
+const MessageSend = ({ convoActions, userState }) => (
   <div className="message-send-wrap">
-    <UserConsumer>
-      {({ userData }) => <MessageSendMessage userData={userData} />}
-    </UserConsumer>
+    <MessageSendMessage
+      sendMessage={convoActions.sendMessage}
+      userData={userState.userData}
+    />
   </div>
 );
 

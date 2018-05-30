@@ -32,8 +32,10 @@ export class UserProvider extends Component {
     return (
       <UserContext.Provider
         value={{
-          signedIn: this.state.signedIn,
-          userData: this.state.userData
+          userState: {
+            signedIn: this.state.signedIn,
+            userData: this.state.userData
+          }
         }}
       >
         {this.props.children}

@@ -6,6 +6,9 @@
   align-self: center;
   animation-fill-mode: both;
   animation: message-loaded 300ms ease-in-out forwards;
+  opacity: 0;
+  transform: translate3d(0, 5px, 0);
+  animation: message-loaded 300ms ease-in-out forwards 100ms;
 }
 
 .message-item {

@@ -4,11 +4,11 @@ import { UserConsumer } from "../../context/userContext";
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <UserConsumer>
-    {({ signedIn }) => (
+    {({ userState }) => (
       <Route
         {...rest}
         render={props =>
-          signedIn ? (
+          userState.signedIn ? (
             <Component {...props} />
           ) : (
             <Redirect

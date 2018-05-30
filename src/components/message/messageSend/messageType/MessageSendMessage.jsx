@@ -1,39 +1,25 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import Textarea from "react-textarea-autosize";
-import uuid from "uuid";
-import dayjs from "dayjs";
-import { connect } from "react-redux";
-import socketClient from "../../../../socket/socketClient";
 
 import MessageSendFile from "./MessageSendFile";
-
-// Actions
-import { sendMessage, pushMessageToClient } from "../../../../actions/Actions";
 
 class MessageSendMessage extends Component {
   static propTypes = {
     userData: PropTypes.shape({
       uid: PropTypes.string
     }),
-    messageLog: PropTypes.arrayOf(PropTypes.object).isRequired,
-    sendMessage: PropTypes.func.isRequired,
-    pushMessageToClient: PropTypes.func.isRequired
+    sendMessage: PropTypes.func
   };
 
   static defaultProps = {
-    userData: {}
+    userData: {},
+    sendMessage: undefined
   };
 
   state = {
     inputValue: ""
   };
-
-  componentDidMount() {
-    socketClient.on("RECEIVE_MESSAGE", message => {
-      this.props.pushMessageToClient(message);
-    });
-  }
 
   handleTypeEvent = e => {
     const isShift = e.nativeEvent.shiftKey;
@@ -54,23 +40,8 @@ class MessageSendMessage extends Component {
         inputValue: ""
       });
 
-      const timeFull = dayjs().format("YYYY-MM-DD HH:mm:ss");
-      const timeMin = dayjs().format("dddd, h:mm a");
-
-      const { messageLog, userData } = this.props;
-      const chatID = "UNIQ#";
-
-      const msgObj = {
-        chatID,
-        id: uuid(),
-        userId: userData.uid,
-        text: trimText,
-        date: timeMin,
-        dateFull: timeFull,
-        showTimeStamp: false,
-        showPic: true
-      };
-      this.props.sendMessage(msgObj, messageLog);
+      const { userData, sendMessage } = this.props;
+      sendMessage(trimText, userData.uid);
     }
   };
 
@@ -94,14 +65,4 @@ class MessageSendMessage extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  messageLog: state.userMessages
-});
-
-export default connect(
-  mapStateToProps,
-  {
-    sendMessage,
-    pushMessageToClient
-  }
-)(MessageSendMessage);
+export default MessageSendMessage;

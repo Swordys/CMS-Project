@@ -7,7 +7,6 @@ import Message from "./message/Message";
 
 import "../css/messageApp/app/App.css";
 
-// firebaseAuth.signOut();
 
 const App = () => (
   <div className="App">
