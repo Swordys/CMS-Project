@@ -1,0 +1,14 @@
+.tab-message-search {
+  display: flex;
+  align-items: center;
+  background: rgb(245, 245, 245);
+  border-radius: 2px;
+}
+
+.tab-menu-search {
+  width: 100%;
+  border: 0;
+  padding: 10px;
+  background: transparent;
+  outline: none;
+}
