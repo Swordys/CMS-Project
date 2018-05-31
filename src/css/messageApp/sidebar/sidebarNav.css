@@ -1,0 +1,48 @@
+.sidebar-nav-wrap {
+  height: 100%;
+  width: 60px;
+  padding: 10px;
+  background: white;
+  background-color: rgba(0, 90, 230, 0.85);
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.sidebar-nav {
+  height: 100%;
+  width: 100%;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.nav-wrap__bottom {
+  justify-content: flex-end;
+}
+
+.nav-icon {
+  height: 40px;
+  width: 100%;
+  display: flex;
+  margin-bottom: 15px;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  cursor: pointer;
+}
+
+.nav-icon__logo {
+  margin-bottom: 100%;
+}
+
+.nav-icon:last-child {
+  margin: 0;
+}
+
+.nav-icon-shape {
+  margin: auto;
+  font-size: 24px;
+  color: rgba(0, 90, 230, 0.85);
+}

@@ -1,19 +1,27 @@
 import React from "react";
-import { Route, Switch } from "react-router-dom";
-import PrivateRoute from "./general/protectedRoute";
+import { Switch } from "react-router-dom";
+import ConditionRoute from "./general/conditionRoute";
 
 import Login from "./login/Login";
-import Message from "./message/Message";
+import Messenger from "./messenger/Messenger";
 
 import "../css/messageApp/app/App.css";
-
-// firebaseAuth.signOut();
 
 const App = () => (
   <div className="App">
     <Switch>
-      <Route exact path="/login" component={Login} />
-      <PrivateRoute path="/user" component={Message} />
+      <ConditionRoute
+        condition={{ loggedOut: false, route: "/user" }}
+        exact
+        path="/login"
+        component={Login}
+      />
+      <ConditionRoute
+        condition={{ loggedOut: true, route: "/login" }}
+        exact
+        path="/user"
+        component={Messenger}
+      />
     </Switch>
   </div>
 );

@@ -6,6 +6,9 @@
   align-self: center;
   animation-fill-mode: both;
   animation: message-loaded 300ms ease-in-out forwards;
+  opacity: 0;
+  transform: translate3d(0, 5px, 0);
+  animation: message-loaded 300ms ease-in-out forwards 100ms;
 }
 
 .message-item {
@@ -36,7 +39,7 @@
   max-width: 600px;
   font-size: 14px;
   position: relative;
-  line-height: 1.3em;
+  line-height: 1.4em;
   border-radius: 15px;
   display: flex;
   justify-content: center;
