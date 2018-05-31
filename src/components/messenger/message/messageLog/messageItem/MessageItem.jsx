@@ -14,7 +14,9 @@ const MessageItem = props => (
     style={{ alignItems: `${props.sender ? "flex-end" : "flex-start"}` }}
   >
     <MessageText {...props} />
-    <MessagePic {...props} />
+    <div className="message-pic-slider">
+      <MessagePic {...props} />
+    </div>
   </div>
 );
 

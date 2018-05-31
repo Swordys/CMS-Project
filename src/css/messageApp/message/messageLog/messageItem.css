@@ -48,6 +48,25 @@
   cursor: default;
 }
 
+
+/* PIC SLIDING ANIMATION */
+
+/* .message-pic-slider {
+  align-self: stretch;
+  display: flex;
+  transform: translate3d(0, calc(-100% + 35px), 0);
+  opacity: 0;
+  animation-fill-mode: both;
+  animation: pic-loaded 600ms ease-out forwards 300ms;
+}
+
+@keyframes pic-loaded {
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+} */
+
 .message-item-pic-wrap {
   align-self: flex-end;
   width: 35px;

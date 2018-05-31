@@ -1,16 +1,13 @@
 .messenger-wrap {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  width: 100%;
-  height: 100vh;
-}
-
-.messenger-body-wrap {
   width: 100%;
   height: 100%;
   display: flex;
+  flex-direction: column;
+}
+
+.messenger-body-wrap {
+  display: flex;
+  height: 100%;
 }
 
 .messenger-header-wrap {
