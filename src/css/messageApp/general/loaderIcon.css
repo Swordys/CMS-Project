@@ -13,7 +13,7 @@
   flex-grow: 1;
   margin: 1px;
   border-radius: 3px;
-  background: rgba(0, 91, 234, 0.85);
+  background: rgba(0, 90, 230, 0.85);
   animation: anim 1.2s cubic-bezier(0, 1.79, 1, -1.67) infinite;
 }
 

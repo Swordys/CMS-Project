@@ -11,6 +11,7 @@
     "prop-types": "^15.6.1",
     "react": "^16.4.0",
     "react-dom": "^16.4.0",
+    "react-feather": "^1.1.0",
     "react-icons": "^2.2.7",
     "react-redux": "^5.0.7",
     "react-router": "^4.2.0",
@@ -24,6 +25,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "socket": "node src/socket/socket.js",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
