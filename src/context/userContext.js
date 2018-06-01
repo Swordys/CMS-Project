@@ -15,7 +15,6 @@ export class UserProvider extends Component {
   };
 
   state = {
-    userSignedIn: false,
     userData: null
   };
 
@@ -31,7 +30,6 @@ export class UserProvider extends Component {
     return (
       <UserContext.Provider
         value={{
-          userSignedIn: this.state.userSignedIn,
           userData: this.state.userData
         }}
       >

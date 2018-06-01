@@ -15,18 +15,32 @@ export const retunUserAccount = async uid => {
   return userRef.data();
 };
 
-export const loadConversationLog = async () => {
-  const snapShot = await firestore
-    .collection("conversation")
+export const loadConversationLog = async convoId => {
+  const convoRoom = firestore.collection("conversations").doc(convoId);
+  const metaQuery = await convoRoom.get();
+  const messageLogQuery = await convoRoom
+    .collection("messageLog")
     .orderBy("dateFull")
     .get();
-  const conversation = snapShot.docs.map(e => e.data());
-  return conversation;
+
+  const messageLog = messageLogQuery.docs.map(e => e.data());
+  const metaData = metaQuery.data();
+
+  console.log(metaData);
+  console.log(messageLog);
+
+  return messageLog;
 };
 
-export const pushMessageToFirebase = message => {
-  const convoCollection = firestore.collection("conversation");
-  convoCollection.doc(message.id).set(message);
+export const pushMessageToFirebase = (message, roomId) => {
+  const conversationRoom = firestore.collection("conversations").doc(roomId);
+
+  conversationRoom.set({
+    displayMessage: message.text,
+    lastMessageTime: message.dateFull
+  });
+  conversationRoom.collection("messageLog").add(message);
+  conversationRoom.collection("members").doc(message.userId);
 };
 
 export const processMessage = (messageLog, message, uid) => {

@@ -29,7 +29,8 @@ export class ConversationProvider extends Component {
         conversationLog: [...conversationLog, message]
       }));
     });
-    // const conversationLog = await loadConversationLog().then(log => log);
+    const convoId = 'convo#0';
+    const conversationLog = await loadConversationLog(convoId).then(log => log);
     this.setState({
       // conversationLog,
       convoIsLoading: false
@@ -38,8 +39,7 @@ export class ConversationProvider extends Component {
 
   sendMessage = (message, uid) => {
     const currentMsg = processMessage(this.state.conversationLog, message, uid);
-    console.log(currentMsg);
-    pushMessageToFirebase(currentMsg);
+    pushMessageToFirebase(currentMsg, "convo#0");
     socketClient.emit("SEND_MESSAGE", currentMsg);
   };
 
