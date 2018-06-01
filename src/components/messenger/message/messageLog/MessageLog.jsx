@@ -3,19 +3,9 @@ import React, { Component } from "react";
 import "../../../../css/messageApp/general/loaderIcon.css";
 import "../../../../css/messageApp/message/messageLog/messageLog.css";
 
-import {
-  convoStateInterface,
-  userStateInterface
-} from "../../../../interfaces/interface";
-
 import MessageItem from "./messageItem/MessageItem";
 
 class MessageLog extends Component {
-  static propTypes = {
-    ...convoStateInterface,
-    ...userStateInterface
-  };
-
   componentDidUpdate() {
     this.bottom.scrollIntoView();
   }
@@ -41,7 +31,7 @@ class MessageLog extends Component {
     });
 
   render() {
-    const { convoState, userState } = this.props;
+    const { convoIsLoading, conversationLog, userData } = this.props;
 
     const spinner = (
       <div className="message-log-load">
@@ -64,9 +54,9 @@ class MessageLog extends Component {
 
     return (
       <div className="convo-wrap">
-        {convoState.convoIsLoading ? spinner : null}
+        {convoIsLoading ? spinner : null}
         <div className="convo-log">
-          {this.renderMessages(userState.userData, convoState.conversationLog)}
+          {this.renderMessages(userData, conversationLog)}
           {bottom}
         </div>
       </div>

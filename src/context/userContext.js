@@ -12,24 +12,24 @@ export class UserProvider extends Component {
   };
 
   state = {
-    signedIn: false,
+    userSignedIn: false,
     userData: null
   };
 
   componentDidMount() {
     firebaseAuth.onAuthStateChanged(user => {
       if (user) {
-        const userData = {
-          phone: user.phoneNumber,
-          uid: user.uid
-        };
+        // const userData = {
+        //   phone: user.phoneNumber,
+        //   uid: user.uid
+        // };
         // this.loadUserData(user);
         // this.setState({
-        //   signedIn: true,
+        //   userSignedIn: true,
         //   userData
         // });
       } else {
-        this.setState({ signedIn: false, userData: null });
+        this.setState({ userSignedIn: false, userData: null });
       }
     });
     // firebaseAuth.signOut();
@@ -39,10 +39,8 @@ export class UserProvider extends Component {
     return (
       <UserContext.Provider
         value={{
-          userState: {
-            signedIn: this.state.signedIn,
-            userData: this.state.userData
-          }
+          userSignedIn: this.state.userSignedIn,
+          userData: this.state.userData
         }}
       >
         {this.props.children}

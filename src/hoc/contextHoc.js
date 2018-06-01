@@ -6,14 +6,16 @@ const withUserAndConvoStore = Component =>
   function withUserDataComponent(props) {
     return (
       <UserConsumer>
-        {({ userState }) => (
+        {({ userSignedIn, userData }) => (
           <ConversationConsumer>
-            {({ convoState, convoActions }) => (
+            {({ conversationLog, convoIsLoading, sendMessage }) => (
               <Component
                 {...props}
-                userState={userState}
-                convoState={convoState}
-                convoActions={convoActions}
+                userSignedIn={userSignedIn}
+                userData={userData}
+                conversationLog={conversationLog}
+                convoIsLoading={convoIsLoading}
+                sendMessage={sendMessage}
               />
             )}
           </ConversationConsumer>

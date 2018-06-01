@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import socketClient from "../socket/socketClient";
 
 import {
-  loadConversationLog,
+  // loadConversationLog,
   processMessage,
   pushMessageToFirebase
 } from "../API/firestore/index";
@@ -46,13 +46,9 @@ export class ConversationProvider extends Component {
     return (
       <ConversationContext.Provider
         value={{
-          convoState: {
-            conversationLog: this.state.conversationLog,
-            convoIsLoading: this.state.convoIsLoading
-          },
-          convoActions: {
-            sendMessage: this.sendMessage
-          }
+          conversationLog: this.state.conversationLog,
+          convoIsLoading: this.state.convoIsLoading,
+          sendMessage: this.sendMessage
         }}
       >
         {this.props.children}
