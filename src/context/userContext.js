@@ -1,10 +1,13 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { firebaseAuth } from "../firebase/index";
+import { retunUserAccount } from "../API/firestore";
+import { returnUserId } from "../API/auth";
 
 const UserContext = React.createContext();
 
 export const UserConsumer = UserContext.Consumer;
+
+/* eslint-disable react/no-did-mount-set-state */
 
 export class UserProvider extends Component {
   static propTypes = {
@@ -16,23 +19,12 @@ export class UserProvider extends Component {
     userData: null
   };
 
-  componentDidMount() {
-    firebaseAuth.onAuthStateChanged(user => {
-      if (user) {
-        const userData = {
-          phone: user.phoneNumber,
-          uid: user.uid
-        };
-        // this.loadUserData(user);
-        this.setState({
-          userSignedIn: true,
-          userData
-        });
-      } else {
-        this.setState({ userSignedIn: false, userData: null });
-      }
+  async componentDidMount() {
+    const uid = returnUserId();
+    const userData = await retunUserAccount(uid);
+    this.setState({
+      userData
     });
-    firebaseAuth.signOut();
   }
 
   render() {

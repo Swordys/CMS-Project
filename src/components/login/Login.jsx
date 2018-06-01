@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import { GridLoader } from "react-spinners";
-import { firebaseAuth, ReCaptcha } from "../../firebase/index";
-import { setupUserAccount } from "../../API/firestore/index";
+import { ReCaptcha } from "../../firebase/index";
+// API
+import { registerUserAccount } from "../../API/firestore/index";
+import { signUpWithPhone } from "../../API/auth/index";
 
 import "../../css/messageApp/login/login.css";
 
@@ -13,7 +15,6 @@ const Login = class extends Component {
     numberSuccess: false,
     codeLoading: false,
     codeSuccess: false,
-    user: null,
     error: null
   };
 
@@ -31,8 +32,7 @@ const Login = class extends Component {
         numberLoading: true
       });
       const appVerifier = window.recaptchaVerifier;
-      firebaseAuth
-        .signInWithPhoneNumber(phoneNumber, appVerifier)
+      signUpWithPhone(phoneNumber, appVerifier)
         .then(confirmationResult => {
           window.confirmationResult = confirmationResult;
           this.setState({
@@ -56,14 +56,16 @@ const Login = class extends Component {
       window.confirmationResult
         .confirm(this.state.confirmCode)
         .then(result => {
-          const { user } = result;
-          const initialData = {
-            uid: user.uid,
-            phoneNumber: user.phoneNumber
-          };
+          const { user, additionalUserInfo } = result;
 
-          setupUserAccount(initialData);
-          this.setState({ user, codeLoading: false, codeSuccess: true });
+          if (additionalUserInfo.isNewUser) {
+            const initialData = {
+              uid: user.uid,
+              phoneNumber: user.phoneNumber
+            };
+            registerUserAccount(initialData);
+          }
+          this.setState({ codeLoading: false, codeSuccess: true });
         })
         .catch(error => {
           this.setState({ error, codeLoading: false });

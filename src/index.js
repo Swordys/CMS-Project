@@ -5,14 +5,11 @@ import registerServiceWorker from "./registerServiceWorker";
 
 import "./css/index.css";
 import App from "./components/App";
-import { UserProvider } from "./context/userContext";
 
 ReactDOM.render(
-  <UserProvider>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  </UserProvider>,
+  <BrowserRouter>
+    <App />
+  </BrowserRouter>,
   document.getElementById("root")
 );
 registerServiceWorker();

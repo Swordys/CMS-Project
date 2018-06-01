@@ -2,23 +2,17 @@ import uuid from "uuid";
 import dayjs from "dayjs";
 import { firestore } from "../../firebase/index";
 
-export const setupUserAccount = user => {
-  console.log(user);
+export const registerUserAccount = user => {
   const convoCollection = firestore.collection("users");
   convoCollection.doc(user.uid).set(user);
 };
 
-export const retunUserAccount = async user => {
-  const { uid } = user;
+export const retunUserAccount = async uid => {
   const userRef = await firestore
     .collection("users")
     .doc(uid)
     .get();
-  const userData = userRef.data();
-  if (userData) {
-    return userData;
-  }
-  return setupUserAccount(user);
+  return userRef.data();
 };
 
 export const loadConversationLog = async () => {
