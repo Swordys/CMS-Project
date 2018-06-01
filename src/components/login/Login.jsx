@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { GridLoader } from "react-spinners";
 import { firebaseAuth, ReCaptcha } from "../../firebase/index";
+import { setupUserAccount } from "../../API/firestore/index";
 
 import "../../css/messageApp/login/login.css";
 
@@ -55,9 +56,13 @@ const Login = class extends Component {
       window.confirmationResult
         .confirm(this.state.confirmCode)
         .then(result => {
-          // HERE
           const { user } = result;
-          console.log(user);
+          const initialData = {
+            uid: user.uid,
+            phoneNumber: user.phoneNumber
+          };
+
+          setupUserAccount(initialData);
           this.setState({ user, codeLoading: false, codeSuccess: true });
         })
         .catch(error => {

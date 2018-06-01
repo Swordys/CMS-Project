@@ -3,13 +3,9 @@ import dayjs from "dayjs";
 import { firestore } from "../../firebase/index";
 
 export const setupUserAccount = user => {
-  const newUser = {
-    phoneNumber: user.phoneNumber,
-    uid: user.uid
-  };
+  console.log(user);
   const convoCollection = firestore.collection("users");
-  convoCollection.doc(user.uid).set(newUser);
-  return newUser;
+  convoCollection.doc(user.uid).set(user);
 };
 
 export const retunUserAccount = async user => {

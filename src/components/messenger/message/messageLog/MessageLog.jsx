@@ -32,7 +32,6 @@ class MessageLog extends Component {
 
   render() {
     const { convoIsLoading, conversationLog, userData } = this.props;
-
     const spinner = (
       <div className="message-log-load">
         <div className="messageItem_load_icon">

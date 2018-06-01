@@ -51,7 +51,7 @@ class MessageSendMessage extends Component {
         <MessageSendFile />
         <div className="message-send-box">
           <Textarea
-            onKeyPress={this.handleTypeEvent}
+            onKeyDown={this.handleTypeEvent}
             onChange={e => {
               this.setState({ inputValue: e.target.value });
             }}

@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import socketClient from "../socket/socketClient";
 
 import {
-  // loadConversationLog,
+  loadConversationLog,
   processMessage,
   pushMessageToFirebase
 } from "../API/firestore/index";
@@ -38,6 +38,7 @@ export class ConversationProvider extends Component {
 
   sendMessage = (message, uid) => {
     const currentMsg = processMessage(this.state.conversationLog, message, uid);
+    console.log(currentMsg);
     pushMessageToFirebase(currentMsg);
     socketClient.emit("SEND_MESSAGE", currentMsg);
   };

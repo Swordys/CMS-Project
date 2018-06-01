@@ -19,20 +19,20 @@ export class UserProvider extends Component {
   componentDidMount() {
     firebaseAuth.onAuthStateChanged(user => {
       if (user) {
-        // const userData = {
-        //   phone: user.phoneNumber,
-        //   uid: user.uid
-        // };
+        const userData = {
+          phone: user.phoneNumber,
+          uid: user.uid
+        };
         // this.loadUserData(user);
-        // this.setState({
-        //   userSignedIn: true,
-        //   userData
-        // });
+        this.setState({
+          userSignedIn: true,
+          userData
+        });
       } else {
         this.setState({ userSignedIn: false, userData: null });
       }
     });
-    // firebaseAuth.signOut();
+    firebaseAuth.signOut();
   }
 
   render() {

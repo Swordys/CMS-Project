@@ -12,12 +12,12 @@ const MessageLogWithUserAndConvoStore = withUserAndConvoStore(MessageLog);
 const MessageSendWithUserAndConvoStore = withUserAndConvoStore(MessageSend);
 
 const Message = () => (
-  <div className="message-wrap">
-    <ConversationProvider>
+  <ConversationProvider>
+    <div className="message-wrap">
       <MessageLogWithUserAndConvoStore />
       <MessageSendWithUserAndConvoStore />
-    </ConversationProvider>
-  </div>
+    </div>
+  </ConversationProvider>
 );
 
 export default Message;
