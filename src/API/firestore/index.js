@@ -2,6 +2,29 @@ import uuid from "uuid";
 import dayjs from "dayjs";
 import { firestore } from "../../firebase/index";
 
+export const setupUserAccount = user => {
+  const newUser = {
+    phoneNumber: user.phoneNumber,
+    uid: user.uid
+  };
+  const convoCollection = firestore.collection("users");
+  convoCollection.doc(user.uid).set(newUser);
+  return newUser;
+};
+
+export const retunUserAccount = async user => {
+  const { uid } = user;
+  const userRef = await firestore
+    .collection("users")
+    .doc(uid)
+    .get();
+  const userData = userRef.data();
+  if (userData) {
+    return userData;
+  }
+  return setupUserAccount(user);
+};
+
 export const loadConversationLog = async () => {
   const snapShot = await firestore
     .collection("conversation")

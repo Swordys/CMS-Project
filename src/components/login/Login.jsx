@@ -55,7 +55,9 @@ const Login = class extends Component {
       window.confirmationResult
         .confirm(this.state.confirmCode)
         .then(result => {
-          const { user } = result.user;
+          // HERE
+          const { user } = result;
+          console.log(user);
           this.setState({ user, codeLoading: false, codeSuccess: true });
         })
         .catch(error => {

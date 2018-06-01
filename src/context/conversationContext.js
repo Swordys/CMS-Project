@@ -1,5 +1,7 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import socketClient from "../socket/socketClient";
+
 import {
   loadConversationLog,
   processMessage,
@@ -12,6 +14,10 @@ export const ConversationConsumer = ConversationContext.Consumer;
 /* eslint-disable react/no-did-mount-set-state */
 
 export class ConversationProvider extends Component {
+  static propTypes = {
+    children: PropTypes.node.isRequired
+  };
+
   state = {
     conversationLog: [],
     convoIsLoading: true
@@ -23,9 +29,9 @@ export class ConversationProvider extends Component {
         conversationLog: [...conversationLog, message]
       }));
     });
-    const conversationLog = await loadConversationLog().then(log => log);
+    // const conversationLog = await loadConversationLog().then(log => log);
     this.setState({
-      conversationLog,
+      // conversationLog,
       convoIsLoading: false
     });
   }

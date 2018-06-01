@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import { firebaseAuth } from "../firebase/index";
 
 const UserContext = React.createContext();
@@ -6,6 +7,10 @@ const UserContext = React.createContext();
 export const UserConsumer = UserContext.Consumer;
 
 export class UserProvider extends Component {
+  static propTypes = {
+    children: PropTypes.node.isRequired
+  };
+
   state = {
     signedIn: false,
     userData: null
@@ -18,14 +23,16 @@ export class UserProvider extends Component {
           phone: user.phoneNumber,
           uid: user.uid
         };
-        this.setState({
-          signedIn: true,
-          userData
-        });
+        // this.loadUserData(user);
+        // this.setState({
+        //   signedIn: true,
+        //   userData
+        // });
       } else {
         this.setState({ signedIn: false, userData: null });
       }
     });
+    // firebaseAuth.signOut();
   }
 
   render() {

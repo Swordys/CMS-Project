@@ -4,11 +4,22 @@ import SidebarMenu from "./SidebarMenu";
 
 import "../../../css/messageApp/sidebar/sidebar.css";
 
+import {
+  TabMenuProvider,
+  TabMenuConsumer
+} from "../../../context/tabMenuContext";
+
 const Sidebar = () => (
-  <div className="sidebar-wrap">
-    <SidebarNav />
-    <SidebarMenu />
-  </div>
+  <TabMenuProvider>
+    <TabMenuConsumer>
+      {({ activeTab, switchTab }) => (
+        <div className="sidebar-wrap">
+          <SidebarNav switchTab={switchTab} />
+          <SidebarMenu activeTab={activeTab} />
+        </div>
+      )}
+    </TabMenuConsumer>
+  </TabMenuProvider>
 );
 
 export default Sidebar;

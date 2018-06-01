@@ -31,6 +31,8 @@
   justify-content: center;
   position: relative;
   cursor: pointer;
+  background: none;
+  border: none;
 }
 
 .nav-icon__logo {

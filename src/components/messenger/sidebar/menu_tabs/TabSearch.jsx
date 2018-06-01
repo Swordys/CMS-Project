@@ -2,8 +2,10 @@ import React from "react";
 
 import "../../../../css/messageApp/menu_tabs/tabSearch.css";
 
-const TabSearch = () => (
-  <div className="tab-menu tab-menu__search">
+const TabSearch = ({ active }) => (
+  <div
+    className={`tab-menu${active ? " tab-menu__active" : ""} tab-menu__search`}
+  >
     <div className="tab-message-search">
       <input
         placeholder="Search Messenger"
