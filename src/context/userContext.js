@@ -19,7 +19,7 @@ export class UserProvider extends Component {
   };
 
   async componentDidMount() {
-    const uid = returnUserId();
+    const uid = await returnUserId();
     const userData = await retunUserAccount(uid);
     this.setState({
       userData

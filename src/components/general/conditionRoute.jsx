@@ -9,7 +9,7 @@ export default class ConditionRoute extends Component {
   };
 
   componentDidMount() {
-    firebaseAuth.onAuthStateChanged(user => {
+    this.authWatch = firebaseAuth.onAuthStateChanged(user => {
       this.setState({
         pending: false,
         loggedIn: !!user
@@ -17,19 +17,23 @@ export default class ConditionRoute extends Component {
     });
   }
 
+  componentWillUnmount() {
+    this.authWatch();
+  }
+
   render() {
-    const { condition, component: Component, ...rest } = this.props;
+    const { component: Component, ...rest } = this.props;
     return (
       <Route
         {...rest}
         render={renderProps => {
           if (this.state.pending) return null;
-          return condition.loggedOut === this.state.loggedIn ? (
+          return this.state.loggedIn ? (
             <Component {...renderProps} />
           ) : (
             <Redirect
               to={{
-                pathname: condition.route,
+                pathname: '/login',
                 state: { from: renderProps.location }
               }}
             />

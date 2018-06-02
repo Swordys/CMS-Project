@@ -29,12 +29,16 @@ export class ConversationProvider extends Component {
         conversationLog: [...conversationLog, message]
       }));
     });
-    const convoId = 'convo#0';
+    const convoId = "convo#0";
     const conversationLog = await loadConversationLog(convoId).then(log => log);
     this.setState({
       // conversationLog,
       convoIsLoading: false
     });
+  }
+
+  componentWillUnmount() {
+    socketClient.off("RECEIVE_MESSAGE");
   }
 
   sendMessage = (message, uid) => {

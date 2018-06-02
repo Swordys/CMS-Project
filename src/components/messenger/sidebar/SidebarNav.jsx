@@ -2,6 +2,7 @@ import React from "react";
 import * as icon from "react-feather";
 import "../../../css/messageApp/sidebar/sidebarNav.css";
 import { TabMenuConsumer } from "../../../context/tabMenuContext";
+import { signOutUser } from "../../../API/auth/index";
 
 const SibarNav = () => (
   <TabMenuConsumer>
@@ -19,12 +20,12 @@ const SibarNav = () => (
           </button>
         </div>
         <div className="sidebar-nav nav-wrap__bottom">
-          <div className="nav-icon">
+          <button className="nav-icon">
             <icon.Sliders size={18} color="white" />
-          </div>
-          <div className="nav-icon">
+          </button>
+          <button onClick={() => signOutUser()} className="nav-icon">
             <icon.LogOut size={18} color="white" />
-          </div>
+          </button>
         </div>
       </div>
     )}

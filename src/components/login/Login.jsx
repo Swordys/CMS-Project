@@ -24,6 +24,10 @@ const Login = class extends Component {
     });
   }
 
+  componentWillUnmount() {
+    window.recaptchaVerifier = null;
+  }
+
   handleSubmitNumber = e => {
     e.preventDefault();
     const { phoneNumber } = this.state;
