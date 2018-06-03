@@ -2,6 +2,17 @@ import uuid from "uuid";
 import dayjs from "dayjs";
 import { firestore } from "../../firebase/index";
 
+export const searchUsers = async text => {
+  const userRef = firestore.collection("users");
+  const query = await userRef
+    .orderBy("name")
+    .startAt(text)
+    .endAt(`${text}${"\uf8ff"}`)
+    .get();
+
+  return query.docs.map(e => e.data());
+};
+
 export const registerUserAccount = user => {
   const convoCollection = firestore.collection("users");
   convoCollection.doc(user.uid).set(user);

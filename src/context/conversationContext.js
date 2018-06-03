@@ -43,7 +43,7 @@ export class ConversationProvider extends Component {
 
   sendMessage = (message, uid) => {
     const currentMsg = processMessage(this.state.conversationLog, message, uid);
-    pushMessageToFirebase(currentMsg, "convo#0");
+    // pushMessageToFirebase(currentMsg, "convo#0");
     socketClient.emit("SEND_MESSAGE", currentMsg);
   };
 

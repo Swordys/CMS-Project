@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { retunUserAccount } from "../API/firestore";
+import { retunUserAccount, searchUsers } from "../API/firestore";
 import { returnUserId } from "../API/auth";
 
 const UserContext = React.createContext();
@@ -21,6 +21,8 @@ export class UserProvider extends Component {
   async componentDidMount() {
     const uid = await returnUserId();
     const userData = await retunUserAccount(uid);
+    // const userSearch = await searchUsers("cob");
+    // console.log(userSearch);
     this.setState({
       userData
     });
