@@ -1,7 +1,6 @@
 import React from "react";
 import "../../../css/messageApp/message/message.css";
 
-import { ConversationProvider } from "../../../context/conversationContext";
 import withUserAndConvoStore from "../../../hoc/contextHoc";
 
 // Components
@@ -12,12 +11,10 @@ const MessageLogWithUserAndConvoStore = withUserAndConvoStore(MessageLog);
 const MessageSendWithUserAndConvoStore = withUserAndConvoStore(MessageSend);
 
 const Message = () => (
-  <ConversationProvider>
-    <div className="message-wrap">
-      <MessageLogWithUserAndConvoStore />
-      <MessageSendWithUserAndConvoStore />
-    </div>
-  </ConversationProvider>
+  <div className="message-wrap">
+    <MessageLogWithUserAndConvoStore />
+    <MessageSendWithUserAndConvoStore />
+  </div>
 );
 
 export default Message;

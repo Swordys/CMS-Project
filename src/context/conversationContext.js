@@ -5,7 +5,9 @@ import socketClient from "../socket/socketClient";
 import {
   loadConversationLog,
   processMessage,
-  pushMessageToFirebase
+  pushMessageToFirebase,
+  returnConversationId,
+  createNewConvoRoom
 } from "../API/firestore/index";
 
 const ConversationContext = React.createContext();
@@ -20,6 +22,7 @@ export class ConversationProvider extends Component {
 
   state = {
     conversationLog: [],
+    activeRoom: null,
     convoIsLoading: true
   };
 
@@ -29,22 +32,60 @@ export class ConversationProvider extends Component {
         conversationLog: [...conversationLog, message]
       }));
     });
-    const convoId = "convo#0";
-    const conversationLog = await loadConversationLog(convoId).then(log => log);
-    this.setState({
-      // conversationLog,
-      convoIsLoading: false
-    });
+    this.loadConversation();
   }
 
   componentWillUnmount() {
     socketClient.off("RECEIVE_MESSAGE");
   }
 
+  loadConversation = async () => {
+    const { activeRoom } = this.state;
+    this.setState({
+      convoIsLoading: true
+    });
+    if (activeRoom) {
+      const conversationLog = await loadConversationLog(activeRoom).then(
+        log => log
+      );
+      this.setState({
+        conversationLog
+      });
+    }
+    this.setState({
+      convoIsLoading: false
+    });
+  };
+
   sendMessage = (message, uid) => {
-    const currentMsg = processMessage(this.state.conversationLog, message, uid);
-    // pushMessageToFirebase(currentMsg, "convo#0");
-    socketClient.emit("SEND_MESSAGE", currentMsg);
+    const { activeRoom } = this.state;
+    if (activeRoom) {
+      const currentMsg = processMessage(
+        this.state.conversationLog,
+        message,
+        uid
+      );
+      pushMessageToFirebase(currentMsg, activeRoom);
+      socketClient.emit("SEND_MESSAGE", currentMsg);
+    }
+  };
+
+  initConversation = async (uid, userUid) => {
+    const result = await returnConversationId(uid, userUid);
+    if (result !== undefined) {
+      console.log('ROOM EXISTS');
+      this.setState({
+        activeRoom: result.conversationId
+      });
+      this.loadConversation();
+    } else {
+      console.log("INIT NEW ROOM");
+      const newRoom = await createNewConvoRoom(uid, userUid);
+      this.setState({
+        activeRoom: newRoom
+      });
+      this.loadConversation();
+    }
   };
 
   render() {
@@ -53,7 +94,8 @@ export class ConversationProvider extends Component {
         value={{
           conversationLog: this.state.conversationLog,
           convoIsLoading: this.state.convoIsLoading,
-          sendMessage: this.sendMessage
+          sendMessage: this.sendMessage,
+          initConversation: this.initConversation
         }}
       >
         {this.props.children}

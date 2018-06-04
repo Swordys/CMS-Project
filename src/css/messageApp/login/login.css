@@ -31,29 +31,7 @@
   width: 100%;
   border-radius: 2px 2px 0 0;
   transition: 300ms ease;
-  /* background-color: #466edc; */
-}
-
-.messenger-login-banner::after {
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  content: "";
-  top: 0;
-  left: 0;
-  background: #466edc;
-  transform-origin: bottom;
-  animation: banner-loaded 300ms ease-in-out forwards;
-  animation-fill-mode: both;
-}
-
-@keyframes banner-loaded {
-  from {
-    transform: scale3d(1, 0, 1);
-  }
-  to {
-    transform: scale3d(1, 1, 1);
-  }
+  background-color: #466edc;
 }
 
 .messenger-login-form-wrap {
@@ -67,25 +45,6 @@
   position: relative;
   display: flex;
   flex-direction: column;
-}
-
-.messenger-login-form-wrap::after {
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  content: "";
-  top: 0;
-  left: 0;
-  background: #466edc;
-  transform-origin: bottom;
-  animation: form-loaded 300ms ease-in-out forwards 250ms;
-  animation-fill-mode: both;
-}
-
-@keyframes form-loaded {
-  100% {
-    transform: scale3d(1, 0, 1);
-  }
 }
 
 .messenger-login-form-wrap:last-child {

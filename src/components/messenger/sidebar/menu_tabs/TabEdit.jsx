@@ -11,7 +11,13 @@ const TabEdit = () => (
           activeTab === "t3" ? " tab-menu__active" : ""
         } tab-menu__edit`}
       >
-        <div />
+        <div>
+          <span>EDIT ACCOUNT</span>
+          <div>
+            <span>Change Username</span>
+            <input type="text" />
+          </div>
+        </div>
       </div>
     )}
   </TabMenuConsumer>

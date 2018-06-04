@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import { searchUsers } from "../API/firestore/index";
 
 const TabMenuContext = React.createContext();
 
@@ -11,7 +12,8 @@ export class TabMenuProvider extends Component {
   };
 
   state = {
-    activeTab: "t1"
+    activeTab: "t1",
+    searchResult: []
   };
 
   switchTab = tab => {
@@ -20,12 +22,21 @@ export class TabMenuProvider extends Component {
     });
   };
 
+  searchUsers = async user => {
+    const searchResult = await searchUsers(user);
+    this.setState({
+      searchResult
+    });
+  };
+
   render() {
     return (
       <TabMenuContext.Provider
         value={{
           activeTab: this.state.activeTab,
-          switchTab: this.switchTab
+          switchTab: this.switchTab,
+          searchUsers: this.searchUsers,
+          userSearchResult: this.state.searchResult
         }}
       >
         {this.props.children}

@@ -3,14 +3,15 @@ import dayjs from "dayjs";
 import { firestore } from "../../firebase/index";
 
 export const searchUsers = async text => {
+  if (text === "") return [];
   const userRef = firestore.collection("users");
   const query = await userRef
-    .orderBy("name")
+    .orderBy("username")
     .startAt(text)
     .endAt(`${text}${"\uf8ff"}`)
     .get();
 
-  return query.docs.map(e => e.data());
+  return query.docs.map(user => user.data());
 };
 
 export const registerUserAccount = user => {
@@ -19,11 +20,16 @@ export const registerUserAccount = user => {
 };
 
 export const retunUserAccount = async uid => {
-  const userRef = await firestore
-    .collection("users")
-    .doc(uid)
-    .get();
-  return userRef.data();
+  const userRef = firestore.collection("users").doc(uid);
+  const userConvoRef = userRef.collection("conversations");
+
+  const userData = await userRef.get().then(data => data.data());
+  const userConvos = await userConvoRef
+    .get()
+    .then(convoArr => convoArr.docs.map(e => e.data()));
+  userData.convos = userConvos;
+
+  return userData;
 };
 
 export const loadConversationLog = async convoId => {
@@ -41,6 +47,30 @@ export const loadConversationLog = async convoId => {
   console.log(messageLog);
 
   return messageLog;
+};
+
+export const returnConversationId = async (uid, userUid) =>
+  firestore
+    .collection("users")
+    .doc(uid)
+    .collection("conversations")
+    .doc(userUid)
+    .get()
+    .then(data => data.data());
+
+export const createNewConvoRoom = async (uid, userUid) => {
+  const newRoomId = uuid();
+  const userRef = firestore
+    .collection("users")
+    .doc(uid)
+    .collection("conversations");
+  const toUserRef = firestore
+    .collection("users")
+    .doc(userUid)
+    .collection("conversations");
+  await userRef.doc(userUid).set({ conversationId: newRoomId });
+  await toUserRef.doc(uid).set({ conversationId: newRoomId });
+  return newRoomId;
 };
 
 export const pushMessageToFirebase = (message, roomId) => {
