@@ -2,7 +2,7 @@ import uuid from "uuid";
 import dayjs from "dayjs";
 import { firestore } from "../../firebase/index";
 
-export const searchUsers = async text => {
+export const searchUsers = async (text, uid) => {
   if (text === "") return [];
   const userRef = firestore.collection("users");
   const query = await userRef
@@ -11,7 +11,9 @@ export const searchUsers = async text => {
     .endAt(`${text}${"\uf8ff"}`)
     .get();
 
-  return query.docs.map(user => user.data());
+  return query.docs
+    .map(user => user.data())
+    .filter(target => target.uid !== uid);
 };
 
 export const registerUserAccount = user => {

@@ -22,8 +22,8 @@ export class TabMenuProvider extends Component {
     });
   };
 
-  searchUsers = async user => {
-    const searchResult = await searchUsers(user);
+  searchUsers = async (user, uid) => {
+    const searchResult = await searchUsers(user, uid);
     this.setState({
       searchResult
     });

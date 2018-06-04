@@ -1,6 +1,8 @@
 import React from "react";
 import { ConversationConsumer } from "../../../context/conversationContext";
 import { UserConsumer } from "../../../context/userContext";
+import { TabMenuConsumer } from "../../../context/tabMenuContext";
+
 import "../../../css/messageApp/sidebar/sidebarMenu.css";
 
 import TabMessages from "./menu_tabs/TabMessages";
@@ -13,14 +15,21 @@ const SidebarMenu = () => (
       {({ userData }) => (
         <ConversationConsumer>
           {({ initConversation }) => (
-            <React.Fragment>
-              <TabMessages />
-              <TabSearch
-                userData={userData}
-                initConversation={initConversation}
-              />
-              <TabEdit />
-            </React.Fragment>
+            <TabMenuConsumer>
+              {({ activeTab, userSearchResult = [], searchUsers }) => (
+                <React.Fragment>
+                  <TabMessages />
+                  <TabSearch
+                    activeTab={activeTab}
+                    userSearchResult={userSearchResult}
+                    searchUsers={searchUsers}
+                    userData={userData}
+                    initConversation={initConversation}
+                  />
+                  <TabEdit />
+                </React.Fragment>
+              )}
+            </TabMenuConsumer>
           )}
         </ConversationConsumer>
       )}
