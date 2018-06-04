@@ -49,16 +49,16 @@ export const loadConversationLog = async convoId => {
   return messageLog;
 };
 
-export const returnConversationId = async (uid, userUid) =>
+export const returnConversationId = async (uid, targetUid) =>
   firestore
     .collection("users")
     .doc(uid)
     .collection("conversations")
-    .doc(userUid)
+    .doc(targetUid)
     .get()
     .then(data => data.data());
 
-export const createNewConvoRoom = async (uid, userUid) => {
+export const createNewConvoRoom = async (uid, targetUid) => {
   const newRoomId = uuid();
   const userRef = firestore
     .collection("users")
@@ -66,9 +66,9 @@ export const createNewConvoRoom = async (uid, userUid) => {
     .collection("conversations");
   const toUserRef = firestore
     .collection("users")
-    .doc(userUid)
+    .doc(targetUid)
     .collection("conversations");
-  await userRef.doc(userUid).set({ conversationId: newRoomId });
+  await userRef.doc(targetUid).set({ conversationId: newRoomId });
   await toUserRef.doc(uid).set({ conversationId: newRoomId });
   return newRoomId;
 };
