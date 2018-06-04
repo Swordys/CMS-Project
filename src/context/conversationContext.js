@@ -90,6 +90,7 @@ export class ConversationProvider extends Component {
           conversationLog
         });
       }
+      socketClient.emit("SUBSCRIBE", activeRoom);
     }
     this.setState({
       convoIsLoading: false
