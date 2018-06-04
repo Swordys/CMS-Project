@@ -112,7 +112,11 @@ export class ConversationProvider extends Component {
       });
 
       pushMessageToFirebase(currentMsg, activeRoom);
-      socketClient.emit("SEND_MESSAGE", currentMsg);
+      const messagePayload = {
+        messageData: currentMsg,
+        roomId: activeRoom
+      };
+      socketClient.emit("SEND_MESSAGE", messagePayload);
     }
   };
 

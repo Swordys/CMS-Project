@@ -4,9 +4,9 @@ const io = require("socket.io")(server);
 io.on("connection", socket => {
   console.log(socket.id);
 
-  socket.on("SEND_MESSAGE", messageData => {
-    socket.join(messageData.chatID);
-    io.to(messageData.chatID).emit("RECEIVE_MESSAGE", messageData);
+  socket.on("SEND_MESSAGE", ({ messageData, roomId }) => {
+    socket.join(roomId);
+    io.to(roomId).emit("RECEIVE_MESSAGE", messageData);
   });
 });
 

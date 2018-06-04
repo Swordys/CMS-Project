@@ -85,12 +85,10 @@ export const pushMessageToFirebase = (message, roomId) => {
 };
 
 export const processMessage = (messageLog, message, uid) => {
-  const chatID = "UNIQ#";
   const timeFull = dayjs().format("YYYY-MM-DD HH:mm:ss");
   const timeMin = dayjs().format("dddd, h:mm a");
 
   const pushMessage = {
-    chatID,
     id: uuid(),
     userId: uid,
     text: message,
