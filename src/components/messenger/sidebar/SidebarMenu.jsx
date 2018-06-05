@@ -1,5 +1,4 @@
 import React from "react";
-import { ConversationConsumer } from "../../../context/conversationContext";
 import { UserConsumer } from "../../../context/userContext";
 import { TabMenuConsumer } from "../../../context/tabMenuContext";
 
@@ -12,26 +11,34 @@ import TabEdit from "./menu_tabs/TabEdit";
 const SidebarMenu = () => (
   <div className="sidebar-menu">
     <UserConsumer>
-      {({ userData }) => (
-        <ConversationConsumer>
-          {({ initConversation }) => (
-            <TabMenuConsumer>
-              {({ activeTab, userSearchResult = [], searchUsers }) => (
-                <React.Fragment>
-                  <TabMessages />
-                  <TabSearch
-                    activeTab={activeTab}
-                    userSearchResult={userSearchResult}
-                    searchUsers={searchUsers}
-                    userData={userData}
-                    initConversation={initConversation}
-                  />
-                  <TabEdit />
-                </React.Fragment>
-              )}
-            </TabMenuConsumer>
+      {({
+        userData,
+        messageConvos,
+        searchUsers,
+        userSearchResult,
+        initConversation,
+        loadConversation
+      }) => (
+        <TabMenuConsumer>
+          {({ activeTab }) => (
+            <React.Fragment>
+              <TabMessages
+                activeTab={activeTab}
+                userData={userData}
+                messageConvos={messageConvos}
+                loadConversation={loadConversation}
+              />
+              <TabSearch
+                activeTab={activeTab}
+                userSearchResult={userSearchResult}
+                searchUsers={searchUsers}
+                userData={userData}
+                initConversation={initConversation}
+              />
+              <TabEdit activeTab={activeTab} />
+            </React.Fragment>
           )}
-        </ConversationConsumer>
+        </TabMenuConsumer>
       )}
     </UserConsumer>
   </div>

@@ -2,20 +2,30 @@ import React from "react";
 
 import "../../../../css/messageApp/menu_tabs/tabMessages.css";
 import TabMessageCard from "./TabMessageCard";
-import { TabMenuConsumer } from "../../../../context/tabMenuContext";
 
-const TabMessages = () => (
-  <TabMenuConsumer>
-    {({ activeTab }) => (
+const TabMessages = class extends React.Component {
+  state = {};
+
+  render() {
+    const { messageConvos, activeTab, loadConversation } = this.props;
+    const userMessages = messageConvos.map(message => (
+      <TabMessageCard
+        key={message.roomId}
+        {...message}
+        loadConversation={loadConversation}
+      />
+    ));
+
+    return (
       <div
         className={`tab-menu${
           activeTab === "t1" ? " tab-menu__active" : ""
         } tab-menu__messages`}
       >
-        <TabMessageCard />
+        {userMessages}
       </div>
-    )}
-  </TabMenuConsumer>
-);
+    );
+  }
+};
 
 export default TabMessages;

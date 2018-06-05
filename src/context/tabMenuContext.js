@@ -12,20 +12,12 @@ export class TabMenuProvider extends Component {
   };
 
   state = {
-    activeTab: "t1",
-    searchResult: []
+    activeTab: "t1"
   };
 
   switchTab = tab => {
     this.setState({
       activeTab: tab
-    });
-  };
-
-  searchUsers = async (user, uid) => {
-    const searchResult = await searchUsers(user, uid);
-    this.setState({
-      searchResult
     });
   };
 

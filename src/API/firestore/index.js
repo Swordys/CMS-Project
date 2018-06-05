@@ -34,11 +34,14 @@ export const searchUsers = async (text, uid) => {
     .filter(target => target.uid !== uid);
 };
 
-export const loadUserConvos = async convosId => {
+export const loadUserConvos = async uid => {
   const conversationsRef = firestore.collection("conversations");
-  const convoDocs = convosId.map(e =>
-    firestore.doc(`conversations/${e.conversationId}`)
-  );
+  const userConvos = await conversationsRef
+    .where(uid, "==", uid)
+    .where("initialized", "==", true)
+    .get();
+
+  return userConvos.docs.map(e => e.data());
 };
 
 export const loadConversationLog = async convoId => {
@@ -66,6 +69,16 @@ export const returnConversationId = async (uid, targetUid) =>
 
 export const createNewConvoRoom = async (uid, targetUid) => {
   const newRoomId = uuid();
+  firestore
+    .collection("conversations")
+    .doc(newRoomId)
+    .set({
+      [uid]: uid,
+      [targetUid]: targetUid,
+      initialized: false,
+      roomId: newRoomId
+    });
+
   const userRef = firestore
     .collection("users")
     .doc(uid)
@@ -79,37 +92,18 @@ export const createNewConvoRoom = async (uid, targetUid) => {
   return newRoomId;
 };
 
-export const pushMessageToFirebase = (message, roomId, targetUid) => {
+export const pushMessageToFirebase = (message, roomId) => {
   const conversationRoom = firestore.collection("conversations").doc(roomId);
 
-  const userConvoRef = firestore
-    .collection("users")
-    .doc(message.userId)
-    .collection("conversations")
-    .doc(targetUid);
-
-  const targetConvoRef = firestore
-    .collection("users")
-    .doc(targetUid)
-    .collection("conversations")
-    .doc(message.userId);
-
-  userConvoRef.set(
+  conversationRoom.set(
     {
       displayMessage: message.text,
-      lastMessageTime: message.dateFull
+      lastMessageTime: message.date,
+      initialized: true
     },
     { merge: true }
   );
 
-  targetConvoRef.set(
-    {
-      displayMessage: message.text,
-      lastMessageTime: message.dateFull
-    },
-    { merge: true }
-  );
-  
   conversationRoom.collection("messageLog").add(message);
 };
 

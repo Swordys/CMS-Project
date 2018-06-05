@@ -6,14 +6,10 @@ import MessageSendFile from "./MessageSendFile";
 
 class MessageSendMessage extends Component {
   static propTypes = {
-    userData: PropTypes.shape({
-      uid: PropTypes.string
-    }),
     sendMessage: PropTypes.func
   };
 
   static defaultProps = {
-    userData: {},
     sendMessage: undefined
   };
 
@@ -40,8 +36,8 @@ class MessageSendMessage extends Component {
         inputValue: ""
       });
 
-      const { userData, sendMessage } = this.props;
-      sendMessage(trimText, userData.uid);
+      const { sendMessage } = this.props;
+      sendMessage(trimText);
     }
   };
 

@@ -8,16 +8,13 @@ const TabSearch = class extends React.Component {
   };
 
   handleUserSearch = value => {
-    const { searchUsers, userData } = this.props;
-    if (userData) {
-      const { uid } = userData;
-      searchUsers(value, uid);
-    }
+    const { searchUsers } = this.props;
+    searchUsers(value);
   };
 
-  handleSearchResClick = userId => {
-    const { userData, initConversation } = this.props;
-    initConversation(userData.uid, userId);
+  handleSearchResClick = targetUser => {
+    const { initConversation } = this.props;
+    initConversation(targetUser);
   };
 
   render() {
@@ -42,7 +39,7 @@ const TabSearch = class extends React.Component {
             {userSearchResult.map(user => (
               <li
                 role="presentation"
-                onClick={() => this.handleSearchResClick(user.uid)}
+                onClick={() => this.handleSearchResClick(user)}
                 className="search-result-item"
                 key={user.uid}
               >
