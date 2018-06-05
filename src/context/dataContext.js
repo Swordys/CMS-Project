@@ -67,7 +67,7 @@ export class DatabaseProvider extends Component {
       const { uid } = userData;
       const convoId = await returnConversationId(uid, targetUid);
       if (convoId !== undefined) {
-        userConvoRooms[targetUid] = convoId;
+        userConvoRooms[targetUid] = convoId.conversationId;
         await this.setState({
           userActiveRoom: convoId.conversationId,
           userConvoRooms: { ...userConvoRooms }
@@ -81,8 +81,7 @@ export class DatabaseProvider extends Component {
         });
       }
     } else {
-      const userActiveRoom = this.state.userConvoRooms[targetUid]
-        .conversationId;
+      const userActiveRoom = this.state.userConvoRooms[targetUid];
       await this.setState({
         userActiveRoom
       });
@@ -92,7 +91,7 @@ export class DatabaseProvider extends Component {
 
   loadConvos = async () => {
     const userMessageConvos = await loadUserConvos(this.state.userData.uid);
-    if (userMessageConvos) {
+    if (userMessageConvos.length > 0) {
       const { roomId } = userMessageConvos[0];
       this.setState({ userMessageConvos, userActiveRoom: roomId });
     }
@@ -113,7 +112,7 @@ export class DatabaseProvider extends Component {
       if (!userConvoLogs[userActiveRoom]) {
         const userActiveConversationLog = await loadConversationLog(
           userActiveRoom
-        ).then(log => log);
+        );
         userConvoLogs[userActiveRoom] = userActiveConversationLog;
         await this.setState({
           userActiveConversationLog,

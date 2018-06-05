@@ -51,11 +51,7 @@ export const loadConversationLog = async convoId => {
     .orderBy("dateFull")
     .get();
 
-  const messageLog = messageLogQuery.docs.map(e => e.data());
-
-  console.log(messageLog);
-
-  return messageLog;
+  return messageLogQuery.docs.map(e => e.data());
 };
 
 export const returnConversationId = async (uid, targetUid) =>
