@@ -43,7 +43,7 @@ export class DatabaseProvider extends Component {
     });
 
     this.initMessagesSocket();
-    this.loadConvos();
+    await this.loadConvos();
     this.loadConversation();
   }
 
@@ -92,7 +92,10 @@ export class DatabaseProvider extends Component {
 
   loadConvos = async () => {
     const userMessageConvos = await loadUserConvos(this.state.userData.uid);
-    if (userMessageConvos) this.setState({ userMessageConvos });
+    if (userMessageConvos) {
+      const { roomId } = userMessageConvos[0];
+      this.setState({ userMessageConvos, userActiveRoom: roomId });
+    }
   };
 
   loadConversation = async (roomId = null) => {
