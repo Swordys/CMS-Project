@@ -25,6 +25,7 @@ export class ConversationProvider extends Component {
     convoRooms: {},
     convoLogs: {},
     activeRoom: null,
+    activeTargetUid: "",
     convoIsLoading: true
   };
 
@@ -43,7 +44,9 @@ export class ConversationProvider extends Component {
 
   initConversation = async (uid, targetUid) => {
     const { convoRooms } = this.state;
-
+    this.setState({
+      activeTargetUid: targetUid
+    });
     if (!convoRooms[targetUid]) {
       const convoId = await returnConversationId(uid, targetUid);
       if (convoId !== undefined) {
@@ -98,7 +101,7 @@ export class ConversationProvider extends Component {
   };
 
   sendMessage = (message, uid) => {
-    const { activeRoom, convoLogs } = this.state;
+    const { activeRoom, convoLogs, activeTargetUid } = this.state;
     if (activeRoom) {
       const currentMsg = processMessage(
         this.state.conversationLog,
@@ -112,7 +115,7 @@ export class ConversationProvider extends Component {
         convoLogs
       });
 
-      pushMessageToFirebase(currentMsg, activeRoom);
+      pushMessageToFirebase(currentMsg, activeRoom, activeTargetUid);
       const messagePayload = {
         messageData: currentMsg,
         roomId: activeRoom

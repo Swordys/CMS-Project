@@ -2,20 +2,6 @@ import uuid from "uuid";
 import dayjs from "dayjs";
 import { firestore } from "../../firebase/index";
 
-export const searchUsers = async (text, uid) => {
-  if (text === "") return [];
-  const userRef = firestore.collection("users");
-  const query = await userRef
-    .orderBy("username")
-    .startAt(text)
-    .endAt(`${text}${"\uf8ff"}`)
-    .get();
-
-  return query.docs
-    .map(user => user.data())
-    .filter(target => target.uid !== uid);
-};
-
 export const registerUserAccount = user => {
   const convoCollection = firestore.collection("users");
   convoCollection.doc(user.uid).set(user);
@@ -34,18 +20,36 @@ export const retunUserAccount = async uid => {
   return userData;
 };
 
+export const searchUsers = async (text, uid) => {
+  if (text === "") return [];
+  const userRef = firestore.collection("users");
+  const query = await userRef
+    .orderBy("username")
+    .startAt(text)
+    .endAt(`${text}${"\uf8ff"}`)
+    .get();
+
+  return query.docs
+    .map(user => user.data())
+    .filter(target => target.uid !== uid);
+};
+
+export const loadUserConvos = async convosId => {
+  const conversationsRef = firestore.collection("conversations");
+  const convoDocs = convosId.map(e =>
+    firestore.doc(`conversations/${e.conversationId}`)
+  );
+};
+
 export const loadConversationLog = async convoId => {
   const convoRoom = firestore.collection("conversations").doc(convoId);
-  const metaQuery = await convoRoom.get();
   const messageLogQuery = await convoRoom
     .collection("messageLog")
     .orderBy("dateFull")
     .get();
 
   const messageLog = messageLogQuery.docs.map(e => e.data());
-  const metaData = metaQuery.data();
 
-  console.log(metaData);
   console.log(messageLog);
 
   return messageLog;
@@ -75,15 +79,38 @@ export const createNewConvoRoom = async (uid, targetUid) => {
   return newRoomId;
 };
 
-export const pushMessageToFirebase = (message, roomId) => {
+export const pushMessageToFirebase = (message, roomId, targetUid) => {
   const conversationRoom = firestore.collection("conversations").doc(roomId);
 
-  conversationRoom.set({
-    displayMessage: message.text,
-    lastMessageTime: message.dateFull
-  });
+  const userConvoRef = firestore
+    .collection("users")
+    .doc(message.userId)
+    .collection("conversations")
+    .doc(targetUid);
+
+  const targetConvoRef = firestore
+    .collection("users")
+    .doc(targetUid)
+    .collection("conversations")
+    .doc(message.userId);
+
+  userConvoRef.set(
+    {
+      displayMessage: message.text,
+      lastMessageTime: message.dateFull
+    },
+    { merge: true }
+  );
+
+  targetConvoRef.set(
+    {
+      displayMessage: message.text,
+      lastMessageTime: message.dateFull
+    },
+    { merge: true }
+  );
+  
   conversationRoom.collection("messageLog").add(message);
-  conversationRoom.collection("members").doc(message.userId);
 };
 
 export const processMessage = (messageLog, message, uid) => {
