@@ -13,13 +13,13 @@ import {
 } from "../API/firestore";
 import { returnUserId } from "../API/auth";
 
-const UserContext = React.createContext();
+const DatabaseContext = React.createContext();
 
-export const UserConsumer = UserContext.Consumer;
+export const DatabaseConsumer = DatabaseContext.Consumer;
 
 /* eslint-disable react/no-did-mount-set-state */
 
-export class UserProvider extends Component {
+export class DatabaseProvider extends Component {
   static propTypes = {
     children: PropTypes.node.isRequired
   };
@@ -171,7 +171,7 @@ export class UserProvider extends Component {
 
   render() {
     return (
-      <UserContext.Provider
+      <DatabaseContext.Provider
         value={{
           userData: this.state.userData,
           convoIsLoading: this.state.convoIsLoading,
@@ -185,7 +185,7 @@ export class UserProvider extends Component {
         }}
       >
         {this.props.children}
-      </UserContext.Provider>
+      </DatabaseContext.Provider>
     );
   }
 }

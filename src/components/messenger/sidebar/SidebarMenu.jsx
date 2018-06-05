@@ -1,5 +1,5 @@
 import React from "react";
-import { UserConsumer } from "../../../context/userContext";
+import { DatabaseConsumer } from "../../../context/dataContext";
 import { TabMenuConsumer } from "../../../context/tabMenuContext";
 
 import "../../../css/messageApp/sidebar/sidebarMenu.css";
@@ -10,7 +10,7 @@ import TabEdit from "./menu_tabs/TabEdit";
 
 const SidebarMenu = () => (
   <div className="sidebar-menu">
-    <UserConsumer>
+    <DatabaseConsumer>
       {({
         userData,
         messageConvos,
@@ -40,7 +40,7 @@ const SidebarMenu = () => (
           )}
         </TabMenuConsumer>
       )}
-    </UserConsumer>
+    </DatabaseConsumer>
   </div>
 );
 

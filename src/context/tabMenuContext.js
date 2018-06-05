@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { searchUsers } from "../API/firestore/index";
 
 const TabMenuContext = React.createContext();
 
@@ -26,9 +25,7 @@ export class TabMenuProvider extends Component {
       <TabMenuContext.Provider
         value={{
           activeTab: this.state.activeTab,
-          switchTab: this.switchTab,
-          searchUsers: this.searchUsers,
-          userSearchResult: this.state.searchResult
+          switchTab: this.switchTab
         }}
       >
         {this.props.children}

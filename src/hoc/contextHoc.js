@@ -1,8 +1,8 @@
 import React from "react";
-import { UserConsumer } from "../context/userContext";
+import { DatabaseConsumer } from "../context/dataContext";
 
 const withFirestore = Component => props => (
-  <UserConsumer>
+  <DatabaseConsumer>
     {({ userData, conversationLog, convoIsLoading, sendMessage }) => (
       <Component
         {...props}
@@ -12,7 +12,7 @@ const withFirestore = Component => props => (
         sendMessage={sendMessage}
       />
     )}
-  </UserConsumer>
+  </DatabaseConsumer>
 );
 
 export default withFirestore;

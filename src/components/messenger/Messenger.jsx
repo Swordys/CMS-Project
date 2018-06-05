@@ -2,12 +2,12 @@ import React from "react";
 import Header from "./header/Header";
 import Message from "./message/Message";
 import Sidebar from "./sidebar/Sidebar";
-import { UserProvider } from "../../context/userContext";
+import { DatabaseProvider } from "../../context/dataContext";
 
 import "../../css/messageApp/messenger/messenger.css";
 
 const Messenger = () => (
-  <UserProvider>
+  <DatabaseProvider>
     <div className="messenger-wrap">
       <div className="messenger-header-wrap">
         <Header />
@@ -17,7 +17,7 @@ const Messenger = () => (
         <Message />
       </div>
     </div>
-  </UserProvider>
+  </DatabaseProvider>
 );
 
 export default Messenger;
