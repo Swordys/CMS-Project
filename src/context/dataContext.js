@@ -31,7 +31,6 @@ export class DatabaseProvider extends Component {
     userMessageConvos: [],
     userSearchResult: [],
     userActiveRoom: null,
-    userActiveTarget: "",
     convoIsLoading: true
   };
 
@@ -46,6 +45,7 @@ export class DatabaseProvider extends Component {
     this.initMessagesSocket();
     await this.loadConvos();
     this.loadConversation();
+    this.loadUserConnections();
   }
 
   componentWillUnmount() {
@@ -54,13 +54,27 @@ export class DatabaseProvider extends Component {
   }
 
   initMessagesSocket = () => {
-    socketClient.on("RECEIVE_MESSAGE", message => {
-      this.setState(({ userActiveConversationLog }) => ({
-        userActiveConversationLog: [...userActiveConversationLog, message]
-      }));
+    socketClient.on("RECEIVE_MESSAGE", ({ messageData, roomId }) => {
+      // Assign active log to users selected room
+      const { userConvoLogs, userActiveRoom } = this.state;
+
+      const activeConvoLog = [...userConvoLogs[roomId], messageData];
+      userConvoLogs[roomId] = activeConvoLog;
+
+      this.setState({
+        userConvoLogs,
+        userActiveConversationLog: userConvoLogs[userActiveRoom]
+      });
     });
-    socketClient.on("RECEIVE_CONVO", message => {
-      console.log("YES", message);
+    // socketClient.on("RECEIVE_CONVO", message => {
+    //   console.log("NEW CONVO", message);
+    // });
+  };
+
+  loadUserConnections = () => {
+    const connectedUsers = Object.keys(this.state.userData.connections);
+    connectedUsers.forEach(targetUid => {
+      socketClient.emit("SUBSCRIBE_USER_CONVOS", targetUid);
     });
   };
 
@@ -71,22 +85,20 @@ export class DatabaseProvider extends Component {
     // If conversation is not in cache
     if (!userConvoRooms[targetUid]) {
       socketClient.emit("SUBSCRIBE_USER_CONVOS", targetUid);
-      const { uid, conversations } = userData;
-      const convoId = conversations[targetUid];
+      const { uid, connections } = userData;
+      const convoId = connections[targetUid];
       if (convoId !== undefined) {
         userConvoRooms[targetUid] = convoId.conversationId;
         await this.setState({
           userActiveRoom: convoId.conversationId,
-          userConvoRooms: { ...userConvoRooms },
-          userActiveTarget: targetUid
+          userConvoRooms: { ...userConvoRooms }
         });
       } else {
         const newRoom = await createNewConvoRoom(uid, targetUid);
         userConvoRooms[targetUid] = newRoom;
         await this.setState({
           userActiveRoom: newRoom,
-          userConvoRooms: { ...userConvoRooms },
-          userActiveTarget: targetUid
+          userConvoRooms: { ...userConvoRooms }
         });
       }
     } else {
@@ -101,13 +113,10 @@ export class DatabaseProvider extends Component {
   loadConvos = async () => {
     const userMessageConvos = await loadUserConvos(this.state.userData.uid);
     if (userMessageConvos.length > 0) {
-      const { uid } = this.state.userData;
-      const { roomId, sender, target } = userMessageConvos[0];
-      const userActiveTarget = uid === sender ? target : sender;
+      const { roomId } = userMessageConvos[0];
       this.setState({
         userMessageConvos,
-        userActiveRoom: roomId,
-        userActiveTarget
+        userActiveRoom: roomId
       });
     }
   };
@@ -157,13 +166,7 @@ export class DatabaseProvider extends Component {
   };
 
   sendMessage = message => {
-    const {
-      userActiveRoom,
-      userConvoLogs,
-      userActiveConversationLog,
-      userActiveTarget,
-      userData
-    } = this.state;
+    const { userActiveRoom, userActiveConversationLog, userData } = this.state;
 
     if (userActiveRoom) {
       const currentMsg = processMessage(
@@ -172,17 +175,10 @@ export class DatabaseProvider extends Component {
         userData.uid
       );
 
-      const activeConvoLog = [...userConvoLogs[userActiveRoom], currentMsg];
-      userConvoLogs[userActiveRoom] = activeConvoLog;
-      this.setState({
-        userConvoLogs
-      });
-
       pushMessageToFirebase(currentMsg, userActiveRoom);
       const messagePayload = {
         messageData: currentMsg,
-        roomId: userActiveRoom,
-        targetId: userActiveTarget
+        roomId: userActiveRoom
       };
       socketClient.emit("SEND_MESSAGE", messagePayload);
     }

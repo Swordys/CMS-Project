@@ -70,7 +70,7 @@ export const createNewConvoRoom = async (uid, targetUid) => {
   await Promise.all([
     user.set(
       {
-        conversations: {
+        connections: {
           [targetUid]: {
             conversationId: newRoomId
           }
@@ -80,7 +80,7 @@ export const createNewConvoRoom = async (uid, targetUid) => {
     ),
     targetUser.set(
       {
-        conversations: {
+        connections: {
           [uid]: {
             conversationId: newRoomId
           }

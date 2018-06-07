@@ -13,12 +13,13 @@ io.on("connection", socket => {
   });
 
   socket.on("SUBSCRIBE_USER_CONVOS", uid => {
+    console.log(uid);
     socket.join(`${uid}/convos`);
   });
 
-  socket.on("SEND_MESSAGE", ({ messageData, roomId, targetId }) => {
-    io.to(roomId).emit("RECEIVE_MESSAGE", messageData);
-    io.to(`${targetId}/convos`).emit("RECEIVE_CONVO", {
+  socket.on("SEND_MESSAGE", ({ messageData, roomId }) => {
+    io.to(roomId).emit("RECEIVE_MESSAGE", { messageData, roomId });
+    io.to(`${messageData.userId}/convos`).emit("RECEIVE_CONVO", {
       text: messageData.text,
       date: messageData.date
     });
