@@ -95,7 +95,6 @@ export const createNewConvoRoom = async (uid, targetUid) => {
 
 export const pushMessageToFirebase = (message, roomId) => {
   const conversationRoom = firestore.collection("conversations").doc(roomId);
-
   conversationRoom.set(
     {
       displayMessage: message.text,

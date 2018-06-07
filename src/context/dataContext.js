@@ -42,6 +42,7 @@ export class DatabaseProvider extends Component {
     });
 
     socketClient.emit("SUBSCRIBE_USER_CONVOS", uid);
+    socketClient.emit("SUBSCRIBE_NEW_CONNECTIONS", uid);
     this.initMessagesSocket();
     await this.loadConvos();
     this.loadConversation();
@@ -54,6 +55,9 @@ export class DatabaseProvider extends Component {
   }
 
   initMessagesSocket = () => {
+    socketClient.on("NEW_CONNECTION", targetUid => {
+      socketClient.emit("SUBSCRIBE_USER_CONVOS", targetUid);
+    });
     socketClient.on("RECEIVE_MESSAGE", ({ messageData, roomId }) => {
       // Assign active log to users selected room
       const { userConvoLogs, userActiveRoom } = this.state;
@@ -67,16 +71,33 @@ export class DatabaseProvider extends Component {
       });
     });
     socketClient.on("RECEIVE_CONVO", message => {
+      console.log(message);
       const { userMessageConvos } = this.state;
       if (userMessageConvos !== null) {
         const { roomId } = message;
-        Object.assign(userMessageConvos[roomId], {
-          displayMessage: message.displayMessage,
-          lastMessageTime: message.lastMessageTime
-        });
+        if (userMessageConvos[roomId]) {
+          Object.assign(userMessageConvos[roomId], {
+            displayMessage: message.displayMessage,
+            lastMessageTime: message.lastMessageTime
+          });
+        } else {
+          userMessageConvos[roomId] = message;
+        }
 
         this.setState({
           userMessageConvos
+        });
+      } else {
+        const { roomId } = message;
+        const newMessageConvos = {
+          [roomId]: {
+            displayMessage: message.displayMessage,
+            lastMessageTime: message.lastMessageTime,
+            roomId
+          }
+        };
+        this.setState({
+          userMessageConvos: newMessageConvos
         });
       }
     });
@@ -92,11 +113,13 @@ export class DatabaseProvider extends Component {
   initConversation = async targetUser => {
     const { userConvoRooms, userData } = this.state;
     const targetUid = targetUser.uid;
-
+    this.setState({
+      convoIsLoading: true
+    });
     // If conversation is not in cache
     if (!userConvoRooms[targetUid]) {
-      socketClient.emit("SUBSCRIBE_USER_CONVOS", targetUid);
       const { uid, connections } = userData;
+      socketClient.emit("CREATE_NEW_CONNECTION", { uid, targetUid });
       const convoId = connections[targetUid];
       if (convoId !== undefined) {
         userConvoRooms[targetUid] = convoId.conversationId;

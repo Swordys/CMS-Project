@@ -12,8 +12,16 @@ io.on("connection", socket => {
     socket.leave(roomId);
   });
 
+  socket.on("CREATE_NEW_CONNECTION", ({ uid, targetUid }) => {
+    io.to(`${targetUid}/connection`).emit("NEW_CONNECTION", uid);
+    io.to(`${uid}/connection`).emit("NEW_CONNECTION", targetUid);
+  });
+
+  socket.on("SUBSCRIBE_NEW_CONNECTIONS", uid => {
+    socket.join(`${uid}/connection`);
+  });
+
   socket.on("SUBSCRIBE_USER_CONVOS", uid => {
-    console.log(uid);
     socket.join(`${uid}/convos`);
   });
 
