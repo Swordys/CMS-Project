@@ -20,8 +20,9 @@ io.on("connection", socket => {
   socket.on("SEND_MESSAGE", ({ messageData, roomId }) => {
     io.to(roomId).emit("RECEIVE_MESSAGE", { messageData, roomId });
     io.to(`${messageData.userId}/convos`).emit("RECEIVE_CONVO", {
-      text: messageData.text,
-      date: messageData.date
+      displayMessage: messageData.text,
+      lastMessageTime: messageData.date,
+      roomId
     });
   });
 });

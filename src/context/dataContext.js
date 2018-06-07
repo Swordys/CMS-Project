@@ -25,10 +25,10 @@ export class DatabaseProvider extends Component {
 
   state = {
     userData: null,
-    userActiveConversationLog: [],
     userConvoRooms: {},
     userConvoLogs: {},
-    userMessageConvos: [],
+    userMessageConvos: null,
+    userActiveConversationLog: [],
     userSearchResult: [],
     userActiveRoom: null,
     convoIsLoading: true
@@ -66,9 +66,20 @@ export class DatabaseProvider extends Component {
         userActiveConversationLog: userConvoLogs[userActiveRoom]
       });
     });
-    // socketClient.on("RECEIVE_CONVO", message => {
-    //   console.log("NEW CONVO", message);
-    // });
+    socketClient.on("RECEIVE_CONVO", message => {
+      const { userMessageConvos } = this.state;
+      if (userMessageConvos !== null) {
+        const { roomId } = message;
+        Object.assign(userMessageConvos[roomId], {
+          displayMessage: message.displayMessage,
+          lastMessageTime: message.lastMessageTime
+        });
+
+        this.setState({
+          userMessageConvos
+        });
+      }
+    });
   };
 
   loadUserConnections = () => {
@@ -111,9 +122,22 @@ export class DatabaseProvider extends Component {
   };
 
   loadConvos = async () => {
-    const userMessageConvos = await loadUserConvos(this.state.userData.uid);
-    if (userMessageConvos.length > 0) {
-      const { roomId } = userMessageConvos[0];
+    const userConvos = await loadUserConvos(this.state.userData.uid);
+    if (userConvos.length > 0) {
+      const { roomId } = userConvos[0];
+      const { uid } = this.state.userData;
+      const userMessageConvos = Object.assign(
+        {},
+        ...userConvos.map(item => ({
+          [item.roomId]: {
+            displayMessage: item.displayMessage,
+            lastMessageTime: item.lastMessageTime,
+            uid: item.targetUid[uid],
+            roomId: item.roomId
+          }
+        }))
+      );
+
       this.setState({
         userMessageConvos,
         userActiveRoom: roomId

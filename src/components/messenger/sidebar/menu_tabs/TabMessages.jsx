@@ -8,13 +8,15 @@ const TabMessages = class extends React.Component {
 
   render() {
     const { messageConvos, activeTab, loadConversation } = this.props;
-    const userMessages = messageConvos.map(message => (
-      <TabMessageCard
-        key={message.roomId}
-        {...message}
-        loadConversation={loadConversation}
-      />
-    ));
+    const userMessages =
+      messageConvos &&
+      Object.values(messageConvos).map(message => (
+        <TabMessageCard
+          key={message.roomId}
+          {...message}
+          loadConversation={loadConversation}
+        />
+      ));
 
     return (
       <div
