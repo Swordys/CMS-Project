@@ -6,7 +6,6 @@ import {
   loadConversationLog,
   processMessage,
   pushMessageToFirebase,
-  returnConversationId,
   createNewConvoRoom,
   loadUserConvos,
   searchUsers
@@ -32,6 +31,7 @@ export class DatabaseProvider extends Component {
     userMessageConvos: [],
     userSearchResult: [],
     userActiveRoom: null,
+    userActiveTarget: "",
     convoIsLoading: true
   };
 
@@ -42,6 +42,7 @@ export class DatabaseProvider extends Component {
       userData
     });
 
+    socketClient.emit("SUBSCRIBE_USER_CONVOS", uid);
     this.initMessagesSocket();
     await this.loadConvos();
     this.loadConversation();
@@ -49,6 +50,7 @@ export class DatabaseProvider extends Component {
 
   componentWillUnmount() {
     socketClient.off("RECEIVE_MESSAGE");
+    socketClient.off("RECEIVE_CONVO");
   }
 
   initMessagesSocket = () => {
@@ -57,27 +59,34 @@ export class DatabaseProvider extends Component {
         userActiveConversationLog: [...userActiveConversationLog, message]
       }));
     });
+    socketClient.on("RECEIVE_CONVO", message => {
+      console.log("YES", message);
+    });
   };
 
   initConversation = async targetUser => {
     const { userConvoRooms, userData } = this.state;
     const targetUid = targetUser.uid;
 
+    // If conversation is not in cache
     if (!userConvoRooms[targetUid]) {
-      const { uid } = userData;
-      const convoId = await returnConversationId(uid, targetUid);
+      socketClient.emit("SUBSCRIBE_USER_CONVOS", targetUid);
+      const { uid, conversations } = userData;
+      const convoId = conversations[targetUid];
       if (convoId !== undefined) {
         userConvoRooms[targetUid] = convoId.conversationId;
         await this.setState({
           userActiveRoom: convoId.conversationId,
-          userConvoRooms: { ...userConvoRooms }
+          userConvoRooms: { ...userConvoRooms },
+          userActiveTarget: targetUid
         });
       } else {
         const newRoom = await createNewConvoRoom(uid, targetUid);
         userConvoRooms[targetUid] = newRoom;
         await this.setState({
           userActiveRoom: newRoom,
-          userConvoRooms: { ...userConvoRooms }
+          userConvoRooms: { ...userConvoRooms },
+          userActiveTarget: targetUid
         });
       }
     } else {
@@ -92,8 +101,14 @@ export class DatabaseProvider extends Component {
   loadConvos = async () => {
     const userMessageConvos = await loadUserConvos(this.state.userData.uid);
     if (userMessageConvos.length > 0) {
-      const { roomId } = userMessageConvos[0];
-      this.setState({ userMessageConvos, userActiveRoom: roomId });
+      const { uid } = this.state.userData;
+      const { roomId, sender, target } = userMessageConvos[0];
+      const userActiveTarget = uid === sender ? target : sender;
+      this.setState({
+        userMessageConvos,
+        userActiveRoom: roomId,
+        userActiveTarget
+      });
     }
   };
 
@@ -146,6 +161,7 @@ export class DatabaseProvider extends Component {
       userActiveRoom,
       userConvoLogs,
       userActiveConversationLog,
+      userActiveTarget,
       userData
     } = this.state;
 
@@ -165,7 +181,8 @@ export class DatabaseProvider extends Component {
       pushMessageToFirebase(currentMsg, userActiveRoom);
       const messagePayload = {
         messageData: currentMsg,
-        roomId: userActiveRoom
+        roomId: userActiveRoom,
+        targetId: userActiveTarget
       };
       socketClient.emit("SEND_MESSAGE", messagePayload);
     }

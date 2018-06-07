@@ -9,15 +9,7 @@ export const registerUserAccount = user => {
 
 export const retunUserAccount = async uid => {
   const userRef = firestore.collection("users").doc(uid);
-  const userConvoRef = userRef.collection("conversations");
-
-  const userData = await userRef.get().then(data => data.data());
-  const userConvos = await userConvoRef
-    .get()
-    .then(convoArr => convoArr.docs.map(e => e.data()));
-  userData.convos = userConvos;
-
-  return userData;
+  return userRef.get().then(data => data.data());
 };
 
 export const searchUsers = async (text, uid) => {
@@ -37,7 +29,7 @@ export const searchUsers = async (text, uid) => {
 export const loadUserConvos = async uid => {
   const conversationsRef = firestore.collection("conversations");
   const userConvos = await conversationsRef
-    .where(uid, "==", uid)
+    .where(`members.${uid}`, "==", true)
     .where("initialized", "==", true)
     .get();
 
@@ -54,37 +46,50 @@ export const loadConversationLog = async convoId => {
   return messageLogQuery.docs.map(e => e.data());
 };
 
-export const returnConversationId = async (uid, targetUid) =>
-  firestore
-    .collection("users")
-    .doc(uid)
-    .collection("conversations")
-    .doc(targetUid)
-    .get()
-    .then(data => data.data());
-
 export const createNewConvoRoom = async (uid, targetUid) => {
   const newRoomId = uuid();
   firestore
     .collection("conversations")
     .doc(newRoomId)
     .set({
-      [uid]: uid,
-      [targetUid]: targetUid,
+      targetUid: {
+        [uid]: targetUid,
+        [targetUid]: uid
+      },
+      members: {
+        [uid]: true,
+        [targetUid]: true
+      },
       initialized: false,
       roomId: newRoomId
     });
 
-  const userRef = firestore
-    .collection("users")
-    .doc(uid)
-    .collection("conversations");
-  const toUserRef = firestore
-    .collection("users")
-    .doc(targetUid)
-    .collection("conversations");
-  await userRef.doc(targetUid).set({ conversationId: newRoomId });
-  await toUserRef.doc(uid).set({ conversationId: newRoomId });
+  const user = firestore.collection("users").doc(uid);
+  const targetUser = firestore.collection("users").doc(targetUid);
+
+  await Promise.all([
+    user.set(
+      {
+        conversations: {
+          [targetUid]: {
+            conversationId: newRoomId
+          }
+        }
+      },
+      { merge: true }
+    ),
+    targetUser.set(
+      {
+        conversations: {
+          [uid]: {
+            conversationId: newRoomId
+          }
+        }
+      },
+      { merge: true }
+    )
+  ]);
+
   return newRoomId;
 };
 

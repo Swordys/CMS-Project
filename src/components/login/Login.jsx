@@ -64,6 +64,7 @@ const Login = class extends Component {
 
           if (additionalUserInfo.isNewUser) {
             const initialData = {
+              conversations: {},
               uid: user.uid,
               phoneNumber: user.phoneNumber
             };
