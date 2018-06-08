@@ -30,7 +30,6 @@ export const loadUserConvos = async uid => {
   const conversationsRef = firestore.collection("conversations");
   const userConvos = await conversationsRef
     .where(`members.${uid}`, "==", true)
-    .where("initialized", "==", true)
     .get();
 
   return userConvos.docs.map(e => e.data());
@@ -46,8 +45,7 @@ export const loadConversationLog = async convoId => {
   return messageLogQuery.docs.map(e => e.data());
 };
 
-export const createNewConvoRoom = async (uid, targetUid) => {
-  const newRoomId = uuid();
+export const createNewConvoRoom = async (newRoomId, uid, targetUid) => {
   firestore
     .collection("conversations")
     .doc(newRoomId)
@@ -60,7 +58,6 @@ export const createNewConvoRoom = async (uid, targetUid) => {
         [uid]: true,
         [targetUid]: true
       },
-      initialized: false,
       roomId: newRoomId
     });
 
@@ -89,8 +86,6 @@ export const createNewConvoRoom = async (uid, targetUid) => {
       { merge: true }
     )
   ]);
-
-  return newRoomId;
 };
 
 export const pushMessageToFirebase = (message, roomId) => {
@@ -98,8 +93,7 @@ export const pushMessageToFirebase = (message, roomId) => {
   conversationRoom.set(
     {
       displayMessage: message.text,
-      lastMessageTime: message.date,
-      initialized: true
+      lastMessageTime: message.date
     },
     { merge: true }
   );

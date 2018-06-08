@@ -12,9 +12,12 @@ const TabSearch = class extends React.Component {
     searchUsers(value);
   };
 
-  handleSearchResClick = targetUser => {
-    const { initConversation } = this.props;
-    initConversation(targetUser);
+  handleSearchResClick = target => {
+    const { loadUserPage } = this.props;
+    const selectedUser = {
+      userId: target.uid
+    };
+    loadUserPage(selectedUser);
   };
 
   render() {

@@ -1,12 +1,12 @@
 import React from "react";
 
 const TabMessageCard = ({
-  roomId,
+  userId,
   displayMessage,
   lastMessageTime,
-  loadConversation
+  loadUserPage
 }) => (
-  <div onClick={() => loadConversation(roomId)} className="tab-message-card">
+  <div onClick={() => loadUserPage({ userId })} className="tab-message-card">
     <div className="message-card-pic" />
     <div className="message-card-desc">
       <div className="message-card-user">Swordys</div>

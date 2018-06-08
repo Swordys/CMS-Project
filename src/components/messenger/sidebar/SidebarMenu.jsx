@@ -16,8 +16,7 @@ const SidebarMenu = () => (
         messageConvos,
         searchUsers,
         userSearchResult,
-        initConversation,
-        loadConversation
+        loadUserPage,
       }) => (
         <TabMenuConsumer>
           {({ activeTab }) => (
@@ -26,14 +25,14 @@ const SidebarMenu = () => (
                 activeTab={activeTab}
                 userData={userData}
                 messageConvos={messageConvos}
-                loadConversation={loadConversation}
+                loadUserPage={loadUserPage}
               />
               <TabSearch
                 activeTab={activeTab}
+                loadUserPage={loadUserPage}
                 userSearchResult={userSearchResult}
                 searchUsers={searchUsers}
                 userData={userData}
-                initConversation={initConversation}
               />
               <TabEdit activeTab={activeTab} />
             </React.Fragment>
