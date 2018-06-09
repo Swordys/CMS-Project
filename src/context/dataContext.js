@@ -257,11 +257,9 @@ export class DatabaseProvider extends Component {
           convoIsLoading: this.state.convoIsLoading,
           conversationLog: this.state.userActiveConversationLog,
           messageConvos: this.state.userMessageConvos,
-          loadUserPage: this.loadUserPage,
-          initConversation: this.initConversation,
-          loadConversation: this.loadConversation,
-          searchUsers: this.searchUsers,
           userSearchResult: this.state.userSearchResult,
+          loadUserPage: this.loadUserPage,
+          searchUsers: this.searchUsers,
           sendMessage: this.sendMessage
         }}
       >
