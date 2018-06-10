@@ -60,8 +60,8 @@ export class DatabaseProvider extends Component {
   };
 
   loadSocketListeners = () => {
-    socketClient.on("NEW_CONNECTION", ({ targetUid, roomId }) => {
-      socketClient.emit("SUBSCRIBE_CONVO", roomId);
+    socketClient.on("NEW_CONNECTION", async ({ targetUid, roomId }) => {
+      await socketClient.emit("SUBSCRIBE_CONVO", roomId);
       const { userData } = this.state;
       userData.connections[targetUid] = {
         conversationId: roomId
@@ -214,14 +214,9 @@ export class DatabaseProvider extends Component {
     socketClient.emit("SUBSCRIBE_CONVO", newConversationId);
 
     createNewConvoRoom(newConversationId, uid, userId);
-    const { userData } = this.state;
-    userData.connections[userId] = {
-      conversationId: newConversationId
-    };
 
     await this.setState({
-      userActiveRoom: newConversationId,
-      userData
+      userActiveRoom: newConversationId
     });
     this.pushMessageToFirestoreAndSockets(newMessage, newConversationId);
   };
