@@ -28,11 +28,14 @@ export const searchUsers = async (text, uid) => {
 
 export const loadUserConvos = async uid => {
   const conversationsRef = firestore.collection("conversations");
+
   const userConvos = await conversationsRef
     .where(`members.${uid}`, "==", true)
     .get();
 
-  return userConvos.docs.map(e => e.data());
+  return userConvos.docs
+    .map(e => e.data())
+    .sort((a, b) => b.timeStamp - a.timeStamp);
 };
 
 export const loadConversationLog = async convoId => {
@@ -93,7 +96,8 @@ export const pushMessageToFirebase = (message, roomId) => {
   conversationRoom.set(
     {
       displayMessage: message.text,
-      lastMessageTime: message.date
+      lastMessageTime: message.date,
+      timeStamp: dayjs().unix()
     },
     { merge: true }
   );
