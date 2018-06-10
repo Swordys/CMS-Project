@@ -56,16 +56,21 @@ export class DatabaseProvider extends Component {
   }
 
   subscribeSockets = uid => {
-    socketClient.emit("SUBSCRIBE_USER_CONVOS", uid);
-    socketClient.emit("SUBSCRIBE_NEW_CONNECTIONS", uid);
+    socketClient.emit("SUBSCRIBE_NEW_CONNECTION", uid);
   };
 
   loadSocketListeners = () => {
-    socketClient.on("NEW_CONNECTION", targetUid => {
-      socketClient.emit("SUBSCRIBE_USER_CONVOS", targetUid);
+    socketClient.on("NEW_CONNECTION", ({ targetUid, roomId }) => {
+      socketClient.emit("SUBSCRIBE_CONVO", roomId);
+      const { userData } = this.state;
+      userData.connections[targetUid] = {
+        conversationId: roomId
+      };
+      this.setState({
+        userData
+      });
     });
     socketClient.on("RECEIVE_MESSAGE", ({ messageData, roomId }) => {
-      // Assign active log to users selected room
       const { userConvoLogs, userActiveRoom } = this.state;
 
       if (!userConvoLogs[roomId]) {
@@ -80,14 +85,17 @@ export class DatabaseProvider extends Component {
         userActiveConversationLog: userConvoLogs[userActiveRoom]
       });
     });
+
     socketClient.on("RECEIVE_CONVO", convo => {
-      const { userMessageConvos, selectedUser } = this.state;
-      const { roomId } = convo;
+      const { userMessageConvos, selectedUser, userData } = this.state;
+      const { roomId, senderId } = convo;
+      const { uid } = userData;
+
       userMessageConvos[roomId] = {
         displayMessage: convo.displayMessage,
         lastMessageTime: convo.lastMessageTime,
-        roomId: convo.roomId,
-        userId: selectedUser.userId
+        userId: uid === senderId ? selectedUser.userId : senderId,
+        roomId
       };
 
       this.setState({
@@ -97,9 +105,9 @@ export class DatabaseProvider extends Component {
   };
 
   loadUserConnections = () => {
-    const connectedUsers = Object.keys(this.state.userData.connections);
-    connectedUsers.forEach(targetUid => {
-      socketClient.emit("SUBSCRIBE_USER_CONVOS", targetUid);
+    const connectedRooms = Object.values(this.state.userData.connections);
+    connectedRooms.forEach(item => {
+      socketClient.emit("SUBSCRIBE_CONVO", item.conversationId);
     });
   };
 
@@ -187,7 +195,7 @@ export class DatabaseProvider extends Component {
           userActiveConversationLog
         });
       }
-      socketClient.emit("SUBSCRIBE", userActiveRoom);
+      socketClient.emit("SUBSCRIBE_ROOM", userActiveRoom);
     }
     this.setState({
       convoIsLoading: false
@@ -197,8 +205,13 @@ export class DatabaseProvider extends Component {
   createNewConversation = async (newMessage, uid, userId) => {
     const newConversationId = uuid();
 
-    socketClient.emit("CREATE_NEW_CONNECTION", { uid, userId });
-    socketClient.emit("SUBSCRIBE", newConversationId);
+    socketClient.emit("CREATE_NEW_CONNECTION", {
+      uid,
+      userId,
+      roomId: newConversationId
+    });
+    socketClient.emit("SUBSCRIBE_ROOM", newConversationId);
+    socketClient.emit("SUBSCRIBE_CONVO", newConversationId);
 
     createNewConvoRoom(newConversationId, uid, userId);
     const { userData } = this.state;
@@ -222,13 +235,13 @@ export class DatabaseProvider extends Component {
     } = this.state;
 
     if (selectedUser !== null) {
-      const { uid } = this.state.userData;
+      const { uid } = userData;
       const { userId } = selectedUser;
 
       const newMessage = processMessage(
         userActiveConversationLog,
         message,
-        userData.uid
+        uid
       );
 
       if (userActiveRoom) {

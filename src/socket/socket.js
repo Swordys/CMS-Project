@@ -4,32 +4,39 @@ const io = require("socket.io")(server);
 io.on("connection", socket => {
   console.log(socket.id);
 
-  socket.on("SUBSCRIBE", roomId => {
+  socket.on("SUBSCRIBE_ROOM", roomId => {
     socket.join(roomId);
   });
 
-  socket.on("UNSUBSCRIBE", roomId => {
+  socket.on("UNSUBSCRIBE_ROOM", roomId => {
     socket.leave(roomId);
   });
 
-  socket.on("CREATE_NEW_CONNECTION", ({ uid, targetUid }) => {
-    io.to(`${targetUid}/connection`).emit("NEW_CONNECTION", uid);
-    io.to(`${uid}/connection`).emit("NEW_CONNECTION", targetUid);
-  });
-
-  socket.on("SUBSCRIBE_NEW_CONNECTIONS", uid => {
+  socket.on("SUBSCRIBE_NEW_CONNECTION", uid => {
     socket.join(`${uid}/connection`);
   });
 
-  socket.on("SUBSCRIBE_USER_CONVOS", uid => {
-    socket.join(`${uid}/convos`);
+  socket.on("CREATE_NEW_CONNECTION", ({ uid, userId, roomId }) => {
+    io.to(`${userId}/connection`).emit("NEW_CONNECTION", {
+      targetUid: uid,
+      roomId
+    });
+    io.to(`${uid}/connection`).emit("NEW_CONNECTION", {
+      targetUid: userId,
+      roomId
+    });
+  });
+
+  socket.on("SUBSCRIBE_CONVO", roomId => {
+    socket.join(`${roomId}/convo`);
   });
 
   socket.on("SEND_MESSAGE", ({ messageData, roomId }) => {
     io.to(roomId).emit("RECEIVE_MESSAGE", { messageData, roomId });
-    io.to(`${messageData.userId}/convos`).emit("RECEIVE_CONVO", {
+    io.to(`${roomId}/convo`).emit("RECEIVE_CONVO", {
       displayMessage: messageData.text,
       lastMessageTime: messageData.date,
+      senderId: messageData.userId,
       roomId
     });
   });
