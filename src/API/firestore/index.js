@@ -48,37 +48,45 @@ export const loadConversationLog = async convoId => {
   return messageLogQuery.docs.map(e => e.data());
 };
 
-export const createNewConvoRoom = async (newRoomId, uid, targetUid) => {
+export const createNewConvoRoom = async (newRoomId, senderUser, targetUser) => {
+  const { uid } = senderUser;
+  const { userId } = targetUser;
   firestore
     .collection("conversations")
     .doc(newRoomId)
     .set({
-      targetUid: {
-        [uid]: targetUid,
-        [targetUid]: uid
+      targetUserInfo: {
+        [uid]: {
+          username: targetUser.username,
+          id: userId
+        },
+        [userId]: {
+          username: senderUser.username,
+          id: uid
+        }
       },
       members: {
         [uid]: true,
-        [targetUid]: true
+        [userId]: true
       },
       roomId: newRoomId
     });
 
-  const user = firestore.collection("users").doc(uid);
-  const targetUser = firestore.collection("users").doc(targetUid);
+  const senderRef = firestore.collection("users").doc(uid);
+  const targetRef = firestore.collection("users").doc(userId);
 
   await Promise.all([
-    user.set(
+    senderRef.set(
       {
         connections: {
-          [targetUid]: {
+          [userId]: {
             conversationId: newRoomId
           }
         }
       },
       { merge: true }
     ),
-    targetUser.set(
+    targetRef.set(
       {
         connections: {
           [uid]: {

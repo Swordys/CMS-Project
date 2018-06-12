@@ -91,12 +91,12 @@ export class DatabaseProvider extends Component {
       const { roomId, senderId } = convo;
       const { uid } = userData;
 
-      userMessageConvos[roomId] = {
+      Object.assign(userMessageConvos[roomId], {
         displayMessage: convo.displayMessage,
         lastMessageTime: convo.lastMessageTime,
         userId: uid === senderId ? selectedUser.userId : senderId,
         roomId
-      };
+      });
 
       this.setState({
         userMessageConvos
@@ -116,14 +116,18 @@ export class DatabaseProvider extends Component {
     const userConvos = await loadUserConvos(uid);
     if (userConvos.length > 0) {
       const userActiveRoom = userConvos[0].roomId;
-      const selectedUser = { userId: userConvos[0].targetUid[uid] };
+      const selectedUser = {
+        userId: userConvos[0].targetUserInfo[uid].id,
+        username: userConvos[0].targetUserInfo[uid].username
+      };
       const userMessageConvos = Object.assign(
         {},
         ...userConvos.map(item => ({
           [item.roomId]: {
             displayMessage: item.displayMessage,
             lastMessageTime: item.lastMessageTime,
-            userId: item.targetUid[uid],
+            userId: item.targetUserInfo[uid].id,
+            username: item.targetUserInfo[uid].username,
             roomId: item.roomId
           }
         }))
@@ -202,9 +206,11 @@ export class DatabaseProvider extends Component {
     });
   };
 
-  createNewConversation = async (newMessage, uid, userId) => {
+  createNewConversation = async (newMessage, senderUser, targetUser) => {
     const newConversationId = uuid();
 
+    const { uid } = senderUser;
+    const { userId } = targetUser;
     socketClient.emit("CREATE_NEW_CONNECTION", {
       uid,
       userId,
@@ -213,7 +219,7 @@ export class DatabaseProvider extends Component {
     socketClient.emit("SUBSCRIBE_ROOM", newConversationId);
     socketClient.emit("SUBSCRIBE_CONVO", newConversationId);
 
-    createNewConvoRoom(newConversationId, uid, userId);
+    createNewConvoRoom(newConversationId, senderUser, targetUser);
 
     await this.setState({
       userActiveRoom: newConversationId
@@ -230,19 +236,25 @@ export class DatabaseProvider extends Component {
     } = this.state;
 
     if (selectedUser !== null) {
-      const { uid } = userData;
-      const { userId } = selectedUser;
-
       const newMessage = processMessage(
         userActiveConversationLog,
         message,
-        uid
+        userData.uid
       );
 
       if (userActiveRoom) {
         this.pushMessageToFirestoreAndSockets(newMessage);
       } else {
-        this.createNewConversation(newMessage, uid, userId);
+        const senderUser = {
+          username: userData.username,
+          uid: userData.uid
+        };
+
+        const targetUser = {
+          username: selectedUser.username,
+          userId: selectedUser.userId
+        };
+        this.createNewConversation(newMessage, senderUser, targetUser);
       }
     }
   };

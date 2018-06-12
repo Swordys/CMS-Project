@@ -15,7 +15,8 @@ const TabSearch = class extends React.Component {
   handleSearchResClick = target => {
     const { loadUserPage } = this.props;
     const selectedUser = {
-      userId: target.uid
+      userId: target.uid,
+      username: target.username
     };
     loadUserPage(selectedUser);
   };
