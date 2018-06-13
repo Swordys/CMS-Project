@@ -3,8 +3,10 @@ import dayjs from "dayjs";
 import { firestore } from "../../firebase/index";
 
 export const registerUserAccount = user => {
-  const convoCollection = firestore.collection("users");
-  convoCollection.doc(user.uid).set(user);
+  firestore
+    .collection("users")
+    .doc(user.uid)
+    .set(user);
 };
 
 export const retunUserAccount = async uid => {

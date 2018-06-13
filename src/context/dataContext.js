@@ -88,15 +88,23 @@ export class DatabaseProvider extends Component {
 
     socketClient.on("RECEIVE_CONVO", convo => {
       const { userMessageConvos, selectedUser, userData } = this.state;
-      const { roomId, senderId } = convo;
+      const { roomId, senderId, senderUsername } = convo;
       const { uid } = userData;
 
-      Object.assign(userMessageConvos[roomId], {
-        displayMessage: convo.displayMessage,
-        lastMessageTime: convo.lastMessageTime,
-        userId: uid === senderId ? selectedUser.userId : senderId,
-        roomId
-      });
+      if (!userMessageConvos[roomId]) {
+        userMessageConvos[roomId] = {
+          displayMessage: convo.displayMessage,
+          lastMessageTime: convo.lastMessageTime,
+          username: uid === senderId ? selectedUser.username : senderUsername,
+          userId: uid === senderId ? selectedUser.userId : senderId,
+          roomId
+        };
+      } else {
+        Object.assign(userMessageConvos[roomId], {
+          displayMessage: convo.displayMessage,
+          lastMessageTime: convo.lastMessageTime
+        });
+      }
 
       this.setState({
         userMessageConvos
@@ -260,9 +268,10 @@ export class DatabaseProvider extends Component {
   };
 
   pushMessageToFirestoreAndSockets = newMessage => {
-    const { userActiveRoom } = this.state;
+    const { userActiveRoom, userData } = this.state;
     const messagePayload = {
       messageData: newMessage,
+      username: userData.username,
       roomId: userActiveRoom
     };
     socketClient.emit("SEND_MESSAGE", messagePayload);

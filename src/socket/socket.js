@@ -31,12 +31,13 @@ io.on("connection", socket => {
     socket.join(`${roomId}/convo`);
   });
 
-  socket.on("SEND_MESSAGE", ({ messageData, roomId }) => {
+  socket.on("SEND_MESSAGE", ({ messageData, roomId, username }) => {
     io.to(roomId).emit("RECEIVE_MESSAGE", { messageData, roomId });
     io.to(`${roomId}/convo`).emit("RECEIVE_CONVO", {
       displayMessage: messageData.text,
       lastMessageTime: messageData.date,
       senderId: messageData.userId,
+      senderUsername: username,
       roomId
     });
   });
