@@ -30,13 +30,13 @@ class MessageSendMessage extends Component {
 
   handleSendMessage = text => {
     const trimText = text.trim();
+    const { sendMessage } = this.props;
 
     if (trimText) {
       this.setState({
         inputValue: ""
       });
 
-      const { sendMessage } = this.props;
       sendMessage(trimText);
     }
   };

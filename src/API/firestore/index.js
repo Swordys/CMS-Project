@@ -44,7 +44,7 @@ export const loadConversationLog = async convoId => {
   const convoRoom = firestore.collection("conversations").doc(convoId);
   const messageLogQuery = await convoRoom
     .collection("messageLog")
-    .orderBy("dateFull")
+    .orderBy("messageDateFull")
     .get();
 
   return messageLogQuery.docs.map(e => e.data());
@@ -105,14 +105,17 @@ export const pushMessageToFirebase = (message, roomId) => {
   const conversationRoom = firestore.collection("conversations").doc(roomId);
   conversationRoom.set(
     {
-      displayMessage: message.text,
-      lastMessageTime: message.date,
+      displayMessage: message.messageText,
+      lastMessageTime: message.messageDate,
       timeStamp: dayjs().unix()
     },
     { merge: true }
   );
 
-  conversationRoom.collection("messageLog").add(message);
+  conversationRoom
+    .collection("messageLog")
+    .doc(message.messageId)
+    .set(message);
 };
 
 export const processMessage = (messageLog, message, uid) => {
@@ -120,13 +123,12 @@ export const processMessage = (messageLog, message, uid) => {
   const timeMin = dayjs().format("dddd, h:mm a");
 
   const pushMessage = {
-    id: uuid(),
-    userId: uid,
-    text: message,
-    date: timeMin,
-    dateFull: timeFull,
-    showTimeStamp: false,
-    showPic: true
+    senderId: uid,
+    messageId: uuid(),
+    messageText: message,
+    messageDate: timeMin,
+    messageDateFull: timeFull,
+    showTimeStamp: false
   };
 
   // -------- TIME STUFF -------

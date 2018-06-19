@@ -34,9 +34,9 @@ io.on("connection", socket => {
   socket.on("SEND_MESSAGE", ({ messageData, roomId, username }) => {
     io.to(roomId).emit("RECEIVE_MESSAGE", { messageData, roomId });
     io.to(`${roomId}/convo`).emit("RECEIVE_CONVO", {
-      displayMessage: messageData.text,
-      lastMessageTime: messageData.date,
-      senderId: messageData.userId,
+      displayMessage: messageData.messageText,
+      lastMessageTime: messageData.messageDate,
+      senderId: messageData.senderId,
       senderUsername: username,
       roomId
     });

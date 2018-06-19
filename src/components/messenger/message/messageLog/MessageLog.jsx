@@ -11,18 +11,18 @@ class MessageLog extends Component {
   }
 
   renderMessages = (userData, conversationLog) =>
-    conversationLog.map(messageData => {
+    conversationLog.map(item => {
       const messageItem = (
         <MessageItem
-          key={messageData.id}
-          sender={userData.uid === messageData.userId}
-          {...messageData}
+          key={item.messageId}
+          sender={userData.uid === item.senderId}
+          {...item}
         />
       );
 
-      return messageData.showTimeStamp ? (
-        <React.Fragment key={messageData.id}>
-          <div className="message-item-date">{messageData.date}</div>
+      return item.showTimeStamp ? (
+        <React.Fragment key={item.messageId}>
+          <div className="message-item-date">{item.messageDate}</div>
           {messageItem}
         </React.Fragment>
       ) : (

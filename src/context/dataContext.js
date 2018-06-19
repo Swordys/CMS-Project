@@ -189,7 +189,7 @@ export class DatabaseProvider extends Component {
       convoIsLoading: true
     });
 
-    if (userActiveRoom !== null) {
+    if (userActiveRoom) {
       if (!userConvoLogs[userActiveRoom]) {
         const userActiveConversationLog = await loadConversationLog(
           userActiveRoom

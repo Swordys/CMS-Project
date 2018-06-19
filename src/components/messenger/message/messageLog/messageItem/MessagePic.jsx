@@ -1,19 +1,19 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const MessagePic = ({ userId }) => (
+const MessagePic = ({ senderId }) => (
   <div className="message-item-pic-wrap">
     <div
       className="message-item-pic"
       style={{
-        backgroundImage: `url(https://api.adorable.io/avatars/60/${userId})`
+        backgroundImage: `url(https://api.adorable.io/avatars/60/${senderId})`
       }}
     />
   </div>
 );
 
 MessagePic.propTypes = {
-  userId: PropTypes.string.isRequired
+  senderId: PropTypes.string.isRequired
 };
 
 export default MessagePic;
