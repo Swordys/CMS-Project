@@ -9,29 +9,28 @@
   flex-shrink: 0;
   height: 90px;
   width: 100%;
-  border-radius: 3px;
   display: flex;
   align-items: center;
-  padding: 10px;
-  margin-bottom: 10px;
-  background: rgb(240, 240, 240);
+  /* background: rgb(240, 240, 240); */
   cursor: pointer;
+  border-bottom: 1px solid rgb(200, 200, 200);
+  position: relative;
 }
 
 .message-card-pic {
   height: 50px;
   width: 50px;
-  background-size: contain;
+  background-size: cover;
   flex-shrink: 0;
   margin-right: 15px;
-  margin-left: 5px;
   border-radius: 50%;
 }
 
 .message-card-desc {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  height: 40%;
+  justify-content: space-between;
   width: calc(100% - 70px);
   font-family: Roboto;
 }
@@ -43,10 +42,9 @@
 }
 
 .message-card-message {
-  font-size: 14px;
-  color: rgb(80, 80, 80);
+  font-size: 12px;
+  color: rgb(120, 120, 120);
   letter-spacing: 0.2px;
-  margin: 2px 0;
   overflow: hidden;
   display: inline-block;
   text-overflow: ellipsis;
@@ -58,6 +56,11 @@
   line-height: 1.6;
   color: rgb(130, 130, 130);
   letter-spacing: 1px;
+  position: absolute;
+  font-family: Roboto;
+  margin: 5px 0;
+  right: 0;
+  top: 0;
 }
 
 .tab-message-card:last-child {

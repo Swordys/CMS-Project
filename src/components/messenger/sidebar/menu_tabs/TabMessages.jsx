@@ -7,11 +7,7 @@ const TabMessages = class extends React.Component {
   state = {};
 
   render() {
-    const {
-      messageConvos,
-      activeTab,
-      loadUserPage
-    } = this.props;
+    const { messageConvos, loadUserPage, activeTab } = this.props;
     const userMessages =
       messageConvos &&
       Object.values(messageConvos).map(message => (
