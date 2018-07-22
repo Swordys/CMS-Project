@@ -1,0 +1,21 @@
+/* Message transitions */
+
+.message-item-anim-enter {
+  opacity: 0;
+  transform: translate3d(0, 5px, 0);
+}
+
+.message-item-anim-enter.message-item-anim-enter-active {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+  transition: opacity 300ms ease-out, transform 300ms ease-out;
+}
+
+.message-item-anim-exit {
+  opacity: 1;
+}
+
+.message-item-anim-exit.message-item-anim-exit-active {
+  opacity: 0;
+  transition: opacity 300ms ease-out;
+}

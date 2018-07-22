@@ -1,0 +1,4 @@
+.sidebar-wrap {
+  display: flex;
+  z-index: 50;
+}

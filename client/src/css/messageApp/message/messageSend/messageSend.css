@@ -1,0 +1,75 @@
+.message-send-box-text::-webkit-scrollbar {
+  width: 4px;
+}
+
+.message-send-box-text::-webkit-scrollbar-thumb {
+  background-color: #3c3c3c;
+  border-radius: 3px;
+}
+
+/* Main styles */
+
+.message-send-wrap {
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+  height: auto;
+  flex-shrink: 0;
+  padding: 15px;
+  box-sizing: border-box;
+  background: white;
+  position: relative;
+  box-shadow: 0px 0px 80px 0px rgba(30, 30, 30, 0.1);
+}
+
+.message-send {
+  background: rgb(225, 225, 225);
+  display: flex;
+  width: 100%;
+  border-radius: 3px;
+  overflow: hidden;
+  position: relative;
+}
+
+.message-send-box {
+  width: 100%;
+  position: relative;
+  display: flex;
+}
+
+.message-send-box::after {
+  content: "";
+  position: absolute;
+  height: 75%;
+  width: 1px;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(40, 40, 40, 0.1);
+}
+
+.message-send-box-text {
+  resize: none;
+  max-height: 140px;
+  width: 100%;
+  background: transparent;
+  padding: 12px;
+  border: none;
+  outline: none;
+  font-size: 14px;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #282828;
+}
+
+/* MessageSend Fields */
+
+.message-send-field {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-self: center;
+}
